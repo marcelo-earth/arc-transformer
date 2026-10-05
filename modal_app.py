@@ -2,6 +2,7 @@
 
 Usage:
     ARC_RUN=smoke-l4-001 modal run modal_app.py::smoke         # check flash-attn on a cheap GPU
+    ARC_RUN=probe-l4-001 modal run modal_app.py::probe         # first epochs on an L4, to catch crashes
     ARC_RUN=low-h100-001 modal run modal_app.py --preset low   # reproduction run on an H100
 
 ARC_RUN tags the app for experiment-hub's costs.py. Use a new value per run.
@@ -19,9 +20,11 @@ import modal
 
 MDLARC_REPO = "https://github.com/mvakde/mdlARC.git"
 MDLARC_COMMIT = "8afc20d"
+# torch 2.8 breaks mdlARC's compiled training step (Float vs BFloat16 addmm);
+# the reference ran on CUDA 13, so match it with torch 2.9 + cu130.
 FLASH_ATTN_WHEEL = (
-    "https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3.post1/"
-    "flash_attn-2.8.3.post1+cu12torch2.8cxx11abiTRUE-cp312-cp312-linux_x86_64.whl"
+    "https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/"
+    "flash_attn-2.8.3+cu13torch2.9cxx11abiTRUE-cp312-cp312-linux_x86_64.whl"
 )
 
 # Modal list prices (USD per hour), checked 2026-10-05.
@@ -33,7 +36,7 @@ TIMEOUT_SECONDS = {"low": 40 * 60, "medium": 75 * 60}
 image = (
     modal.Image.debian_slim(python_version="3.12")
     .apt_install("git", "build-essential")
-    .pip_install("torch==2.8.0", index_url="https://download.pytorch.org/whl/cu128")
+    .pip_install("torch==2.9.0", index_url="https://download.pytorch.org/whl/cu130")
     .pip_install("numpy", "numba", "matplotlib", FLASH_ATTN_WHEEL)
     .run_commands(
         f"git clone {MDLARC_REPO} /mdlARC",
@@ -60,6 +63,15 @@ def smoke():
     cu = torch.tensor([0, 32, 64], device="cuda", dtype=torch.int32)
     out = flash_attn_varlen_qkvpacked_func(qkv, cu, 32)
     print(f"torch {torch.__version__}, gpu {torch.cuda.get_device_name()}, out {tuple(out.shape)}")
+
+
+@app.function(gpu="L4", timeout=8 * 60)
+def probe():
+    """Run the low preset for a few minutes to check that training gets past epoch 1."""
+    try:
+        subprocess.run(["python", "run_script.py", "low"], cwd="/mdlARC", timeout=6 * 60)
+    except subprocess.TimeoutExpired:
+        print("probe: stopped after 6 minutes without crashing")
 
 
 def _run(preset: str, gpu: str) -> dict:
