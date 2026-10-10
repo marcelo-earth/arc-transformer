@@ -28,6 +28,8 @@ the $0.67 reference cost used a different GPU and provider.
 ```bash
 ARC_RUN=probe-h100-20261009-003 modal run modal_app.py --diagnostic
 ARC_RUN=low-h100-20261009-003 modal run modal_app.py --preset low
+# Recover evaluation from a completed training checkpoint without retraining:
+ARC_RUN=eval-low-h100-20261009-003 modal run modal_app.py --evaluate-from low-h100-20261009-003
 ```
 
 The diagnostic trains two epochs on an H100 and skips evaluation. The low
@@ -46,6 +48,8 @@ recovery; resuming is not yet exposed by this runner.
 The diagnostic stops internally after seven minutes and the low run after
 30 minutes, with two extra minutes reserved for finalization before Modal's
 hard timeout. Failures, timeouts and missing scores are reported explicitly.
+Checkpoint-only evaluation has a 15-minute inner deadline. It verifies the
+source training dose and data hashes before loading the frozen checkpoint.
 Only the low preset is enabled within the current budget. Actual spending
 comes from Modal billing with `project` and `run` tags, including CPU and RAM.
 
@@ -63,6 +67,8 @@ flowchart LR
     L --> V[Persistent logs, config and checkpoints]
     V --> S[Submission and score]
     S --> B[Record actual billing and decide next run]
+    D -->|training completed| E[Evaluate frozen checkpoint]
+    E --> S
 ```
 
 Local failure-path checks: `python3.11 -m unittest discover -s tests -v`.

@@ -1,0 +1,15 @@
+{
+  "run_id": "low-h100-20261009-003",
+  "preset": "low",
+  "gpu": "H100",
+  "mdlarc_commit": "8afc20d",
+  "seed": 42,
+  "mode": "baseline",
+  "compute_cost_source": "modal billing report, project/run tags",
+  "started_utc": "2026-10-10T03:52:24.675374+00:00",
+  "status": "failed",
+  "timeout_seconds": 1800,
+  "score": null,
+  "returncode": 1,
+  "seconds": 695.3
+}

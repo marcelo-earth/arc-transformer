@@ -1,0 +1,348 @@
+{"python": "3.12.10", "torch": "2.9.0+cu130", "cuda": "13.0", "flash_attn": "2.8.3", "gpu": "NVIDIA H100 80GB HBM3", "cpu_threads": 4}
+Modules imported successfully.
+Using preset: low
+Building model and data...
+/usr/local/lib/python3.12/site-packages/torch/backends/__init__.py:46: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  self.setter(val)
+Precomputing 3D positions...
+Augmentation stats: 5445 sequences, avg augments=74.2, min=1, max=80
+Starting Training...
+Validation disabled (skipping solutions.json load).
+Compiled NorMuon optimizer update kernels.
+Compiling model for training speedup...
+Epoch 1/90
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] Graph break from `Tensor.item()`, consider setting:
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     torch._dynamo.config.capture_scalar_outputs = True
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] or:
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     env TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] to include these operations in the captured graph.
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] 
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] Graph break: from user code at:
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]   File "/mdlARC/src/tinytransformer.py", line 695, in forward
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     return self._forward_varlen(
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]   File "/mdlARC/src/tinytransformer.py", line 888, in _forward_varlen
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     if int(cu_seqlens[0].item()) != 0:
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] 
+W1010 03:53:19.676000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] 
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+/usr/local/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:204: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+/usr/local/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:204: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+epoch=1 lr=9.22e-04 losses: avg=1.9787 inp=0.0000 out=1.9787
+Completed epoch timing: {"epoch": 1, "seconds": 102.663}
+Epoch 2/90
+epoch=2 lr=1.66e-03 losses: avg=1.2894 inp=0.0000 out=1.2894
+Completed epoch timing: {"epoch": 2, "seconds": 5.86}
+Epoch 3/90
+epoch=3 lr=1.66e-03 losses: avg=0.8844 inp=0.0000 out=0.8844
+Completed epoch timing: {"epoch": 3, "seconds": 5.833}
+Epoch 4/90
+epoch=4 lr=1.66e-03 losses: avg=0.6416 inp=0.0000 out=0.6416
+Completed epoch timing: {"epoch": 4, "seconds": 5.867}
+Epoch 5/90
+epoch=5 lr=1.66e-03 losses: avg=0.4238 inp=0.0000 out=0.4238
+Completed epoch timing: {"epoch": 5, "seconds": 5.9}
+Epoch 6/90
+epoch=6 lr=1.66e-03 losses: avg=0.3444 inp=0.0000 out=0.3444
+Completed epoch timing: {"epoch": 6, "seconds": 5.913}
+Epoch 7/90
+epoch=7 lr=1.66e-03 losses: avg=0.2947 inp=0.0000 out=0.2947
+Completed epoch timing: {"epoch": 7, "seconds": 5.843}
+Epoch 8/90
+epoch=8 lr=1.66e-03 losses: avg=0.2585 inp=0.0000 out=0.2585
+Completed epoch timing: {"epoch": 8, "seconds": 5.871}
+Epoch 9/90
+epoch=9 lr=1.66e-03 losses: avg=0.2360 inp=0.0000 out=0.2360
+Completed epoch timing: {"epoch": 9, "seconds": 5.984}
+Epoch 10/90
+epoch=10 lr=1.66e-03 losses: avg=0.2199 inp=0.0000 out=0.2199
+Completed epoch timing: {"epoch": 10, "seconds": 6.011}
+Saved checkpoint to runs/tiny.epoch10.pt
+Epoch 11/90
+epoch=11 lr=1.66e-03 losses: avg=0.2064 inp=0.0000 out=0.2064
+Completed epoch timing: {"epoch": 11, "seconds": 5.955}
+Epoch 12/90
+epoch=12 lr=1.66e-03 losses: avg=0.1952 inp=0.0000 out=0.1952
+Completed epoch timing: {"epoch": 12, "seconds": 5.916}
+Epoch 13/90
+epoch=13 lr=1.66e-03 losses: avg=0.1853 inp=0.0000 out=0.1853
+Completed epoch timing: {"epoch": 13, "seconds": 5.966}
+Epoch 14/90
+epoch=14 lr=1.66e-03 losses: avg=0.1780 inp=0.0000 out=0.1780
+Completed epoch timing: {"epoch": 14, "seconds": 5.911}
+Epoch 15/90
+epoch=15 lr=1.66e-03 losses: avg=0.1703 inp=0.0000 out=0.1703
+Completed epoch timing: {"epoch": 15, "seconds": 5.842}
+Epoch 16/90
+epoch=16 lr=1.66e-03 losses: avg=0.1627 inp=0.0000 out=0.1627
+Completed epoch timing: {"epoch": 16, "seconds": 5.827}
+Epoch 17/90
+epoch=17 lr=1.66e-03 losses: avg=0.1566 inp=0.0000 out=0.1566
+Completed epoch timing: {"epoch": 17, "seconds": 5.835}
+Epoch 18/90
+epoch=18 lr=1.66e-03 losses: avg=0.1504 inp=0.0000 out=0.1504
+Completed epoch timing: {"epoch": 18, "seconds": 5.825}
+Epoch 19/90
+epoch=19 lr=1.66e-03 losses: avg=0.1455 inp=0.0000 out=0.1455
+Completed epoch timing: {"epoch": 19, "seconds": 5.881}
+Epoch 20/90
+epoch=20 lr=1.66e-03 losses: avg=0.1413 inp=0.0000 out=0.1413
+Completed epoch timing: {"epoch": 20, "seconds": 5.824}
+Saved checkpoint to runs/tiny.epoch20.pt
+Epoch 21/90
+epoch=21 lr=1.66e-03 losses: avg=0.1360 inp=0.0000 out=0.1360
+Completed epoch timing: {"epoch": 21, "seconds": 5.867}
+Epoch 22/90
+epoch=22 lr=1.66e-03 losses: avg=0.1325 inp=0.0000 out=0.1325
+Completed epoch timing: {"epoch": 22, "seconds": 5.906}
+Epoch 23/90
+epoch=23 lr=1.66e-03 losses: avg=0.1277 inp=0.0000 out=0.1277
+Completed epoch timing: {"epoch": 23, "seconds": 5.805}
+Epoch 24/90
+epoch=24 lr=1.66e-03 losses: avg=0.1245 inp=0.0000 out=0.1245
+Completed epoch timing: {"epoch": 24, "seconds": 5.865}
+Epoch 25/90
+epoch=25 lr=1.66e-03 losses: avg=0.1211 inp=0.0000 out=0.1211
+Completed epoch timing: {"epoch": 25, "seconds": 5.804}
+Epoch 26/90
+epoch=26 lr=1.66e-03 losses: avg=0.1175 inp=0.0000 out=0.1175
+Completed epoch timing: {"epoch": 26, "seconds": 5.883}
+Epoch 27/90
+epoch=27 lr=1.66e-03 losses: avg=0.1149 inp=0.0000 out=0.1149
+Completed epoch timing: {"epoch": 27, "seconds": 5.847}
+Epoch 28/90
+epoch=28 lr=1.66e-03 losses: avg=0.1126 inp=0.0000 out=0.1126
+Completed epoch timing: {"epoch": 28, "seconds": 5.855}
+Epoch 29/90
+epoch=29 lr=1.66e-03 losses: avg=0.1090 inp=0.0000 out=0.1090
+Completed epoch timing: {"epoch": 29, "seconds": 5.882}
+Epoch 30/90
+epoch=30 lr=1.66e-03 losses: avg=0.1070 inp=0.0000 out=0.1070
+Completed epoch timing: {"epoch": 30, "seconds": 5.934}
+Saved checkpoint to runs/tiny.epoch30.pt
+Epoch 31/90
+epoch=31 lr=1.66e-03 losses: avg=0.1036 inp=0.0000 out=0.1036
+Completed epoch timing: {"epoch": 31, "seconds": 5.895}
+Epoch 32/90
+epoch=32 lr=1.66e-03 losses: avg=0.1011 inp=0.0000 out=0.1011
+Completed epoch timing: {"epoch": 32, "seconds": 5.852}
+Epoch 33/90
+epoch=33 lr=1.66e-03 losses: avg=0.0987 inp=0.0000 out=0.0987
+Completed epoch timing: {"epoch": 33, "seconds": 5.836}
+Epoch 34/90
+epoch=34 lr=1.66e-03 losses: avg=0.0972 inp=0.0000 out=0.0972
+Completed epoch timing: {"epoch": 34, "seconds": 5.823}
+Epoch 35/90
+epoch=35 lr=1.66e-03 losses: avg=0.0948 inp=0.0000 out=0.0948
+Completed epoch timing: {"epoch": 35, "seconds": 5.788}
+Epoch 36/90
+epoch=36 lr=1.66e-03 losses: avg=0.0926 inp=0.0000 out=0.0926
+Completed epoch timing: {"epoch": 36, "seconds": 5.776}
+Epoch 37/90
+epoch=37 lr=1.66e-03 losses: avg=0.0910 inp=0.0000 out=0.0910
+Completed epoch timing: {"epoch": 37, "seconds": 5.783}
+Epoch 38/90
+epoch=38 lr=1.66e-03 losses: avg=0.0899 inp=0.0000 out=0.0899
+Completed epoch timing: {"epoch": 38, "seconds": 5.827}
+Epoch 39/90
+epoch=39 lr=1.66e-03 losses: avg=0.0881 inp=0.0000 out=0.0881
+Completed epoch timing: {"epoch": 39, "seconds": 5.792}
+Epoch 40/90
+epoch=40 lr=1.66e-03 losses: avg=0.0861 inp=0.0000 out=0.0861
+Completed epoch timing: {"epoch": 40, "seconds": 5.813}
+Saved checkpoint to runs/tiny.epoch40.pt
+Epoch 41/90
+epoch=41 lr=1.66e-03 losses: avg=0.0855 inp=0.0000 out=0.0855
+Completed epoch timing: {"epoch": 41, "seconds": 5.825}
+Epoch 42/90
+epoch=42 lr=1.66e-03 losses: avg=0.0845 inp=0.0000 out=0.0845
+Completed epoch timing: {"epoch": 42, "seconds": 5.924}
+Epoch 43/90
+epoch=43 lr=1.66e-03 losses: avg=0.0825 inp=0.0000 out=0.0825
+Completed epoch timing: {"epoch": 43, "seconds": 5.942}
+Epoch 44/90
+epoch=44 lr=1.66e-03 losses: avg=0.0809 inp=0.0000 out=0.0809
+Completed epoch timing: {"epoch": 44, "seconds": 5.851}
+Epoch 45/90
+epoch=45 lr=1.66e-03 losses: avg=0.0798 inp=0.0000 out=0.0798
+Completed epoch timing: {"epoch": 45, "seconds": 5.799}
+Epoch 46/90
+epoch=46 lr=1.66e-03 losses: avg=0.0789 inp=0.0000 out=0.0789
+Completed epoch timing: {"epoch": 46, "seconds": 5.794}
+Epoch 47/90
+epoch=47 lr=1.66e-03 losses: avg=0.0788 inp=0.0000 out=0.0788
+Completed epoch timing: {"epoch": 47, "seconds": 5.83}
+Epoch 48/90
+epoch=48 lr=1.66e-03 losses: avg=0.0758 inp=0.0000 out=0.0758
+Completed epoch timing: {"epoch": 48, "seconds": 5.839}
+Epoch 49/90
+epoch=49 lr=1.66e-03 losses: avg=0.0747 inp=0.0000 out=0.0747
+Completed epoch timing: {"epoch": 49, "seconds": 5.912}
+Epoch 50/90
+epoch=50 lr=1.66e-03 losses: avg=0.0740 inp=0.0000 out=0.0740
+Completed epoch timing: {"epoch": 50, "seconds": 5.884}
+Saved checkpoint to runs/tiny.epoch50.pt
+Epoch 51/90
+epoch=51 lr=1.66e-03 losses: avg=0.0728 inp=0.0000 out=0.0728
+Completed epoch timing: {"epoch": 51, "seconds": 5.926}
+Epoch 52/90
+epoch=52 lr=1.66e-03 losses: avg=0.0720 inp=0.0000 out=0.0720
+Completed epoch timing: {"epoch": 52, "seconds": 5.926}
+Epoch 53/90
+epoch=53 lr=1.66e-03 losses: avg=0.0707 inp=0.0000 out=0.0707
+Completed epoch timing: {"epoch": 53, "seconds": 5.982}
+Epoch 54/90
+epoch=54 lr=1.66e-03 losses: avg=0.0700 inp=0.0000 out=0.0700
+Completed epoch timing: {"epoch": 54, "seconds": 5.943}
+Epoch 55/90
+epoch=55 lr=1.66e-03 losses: avg=0.0702 inp=0.0000 out=0.0702
+Completed epoch timing: {"epoch": 55, "seconds": 5.949}
+Epoch 56/90
+epoch=56 lr=1.66e-03 losses: avg=0.0680 inp=0.0000 out=0.0680
+Completed epoch timing: {"epoch": 56, "seconds": 5.981}
+Epoch 57/90
+epoch=57 lr=1.66e-03 losses: avg=0.0668 inp=0.0000 out=0.0668
+Completed epoch timing: {"epoch": 57, "seconds": 5.898}
+Epoch 58/90
+epoch=58 lr=1.66e-03 losses: avg=0.0668 inp=0.0000 out=0.0668
+Completed epoch timing: {"epoch": 58, "seconds": 5.898}
+Epoch 59/90
+epoch=59 lr=1.66e-03 losses: avg=0.0658 inp=0.0000 out=0.0658
+Completed epoch timing: {"epoch": 59, "seconds": 5.907}
+Epoch 60/90
+epoch=60 lr=1.66e-03 losses: avg=0.0646 inp=0.0000 out=0.0646
+Completed epoch timing: {"epoch": 60, "seconds": 5.956}
+Saved checkpoint to runs/tiny.epoch60.pt
+Epoch 61/90
+epoch=61 lr=1.66e-03 losses: avg=0.0640 inp=0.0000 out=0.0640
+Completed epoch timing: {"epoch": 61, "seconds": 5.967}
+Epoch 62/90
+epoch=62 lr=1.66e-03 losses: avg=0.0628 inp=0.0000 out=0.0628
+Completed epoch timing: {"epoch": 62, "seconds": 5.969}
+Epoch 63/90
+epoch=63 lr=1.66e-03 losses: avg=0.0625 inp=0.0000 out=0.0625
+Completed epoch timing: {"epoch": 63, "seconds": 5.951}
+Epoch 64/90
+epoch=64 lr=1.66e-03 losses: avg=0.0622 inp=0.0000 out=0.0622
+Completed epoch timing: {"epoch": 64, "seconds": 5.988}
+Epoch 65/90
+epoch=65 lr=1.66e-03 losses: avg=0.0614 inp=0.0000 out=0.0614
+Completed epoch timing: {"epoch": 65, "seconds": 5.919}
+Epoch 66/90
+epoch=66 lr=1.66e-03 losses: avg=0.0612 inp=0.0000 out=0.0612
+Completed epoch timing: {"epoch": 66, "seconds": 5.982}
+Epoch 67/90
+epoch=67 lr=1.66e-03 losses: avg=0.0595 inp=0.0000 out=0.0595
+Completed epoch timing: {"epoch": 67, "seconds": 6.018}
+Epoch 68/90
+epoch=68 lr=1.66e-03 losses: avg=0.0595 inp=0.0000 out=0.0595
+Completed epoch timing: {"epoch": 68, "seconds": 6.042}
+Epoch 69/90
+epoch=69 lr=1.66e-03 losses: avg=0.0593 inp=0.0000 out=0.0593
+Completed epoch timing: {"epoch": 69, "seconds": 5.94}
+Epoch 70/90
+epoch=70 lr=1.66e-03 losses: avg=0.0580 inp=0.0000 out=0.0580
+Completed epoch timing: {"epoch": 70, "seconds": 5.849}
+Saved checkpoint to runs/tiny.epoch70.pt
+Epoch 71/90
+epoch=71 lr=1.66e-03 losses: avg=0.0584 inp=0.0000 out=0.0584
+Completed epoch timing: {"epoch": 71, "seconds": 5.955}
+Epoch 72/90
+epoch=72 lr=1.66e-03 losses: avg=0.0571 inp=0.0000 out=0.0571
+Completed epoch timing: {"epoch": 72, "seconds": 5.965}
+Epoch 73/90
+epoch=73 lr=1.57e-03 losses: avg=0.0559 inp=0.0000 out=0.0559
+Completed epoch timing: {"epoch": 73, "seconds": 5.983}
+Epoch 74/90
+epoch=74 lr=1.48e-03 losses: avg=0.0544 inp=0.0000 out=0.0544
+Completed epoch timing: {"epoch": 74, "seconds": 5.922}
+Epoch 75/90
+epoch=75 lr=1.38e-03 losses: avg=0.0526 inp=0.0000 out=0.0526
+Completed epoch timing: {"epoch": 75, "seconds": 5.91}
+Epoch 76/90
+epoch=76 lr=1.29e-03 losses: avg=0.0510 inp=0.0000 out=0.0510
+Completed epoch timing: {"epoch": 76, "seconds": 5.815}
+Epoch 77/90
+epoch=77 lr=1.20e-03 losses: avg=0.0492 inp=0.0000 out=0.0492
+Completed epoch timing: {"epoch": 77, "seconds": 5.885}
+Epoch 78/90
+epoch=78 lr=1.11e-03 losses: avg=0.0476 inp=0.0000 out=0.0476
+Completed epoch timing: {"epoch": 78, "seconds": 5.923}
+Epoch 79/90
+epoch=79 lr=1.01e-03 losses: avg=0.0452 inp=0.0000 out=0.0452
+Completed epoch timing: {"epoch": 79, "seconds": 5.888}
+Epoch 80/90
+epoch=80 lr=9.22e-04 losses: avg=0.0441 inp=0.0000 out=0.0441
+Completed epoch timing: {"epoch": 80, "seconds": 5.877}
+Saved checkpoint to runs/tiny.epoch80.pt
+Epoch 81/90
+epoch=81 lr=8.30e-04 losses: avg=0.0404 inp=0.0000 out=0.0404
+Completed epoch timing: {"epoch": 81, "seconds": 5.838}
+Epoch 82/90
+epoch=82 lr=7.38e-04 losses: avg=0.0393 inp=0.0000 out=0.0393
+Completed epoch timing: {"epoch": 82, "seconds": 5.829}
+Epoch 83/90
+epoch=83 lr=6.46e-04 losses: avg=0.0366 inp=0.0000 out=0.0366
+Completed epoch timing: {"epoch": 83, "seconds": 5.911}
+Epoch 84/90
+epoch=84 lr=5.53e-04 losses: avg=0.0352 inp=0.0000 out=0.0352
+Completed epoch timing: {"epoch": 84, "seconds": 5.895}
+Epoch 85/90
+epoch=85 lr=4.61e-04 losses: avg=0.0338 inp=0.0000 out=0.0338
+Completed epoch timing: {"epoch": 85, "seconds": 5.901}
+Epoch 86/90
+epoch=86 lr=3.69e-04 losses: avg=0.0330 inp=0.0000 out=0.0330
+Completed epoch timing: {"epoch": 86, "seconds": 5.923}
+Epoch 87/90
+epoch=87 lr=2.77e-04 losses: avg=0.0310 inp=0.0000 out=0.0310
+Completed epoch timing: {"epoch": 87, "seconds": 5.963}
+Epoch 88/90
+epoch=88 lr=1.84e-04 losses: avg=0.0300 inp=0.0000 out=0.0300
+Completed epoch timing: {"epoch": 88, "seconds": 5.835}
+Epoch 89/90
+epoch=89 lr=9.22e-05 losses: avg=0.0292 inp=0.0000 out=0.0292
+Completed epoch timing: {"epoch": 89, "seconds": 5.821}
+Epoch 90/90
+epoch=90 lr=0.00e+00 losses: avg=0.0287 inp=0.0000 out=0.0287
+Completed epoch timing: {"epoch": 90, "seconds": 5.821}
+Saved checkpoint to runs/tiny.pt
+Training finished in 640.67s
+Starting Evaluation...
+GPU cleaned. Allocated: 0.06 GB
+
+============================================================
+STARTING EVALUATION: submission_eval (Augmented augs: 80)
+============================================================
+
+Building model and dataloader...
+Traceback (most recent call last):
+  File "/reference_runner.py", line 92, in <module>
+    main()
+  File "/reference_runner.py", line 86, in main
+    runpy.run_path("run_script.py", run_name="__main__")
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "run_script.py", line 140, in <module>
+    eval_result = evaluate.run_evaluation(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mdlARC/src/evaluate.py", line 789, in run_evaluation
+    model, dataset, _, device, _ = build_model_and_data(
+                                   ^^^^^^^^^^^^^^^^^^^^^
+TypeError: main.<locals>.build_with_logging() got an unexpected keyword argument 'checkpoint'
