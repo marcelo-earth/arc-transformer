@@ -1,0 +1,23 @@
+{
+  "source": "modal billing report --start 2026-10-09 -r h --tag-names project,run --json",
+  "retrieved_date_lima": "2026-10-10",
+  "rows": [
+    {
+      "object_id": "ap-HyTcT5BrJhT7yd2LQsaxa5",
+      "description": "arc-transformer",
+      "environment": "main",
+      "interval_start": "2026-10-10T04:00:00",
+      "cost": "2.32326352",
+      "tags": "{\"run\": \"high-h100-20261009-001\", \"project\": \"arc-transformer\"}"
+    },
+    {
+      "object_id": "ap-HyTcT5BrJhT7yd2LQsaxa5",
+      "description": "arc-transformer",
+      "environment": "main",
+      "interval_start": "2026-10-10T05:00:00",
+      "cost": "3.52955706",
+      "tags": "{\"run\": \"high-h100-20261009-001\", \"project\": \"arc-transformer\"}"
+    }
+  ],
+  "cost_usd": 5.8528205799999995
+}
