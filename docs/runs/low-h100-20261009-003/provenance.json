@@ -1,0 +1,8 @@
+{
+  "app_id": "ap-CmvQjTMJosBUczNk4wmn9h",
+  "modal_image_id": "im-e83xOfTJlHsLFfsEZFjEma",
+  "runner_commit": "6e1abd8",
+  "upstream_commit": "8afc20d",
+  "data_audit": "Read-only audit through modal container exec during training; manifest saved in volume. The automatic startup audit was added after this run launched.",
+  "config_verification": "Compared effective config with pinned upstream args_dict; only logging mode, log destination and checkpoint frequency differ."
+}

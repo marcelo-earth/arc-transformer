@@ -1,0 +1,8 @@
+{
+  "python": "3.12.10",
+  "torch": "2.9.0+cu130",
+  "cuda": "13.0",
+  "flash_attn": "2.8.3",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "cpu_threads": 4
+}

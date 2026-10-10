@@ -1,0 +1,15 @@
+{
+  "files": {
+    "challenges.json": {
+      "sha256": "d9bf319542ae39a776dbec4ce357d8dd98cbc50b6d97c2e7929d02e95fefb885",
+      "bytes": 6485906
+    },
+    "solutions.json": {
+      "sha256": "629622b0eecf42c6cb4da628955ef76ec43214f0d00081f8cf63082ade496c52",
+      "bytes": 312989
+    }
+  },
+  "challenge_tasks": 1307,
+  "evaluation_tasks": 400,
+  "eval_tasks_with_test_output_in_challenges": 0
+}
