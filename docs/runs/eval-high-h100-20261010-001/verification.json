@@ -1,0 +1,10 @@
+{
+  "tasks": 400,
+  "test_pairs": 419,
+  "task_averaged_pass_at_2_score": 171.0,
+  "percentage": 42.75,
+  "fully_solved_tasks": 169,
+  "all_task_ids_and_test_pair_counts_match": true,
+  "method": "Compare each expected grid with both attempts; average within each task, then across tasks.",
+  "solutions_sha256_matches_manifest": true
+}

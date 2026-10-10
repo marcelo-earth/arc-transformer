@@ -1,0 +1,11 @@
+{
+  "runner_commit": "30d5945",
+  "app_id": "ap-Oa18xE1he1yBZbIVOxHyEr",
+  "deployment": "arc-transformer-recovery",
+  "function_call_id": "fc-01M4K8HSV30P7N865DZWTXXAMP",
+  "source_training_run": "high-h100-20261009-001",
+  "source_training_commit": "aa35189",
+  "inference_epoch": 648,
+  "deployment_stopped_after_collection": true,
+  "verified_utc": "2026-10-10T16:22:50.446965+00:00"
+}

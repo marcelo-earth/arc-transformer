@@ -1,0 +1,24 @@
+{
+  "source": "modal billing report --start 2026-10-10 --end 2026-10-10T17:00:00+00:00 -r h --tag-names project,run --json",
+  "retrieved_date_lima": "2026-10-10",
+  "rows": [
+    {
+      "object_id": "ap-Oa18xE1he1yBZbIVOxHyEr",
+      "description": "arc-transformer-recovery",
+      "environment": "main",
+      "interval_start": "2026-10-10T15:00:00",
+      "cost": "0.15172322",
+      "tags": "{\"project\": \"arc-transformer\", \"run\": \"eval-high-h100-20261010-001\"}"
+    },
+    {
+      "object_id": "ap-Oa18xE1he1yBZbIVOxHyEr",
+      "description": "arc-transformer-recovery",
+      "environment": "main",
+      "interval_start": "2026-10-10T16:00:00",
+      "cost": "1.30860080",
+      "tags": "{\"project\": \"arc-transformer\", \"run\": \"eval-high-h100-20261010-001\"}"
+    }
+  ],
+  "cost_usd": 1.46032402,
+  "combined_high_and_recovery_cost_usd": 7.3131446
+}
