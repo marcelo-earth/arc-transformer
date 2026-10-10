@@ -103,6 +103,48 @@ flowchart LR
 ```
 
 Local failure-path checks: `python3.11 -m unittest discover -s tests -v`.
+The test environment must include the Modal client for submission tests.
+
+## High reproduction result (2026-10-10)
+
+**42.75% task-averaged pass@2**, 171/400, with 169 tasks fully solved. The
+fixed seed-42 high preset trained 650 epochs with up to 300 augmented views
+and evaluated **checkpoint 648** on the full 400-task public set. Independent
+rescoring confirms every task ID, all 419 test pairs, the exact score and the
+frozen solutions fingerprint. The point result is 1.25 percentage points below
+the reported 44%, inside the pre-specified two-point operational tolerance.
+
+Training completed in 4,025.66 seconds (67.09 minutes). The initial evaluation
+received a cancellation signal after batch 546/1008; its initiating actor is
+unknown. All checkpoints survived. A deployed, spawned evaluation call used
+the same frozen checkpoint without retraining and completed all 1008 batches
+in 1,194.29 seconds of evaluation. The deployment was stopped after collecting
+the result.
+
+Reported tagged compute consumption: **$5.85282058** for the interrupted
+initial run plus **$1.46032402** for recovery, **$7.31314460 combined**, within
+the approved $9 reserve. Billing snapshots can be updated as metering data
+arrives. The account snapshot shows zero monetary billed cost after credits.
+This does not meet the research goal of under-$1 compute consumption.
+
+| Preset | Epochs / views | Task-averaged pass@2 | Fully solved tasks |
+|---|---|---:|---:|
+| low | 90 / 80 | 33.875% | 134 |
+| high | 650 / 300 | 42.75% | 169 |
+
+The observed difference is 8.875 percentage points. Both training dose and
+inference views changed; this comparison does not isolate an epoch-only gain.
+There is one high training seed, so no CI over seeds or statistical equivalence
+claim. The next step is a scoped controlled-ablation or seed-replication plan,
+plus a cheaper execution study, before further compute.
+
+Evidence: [training and cancellation](docs/runs/high-h100-20261009-001/),
+[completed recovery and verification](docs/runs/eval-high-h100-20261010-001/).
+
+Recheck the saved submission with `verify_submission.py`, passing the frozen
+solutions file, reported score and data manifest. This verifier checks exact
+task/pair coverage, both attempts, per-task partial credit and the solutions
+SHA-256 before comparing the reported result.
 
 ## First completed pilot (2026-10-09)
 
