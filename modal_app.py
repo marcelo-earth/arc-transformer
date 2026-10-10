@@ -1,22 +1,21 @@
 """Run the mdlARC reference on Modal.
 
 Usage:
-    ARC_RUN=smoke-l4-001 modal run modal_app.py::smoke         # check flash-attn on a cheap GPU
-    ARC_RUN=probe-l4-001 modal run modal_app.py::probe         # first epochs on an L4, to catch crashes
+    ARC_RUN=probe-h100-001 modal run modal_app.py --diagnostic # two training epochs, no evaluation
     ARC_RUN=low-h100-001 modal run modal_app.py --preset low   # reproduction run on an H100
 
 ARC_RUN tags the app for experiment-hub's costs.py. Use a new value per run.
 
-Each run writes its log and a cost summary to the `arc-transformer-runs` volume.
+Each run streams logs and preserves artifacts in `arc-transformer-runs`.
+Actual cost comes from Modal billing, not GPU-time estimates.
 """
 
 import json
 import os
-import subprocess
-import time
-from datetime import datetime, timezone
+from pathlib import Path
 
 import modal
+from run_support import run_logged, validate_run_id
 
 MDLARC_REPO = "https://github.com/mvakde/mdlARC.git"
 MDLARC_COMMIT = "8afc20d"
@@ -27,11 +26,10 @@ FLASH_ATTN_WHEEL = (
     "flash_attn-2.8.3+cu13torch2.9cxx11abiTRUE-cp312-cp312-linux_x86_64.whl"
 )
 
-# Modal list prices (USD per hour), checked 2026-10-05.
-GPU_PRICE_PER_HOUR = {"H100": 3.949, "L4": 0.799}
-
-# Hard caps so a stuck run cannot exceed the $5 project budget.
-TIMEOUT_SECONDS = {"low": 40 * 60, "medium": 75 * 60}
+# Inner deadlines allow evidence to be committed before Modal's hard timeout.
+# Check actual project spend with experiment-hub/costs.py before each launch.
+TIMEOUT_SECONDS = {"probe": 7 * 60, "low": 30 * 60}
+RUN_ID = validate_run_id(os.environ.get("ARC_RUN", "untitled"))
 
 image = (
     modal.Image.debian_slim(python_version="3.12")
@@ -45,84 +43,67 @@ image = (
         " && python build_datasets.py arc1 --add-conceptarc --with-filtered",
     )
 )
+image = image.add_local_file(Path(__file__).with_name("reference_runner.py"),
+                             "/reference_runner.py", copy=True)
 
 app = modal.App(
     "arc-transformer",
     image=image,
-    tags={"project": "arc-transformer", "run": os.environ.get("ARC_RUN", "untitled")},
+    tags={"project": "arc-transformer", "run": RUN_ID},
 )
 runs = modal.Volume.from_name("arc-transformer-runs", create_if_missing=True)
 
 
-@app.function(gpu="L4", timeout=10 * 60)
-def smoke():
-    import torch
-    from flash_attn import flash_attn_varlen_qkvpacked_func
-
-    qkv = torch.randn(64, 3, 12, 64, device="cuda", dtype=torch.bfloat16)
-    cu = torch.tensor([0, 32, 64], device="cuda", dtype=torch.int32)
-    out = flash_attn_varlen_qkvpacked_func(qkv, cu, 32)
-    print(f"torch {torch.__version__}, gpu {torch.cuda.get_device_name()}, out {tuple(out.shape)}")
+@app.function(gpu="H100", cpu=4, memory=16384, timeout=9 * 60,
+              startup_timeout=120, retries=0, max_containers=1,
+              volumes={"/runs": runs})
+def probe(run_id: str) -> dict:
+    """Complete two epochs before spending on the full low preset."""
+    return _run("low", run_id, probe=True)
 
 
-@app.function(gpu="L4", timeout=8 * 60)
-def probe():
-    """Run the low preset for a few minutes to check that training gets past epoch 1."""
-    try:
-        subprocess.run(["python", "run_script.py", "low"], cwd="/mdlARC", timeout=6 * 60)
-    except subprocess.TimeoutExpired:
-        print("probe: stopped after 6 minutes without crashing")
-
-
-def _run(preset: str, gpu: str) -> dict:
-    started = datetime.now(timezone.utc)
-    t0 = time.time()
-    proc = subprocess.run(
-        ["python", "run_script.py", preset],
-        cwd="/mdlARC",
-        capture_output=True,
-        text=True,
+def _run(preset: str, run_id: str, probe: bool = False) -> dict:
+    run_id = validate_run_id(run_id)
+    out_dir = Path("/runs") / run_id
+    if out_dir.exists():
+        raise ValueError(f"Run already exists: {run_id}; choose a new ARC_RUN.")
+    # The reference writes to runs/; bind it directly to the persistent volume.
+    work_runs = Path("/mdlARC/runs")
+    if work_runs.is_symlink():
+        work_runs.unlink()
+    elif work_runs.exists():
+        raise RuntimeError("Unexpected existing /mdlARC/runs; refusing to overwrite artifacts.")
+    work_runs.symlink_to(out_dir / "artifacts", target_is_directory=True)
+    command = ["python", "-u", "/reference_runner.py", preset]
+    if probe:
+        command.append("--probe")
+    summary = run_logged(
+        command, cwd="/mdlARC", out_dir=out_dir,
+        timeout=TIMEOUT_SECONDS["probe" if probe else preset],
+        metadata={"run_id": run_id, "preset": preset, "gpu": "H100",
+                  "mdlarc_commit": MDLARC_COMMIT, "seed": 42,
+                  "mode": "probe" if probe else "baseline",
+                  "compute_cost_source": "modal billing report, project/run tags"},
+        commit=runs.commit, require_score=not probe,
     )
-    seconds = time.time() - t0
-    log = proc.stdout + "\n--- stderr ---\n" + proc.stderr
-    score_line = next(
-        (line for line in proc.stdout.splitlines() if line.startswith("Official ARC style scoring")),
-        None,
-    )
-    summary = {
-        "preset": preset,
-        "gpu": gpu,
-        "mdlarc_commit": MDLARC_COMMIT,
-        "started_utc": started.isoformat(),
-        "seconds": round(seconds, 1),
-        "gpu_hours": round(seconds / 3600, 4),
-        "gpu_cost_usd": round(seconds / 3600 * GPU_PRICE_PER_HOUR[gpu], 3),
-        "returncode": proc.returncode,
-        "score": score_line,
-    }
-    out_dir = f"/runs/{started:%Y%m%d-%H%M%S}-{preset}-{gpu}"
-    subprocess.run(["mkdir", "-p", out_dir], check=True)
-    with open(f"{out_dir}/log.txt", "w") as f:
-        f.write(log)
-    with open(f"{out_dir}/summary.json", "w") as f:
-        json.dump(summary, f, indent=2)
-    subprocess.run(f"cp -r /mdlARC/runs/* {out_dir}/ 2>/dev/null || true", shell=True)
-    runs.commit()
-    print(log[-4000:])
+    print(json.dumps(summary, indent=2), flush=True)
     return summary
 
 
-@app.function(gpu="H100", timeout=TIMEOUT_SECONDS["low"], volumes={"/runs": runs})
-def run_low() -> dict:
-    return _run("low", "H100")
-
-
-@app.function(gpu="H100", timeout=TIMEOUT_SECONDS["medium"], volumes={"/runs": runs})
-def run_medium() -> dict:
-    return _run("medium", "H100")
+@app.function(gpu="H100", cpu=4, memory=16384, timeout=32 * 60,
+              startup_timeout=120, retries=0, max_containers=1,
+              volumes={"/runs": runs})
+def run_low(run_id: str) -> dict:
+    return _run("low", run_id)
 
 
 @app.local_entrypoint()
-def main(preset: str = "low"):
-    fn = {"low": run_low, "medium": run_medium}[preset]
-    print(json.dumps(fn.remote(), indent=2))
+def main(preset: str = "low", diagnostic: bool = False):
+    if RUN_ID == "untitled":
+        raise ValueError("Set a unique ARC_RUN before launching compute.")
+    if preset != "low":
+        raise ValueError("Only low is enabled inside the current $5 project budget.")
+    summary = (probe if diagnostic else run_low).remote(RUN_ID)
+    print(json.dumps(summary, indent=2))
+    if summary["status"] != "completed":
+        raise RuntimeError(f"Run {RUN_ID} ended with status {summary['status']}; evidence is saved.")
