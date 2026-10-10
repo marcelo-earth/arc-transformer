@@ -1,0 +1,12 @@
+{
+  "app_id": "ap-HyTcT5BrJhT7yd2LQsaxa5",
+  "modal_image_id": "im-AujjHE2YHGC85th2kQ2chR",
+  "runner_commit": "aa35189",
+  "run_id": "high-h100-20261009-001",
+  "started_utc": "2026-10-10T04:27:16.460691+00:00",
+  "launch_status": "running",
+  "configuration_matches_reference_except_observability": true,
+  "frozen_pilot_data_hashes_match": true,
+  "inference_epoch": 648,
+  "authorized_run_reserve_usd": 9
+}
