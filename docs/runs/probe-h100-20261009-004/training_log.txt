@@ -1,0 +1,2 @@
+epoch=1 lr=1.66e-03 losses: avg=1.5423 inp=0.0000 out=1.5423
+epoch=2 lr=0.00e+00 losses: avg=0.9766 inp=0.0000 out=0.9766

@@ -1,0 +1,50 @@
+Modules imported successfully.
+Using preset: low
+Building model and data...
+/usr/local/lib/python3.12/site-packages/torch/backends/__init__.py:46: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  self.setter(val)
+Precomputing 3D positions...
+Augmentation stats: 5445 sequences, avg augments=74.2, min=1, max=80
+Starting Training...
+Validation disabled (skipping solutions.json load).
+Compiled NorMuon optimizer update kernels.
+Compiling model for training speedup...
+Epoch 1/2
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] Graph break from `Tensor.item()`, consider setting:
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     torch._dynamo.config.capture_scalar_outputs = True
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] or:
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     env TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] to include these operations in the captured graph.
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] 
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] Graph break: from user code at:
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]   File "/mdlARC/src/tinytransformer.py", line 695, in forward
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     return self._forward_varlen(
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]   File "/mdlARC/src/tinytransformer.py", line 888, in _forward_varlen
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     if int(cu_seqlens[0].item()) != 0:
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] 
+W1010 03:48:45.251000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] 
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+/usr/local/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:204: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+/usr/local/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:204: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+epoch=1 lr=1.66e-03 losses: avg=1.5423 inp=0.0000 out=1.5423
+Epoch 2/2
+epoch=2 lr=0.00e+00 losses: avg=0.9766 inp=0.0000 out=0.9766
+Saved checkpoint to runs/tiny.pt
+Probe completed: 2 training epochs; evaluation not run.

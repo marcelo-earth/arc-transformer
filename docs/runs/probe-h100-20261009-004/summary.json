@@ -1,0 +1,15 @@
+{
+  "run_id": "probe-h100-20261009-004",
+  "preset": "low",
+  "gpu": "H100",
+  "mdlarc_commit": "8afc20d",
+  "seed": 42,
+  "mode": "probe",
+  "compute_cost_source": "modal billing report, project/run tags",
+  "started_utc": "2026-10-10T03:47:48.157910+00:00",
+  "status": "completed",
+  "timeout_seconds": 420,
+  "score": null,
+  "returncode": 0,
+  "seconds": 169.9
+}
