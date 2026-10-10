@@ -1,6 +1,28 @@
 # arc-transformer
 
-A small autoregressive transformer trained from scratch on ARC-AGI-1.
+Learn visual rules from a few examples. This project trains a small
+autoregressive transformer from scratch to solve colored-grid puzzles in ARC-AGI-1.
+
+## What an ARC puzzle looks like
+
+Each task gives a few examples of an input grid and its corresponding output.
+The model must discover the shared rule and produce the output for a new grid.
+
+![Two example pairs turn red cells blue while preserving their shape. A different new input follows the same rule.](docs/images/arc-grid-example.png)
+
+In this illustrative puzzle, every red cell becomes blue and stays in the same
+position. Other tasks involve moving objects, completing symmetries, counting
+shapes, or discovering relationships between them.
+
+Each color is encoded as a number from 0 to 9. The transformer receives grid
+cells as a sequence, with position information, and learns to generate the
+output grid from the demonstrations.
+
+The illustration is generated from an [editable SVG](docs/images/arc-grid-example.svg).
+Regenerate it with `python scripts/render_arc_example.py`; render the SVG to
+`docs/images/arc-grid-example.png` with ImageMagick for the README preview.
+
+## Research goal
 
 Goal: reproduce the 44% result reported for a 1.5 hour, 67 cent run, then ablate the positional encoding (3D RoPE, per-example embeddings) to pass 50% or explain why it can't.
 
