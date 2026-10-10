@@ -45,6 +45,7 @@ image = (
 )
 image = image.add_local_file(Path(__file__).with_name("reference_runner.py"),
                              "/reference_runner.py", copy=True)
+image = image.add_local_python_source("run_support")
 
 app = modal.App(
     "arc-transformer",
