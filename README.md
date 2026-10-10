@@ -44,7 +44,8 @@ flowchart TD
 
 The reference is pinned to `8afc20d`, with torch 2.9.0, CUDA 13 and
 flash-attn 2.8.3. Check project spending with `python3.11 costs.py --by-run`
-in `../experiment-hub` before launching. The project has a $5 lifetime budget;
+in `../experiment-hub` before launching. The project has a $14 lifetime ceiling,
+including the approved $9 high-preset run;
 the $0.67 reference cost used a different GPU and provider.
 
 ```bash
