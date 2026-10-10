@@ -1,0 +1,18 @@
+{
+  "run_id": "high-h100-20261009-001",
+  "preset": "high",
+  "gpu": "H100",
+  "mdlarc_commit": "8afc20d",
+  "seed": 42,
+  "inference_epoch": 648,
+  "mode": "baseline",
+  "source_run_id": null,
+  "compute_cost_source": "modal billing report, project/run tags",
+  "started_utc": "2026-10-10T04:27:16.460691+00:00",
+  "status": "failed",
+  "timeout_seconds": 7260,
+  "score": null,
+  "error": "InputCancellation: Input was cancelled by user",
+  "returncode": -15,
+  "seconds": 4925.9
+}

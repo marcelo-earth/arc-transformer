@@ -1,0 +1,2563 @@
+{"python": "3.12.10", "torch": "2.9.0+cu130", "cuda": "13.0", "flash_attn": "2.8.3", "gpu": "NVIDIA H100 80GB HBM3", "cpu_threads": 4}
+Modules imported successfully.
+Using preset: high
+Building model and data...
+/usr/local/lib/python3.12/site-packages/torch/backends/__init__.py:46: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  self.setter(val)
+Precomputing 3D positions...
+Augmentation stats: 5445 sequences, avg augments=246.3, min=1, max=300
+Starting Training...
+Validation disabled (skipping solutions.json load).
+Compiled NorMuon optimizer update kernels.
+Compiling model for training speedup...
+Epoch 1/650
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] Graph break from `Tensor.item()`, consider setting:
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     torch._dynamo.config.capture_scalar_outputs = True
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] or:
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     env TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] to include these operations in the captured graph.
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] 
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] Graph break: from user code at:
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]   File "/mdlARC/src/tinytransformer.py", line 695, in forward
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     return self._forward_varlen(
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]   File "/mdlARC/src/tinytransformer.py", line 888, in _forward_varlen
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0]     if int(cu_seqlens[0].item()) != 0:
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] 
+W1010 04:28:37.206000 4 usr/local/lib/python3.12/site-packages/torch/_dynamo/variables/tensor.py:1048] [0/0] 
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+skipping cudagraphs due to mutated inputs (2 instances). Found from : 
+   File "/mdlARC/src/train.py", line 51, in _normuon_update
+    momentum.lerp_(grad, 1 - beta)
+
+/usr/local/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:204: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+/usr/local/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:204: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+epoch=1 lr=1.28e-04 losses: avg=2.6137 inp=0.0000 out=2.6137
+Completed epoch timing: {"epoch": 1, "seconds": 112.379}
+Epoch 2/650
+epoch=2 lr=2.55e-04 losses: avg=1.5615 inp=0.0000 out=1.5615
+Completed epoch timing: {"epoch": 2, "seconds": 6.037}
+Epoch 3/650
+epoch=3 lr=3.83e-04 losses: avg=1.3923 inp=0.0000 out=1.3923
+Completed epoch timing: {"epoch": 3, "seconds": 6.001}
+Epoch 4/650
+epoch=4 lr=5.11e-04 losses: avg=1.2538 inp=0.0000 out=1.2538
+Completed epoch timing: {"epoch": 4, "seconds": 6.014}
+Epoch 5/650
+epoch=5 lr=6.38e-04 losses: avg=1.0881 inp=0.0000 out=1.0881
+Completed epoch timing: {"epoch": 5, "seconds": 6.005}
+Epoch 6/650
+epoch=6 lr=7.66e-04 losses: avg=0.9086 inp=0.0000 out=0.9086
+Completed epoch timing: {"epoch": 6, "seconds": 6.02}
+Epoch 7/650
+epoch=7 lr=8.94e-04 losses: avg=0.7916 inp=0.0000 out=0.7916
+Completed epoch timing: {"epoch": 7, "seconds": 6.016}
+Epoch 8/650
+epoch=8 lr=1.02e-03 losses: avg=0.6553 inp=0.0000 out=0.6553
+Completed epoch timing: {"epoch": 8, "seconds": 6.003}
+Epoch 9/650
+epoch=9 lr=1.15e-03 losses: avg=0.4664 inp=0.0000 out=0.4664
+Completed epoch timing: {"epoch": 9, "seconds": 6.018}
+Epoch 10/650
+epoch=10 lr=1.28e-03 losses: avg=0.3681 inp=0.0000 out=0.3681
+Completed epoch timing: {"epoch": 10, "seconds": 6.011}
+Epoch 11/650
+epoch=11 lr=1.40e-03 losses: avg=0.3129 inp=0.0000 out=0.3129
+Completed epoch timing: {"epoch": 11, "seconds": 6.013}
+Epoch 12/650
+epoch=12 lr=1.53e-03 losses: avg=0.2758 inp=0.0000 out=0.2758
+Completed epoch timing: {"epoch": 12, "seconds": 6.014}
+Epoch 13/650
+epoch=13 lr=1.66e-03 losses: avg=0.2561 inp=0.0000 out=0.2561
+Completed epoch timing: {"epoch": 13, "seconds": 5.998}
+Epoch 14/650
+epoch=14 lr=1.66e-03 losses: avg=0.2400 inp=0.0000 out=0.2400
+Completed epoch timing: {"epoch": 14, "seconds": 6.0}
+Epoch 15/650
+epoch=15 lr=1.66e-03 losses: avg=0.2235 inp=0.0000 out=0.2235
+Completed epoch timing: {"epoch": 15, "seconds": 6.013}
+Epoch 16/650
+epoch=16 lr=1.66e-03 losses: avg=0.2097 inp=0.0000 out=0.2097
+Completed epoch timing: {"epoch": 16, "seconds": 6.011}
+Epoch 17/650
+epoch=17 lr=1.66e-03 losses: avg=0.1986 inp=0.0000 out=0.1986
+Completed epoch timing: {"epoch": 17, "seconds": 6.0}
+Epoch 18/650
+epoch=18 lr=1.66e-03 losses: avg=0.1874 inp=0.0000 out=0.1874
+Completed epoch timing: {"epoch": 18, "seconds": 6.022}
+Epoch 19/650
+epoch=19 lr=1.66e-03 losses: avg=0.1802 inp=0.0000 out=0.1802
+Completed epoch timing: {"epoch": 19, "seconds": 6.002}
+Epoch 20/650
+epoch=20 lr=1.66e-03 losses: avg=0.1707 inp=0.0000 out=0.1707
+Completed epoch timing: {"epoch": 20, "seconds": 6.008}
+Epoch 21/650
+epoch=21 lr=1.66e-03 losses: avg=0.1646 inp=0.0000 out=0.1646
+Completed epoch timing: {"epoch": 21, "seconds": 6.007}
+Epoch 22/650
+epoch=22 lr=1.66e-03 losses: avg=0.1590 inp=0.0000 out=0.1590
+Completed epoch timing: {"epoch": 22, "seconds": 5.992}
+Epoch 23/650
+epoch=23 lr=1.66e-03 losses: avg=0.1514 inp=0.0000 out=0.1514
+Completed epoch timing: {"epoch": 23, "seconds": 6.051}
+Epoch 24/650
+epoch=24 lr=1.66e-03 losses: avg=0.1453 inp=0.0000 out=0.1453
+Completed epoch timing: {"epoch": 24, "seconds": 5.991}
+Epoch 25/650
+epoch=25 lr=1.66e-03 losses: avg=0.1393 inp=0.0000 out=0.1393
+Completed epoch timing: {"epoch": 25, "seconds": 6.006}
+Epoch 26/650
+epoch=26 lr=1.66e-03 losses: avg=0.1349 inp=0.0000 out=0.1349
+Completed epoch timing: {"epoch": 26, "seconds": 6.009}
+Epoch 27/650
+epoch=27 lr=1.66e-03 losses: avg=0.1304 inp=0.0000 out=0.1304
+Completed epoch timing: {"epoch": 27, "seconds": 5.997}
+Epoch 28/650
+epoch=28 lr=1.66e-03 losses: avg=0.1265 inp=0.0000 out=0.1265
+Completed epoch timing: {"epoch": 28, "seconds": 6.014}
+Epoch 29/650
+epoch=29 lr=1.66e-03 losses: avg=0.1220 inp=0.0000 out=0.1220
+Completed epoch timing: {"epoch": 29, "seconds": 6.012}
+Epoch 30/650
+epoch=30 lr=1.66e-03 losses: avg=0.1185 inp=0.0000 out=0.1185
+Completed epoch timing: {"epoch": 30, "seconds": 6.033}
+Epoch 31/650
+epoch=31 lr=1.66e-03 losses: avg=0.1153 inp=0.0000 out=0.1153
+Completed epoch timing: {"epoch": 31, "seconds": 6.016}
+Epoch 32/650
+epoch=32 lr=1.66e-03 losses: avg=0.1118 inp=0.0000 out=0.1118
+Completed epoch timing: {"epoch": 32, "seconds": 5.99}
+Epoch 33/650
+epoch=33 lr=1.66e-03 losses: avg=0.1087 inp=0.0000 out=0.1087
+Completed epoch timing: {"epoch": 33, "seconds": 5.994}
+Epoch 34/650
+epoch=34 lr=1.66e-03 losses: avg=0.1044 inp=0.0000 out=0.1044
+Completed epoch timing: {"epoch": 34, "seconds": 6.009}
+Epoch 35/650
+epoch=35 lr=1.66e-03 losses: avg=0.1021 inp=0.0000 out=0.1021
+Completed epoch timing: {"epoch": 35, "seconds": 6.005}
+Epoch 36/650
+epoch=36 lr=1.66e-03 losses: avg=0.0989 inp=0.0000 out=0.0989
+Completed epoch timing: {"epoch": 36, "seconds": 6.01}
+Epoch 37/650
+epoch=37 lr=1.66e-03 losses: avg=0.0979 inp=0.0000 out=0.0979
+Completed epoch timing: {"epoch": 37, "seconds": 6.007}
+Epoch 38/650
+epoch=38 lr=1.66e-03 losses: avg=0.0959 inp=0.0000 out=0.0959
+Completed epoch timing: {"epoch": 38, "seconds": 6.055}
+Epoch 39/650
+epoch=39 lr=1.66e-03 losses: avg=0.0932 inp=0.0000 out=0.0932
+Completed epoch timing: {"epoch": 39, "seconds": 6.055}
+Epoch 40/650
+epoch=40 lr=1.66e-03 losses: avg=0.0909 inp=0.0000 out=0.0909
+Completed epoch timing: {"epoch": 40, "seconds": 6.078}
+Epoch 41/650
+epoch=41 lr=1.66e-03 losses: avg=0.0901 inp=0.0000 out=0.0901
+Completed epoch timing: {"epoch": 41, "seconds": 6.028}
+Epoch 42/650
+epoch=42 lr=1.66e-03 losses: avg=0.0885 inp=0.0000 out=0.0885
+Completed epoch timing: {"epoch": 42, "seconds": 5.997}
+Epoch 43/650
+epoch=43 lr=1.66e-03 losses: avg=0.0864 inp=0.0000 out=0.0864
+Completed epoch timing: {"epoch": 43, "seconds": 6.031}
+Epoch 44/650
+epoch=44 lr=1.66e-03 losses: avg=0.0843 inp=0.0000 out=0.0843
+Completed epoch timing: {"epoch": 44, "seconds": 5.991}
+Epoch 45/650
+epoch=45 lr=1.66e-03 losses: avg=0.0832 inp=0.0000 out=0.0832
+Completed epoch timing: {"epoch": 45, "seconds": 6.027}
+Epoch 46/650
+epoch=46 lr=1.66e-03 losses: avg=0.0816 inp=0.0000 out=0.0816
+Completed epoch timing: {"epoch": 46, "seconds": 6.043}
+Epoch 47/650
+epoch=47 lr=1.66e-03 losses: avg=0.0811 inp=0.0000 out=0.0811
+Completed epoch timing: {"epoch": 47, "seconds": 6.05}
+Epoch 48/650
+epoch=48 lr=1.66e-03 losses: avg=0.0787 inp=0.0000 out=0.0787
+Completed epoch timing: {"epoch": 48, "seconds": 6.092}
+Epoch 49/650
+epoch=49 lr=1.66e-03 losses: avg=0.0777 inp=0.0000 out=0.0777
+Completed epoch timing: {"epoch": 49, "seconds": 6.036}
+Epoch 50/650
+epoch=50 lr=1.66e-03 losses: avg=0.0766 inp=0.0000 out=0.0766
+Completed epoch timing: {"epoch": 50, "seconds": 6.013}
+Epoch 51/650
+epoch=51 lr=1.66e-03 losses: avg=0.0751 inp=0.0000 out=0.0751
+Completed epoch timing: {"epoch": 51, "seconds": 6.011}
+Epoch 52/650
+epoch=52 lr=1.66e-03 losses: avg=0.0739 inp=0.0000 out=0.0739
+Completed epoch timing: {"epoch": 52, "seconds": 6.037}
+Epoch 53/650
+epoch=53 lr=1.66e-03 losses: avg=0.0729 inp=0.0000 out=0.0729
+Completed epoch timing: {"epoch": 53, "seconds": 6.003}
+Epoch 54/650
+epoch=54 lr=1.66e-03 losses: avg=0.0709 inp=0.0000 out=0.0709
+Completed epoch timing: {"epoch": 54, "seconds": 5.996}
+Epoch 55/650
+epoch=55 lr=1.66e-03 losses: avg=0.0707 inp=0.0000 out=0.0707
+Completed epoch timing: {"epoch": 55, "seconds": 6.052}
+Epoch 56/650
+epoch=56 lr=1.66e-03 losses: avg=0.0701 inp=0.0000 out=0.0701
+Completed epoch timing: {"epoch": 56, "seconds": 6.066}
+Epoch 57/650
+epoch=57 lr=1.66e-03 losses: avg=0.0685 inp=0.0000 out=0.0685
+Completed epoch timing: {"epoch": 57, "seconds": 6.006}
+Epoch 58/650
+epoch=58 lr=1.66e-03 losses: avg=0.0689 inp=0.0000 out=0.0689
+Completed epoch timing: {"epoch": 58, "seconds": 6.047}
+Epoch 59/650
+epoch=59 lr=1.66e-03 losses: avg=0.0668 inp=0.0000 out=0.0668
+Completed epoch timing: {"epoch": 59, "seconds": 6.011}
+Epoch 60/650
+epoch=60 lr=1.66e-03 losses: avg=0.0651 inp=0.0000 out=0.0651
+Completed epoch timing: {"epoch": 60, "seconds": 5.993}
+Epoch 61/650
+epoch=61 lr=1.66e-03 losses: avg=0.0649 inp=0.0000 out=0.0649
+Completed epoch timing: {"epoch": 61, "seconds": 6.007}
+Epoch 62/650
+epoch=62 lr=1.66e-03 losses: avg=0.0639 inp=0.0000 out=0.0639
+Completed epoch timing: {"epoch": 62, "seconds": 5.992}
+Epoch 63/650
+epoch=63 lr=1.66e-03 losses: avg=0.0644 inp=0.0000 out=0.0644
+Completed epoch timing: {"epoch": 63, "seconds": 5.985}
+Epoch 64/650
+epoch=64 lr=1.66e-03 losses: avg=0.0626 inp=0.0000 out=0.0626
+Completed epoch timing: {"epoch": 64, "seconds": 6.004}
+Epoch 65/650
+epoch=65 lr=1.66e-03 losses: avg=0.0622 inp=0.0000 out=0.0622
+Completed epoch timing: {"epoch": 65, "seconds": 6.009}
+Epoch 66/650
+epoch=66 lr=1.66e-03 losses: avg=0.0619 inp=0.0000 out=0.0619
+Completed epoch timing: {"epoch": 66, "seconds": 6.025}
+Epoch 67/650
+epoch=67 lr=1.66e-03 losses: avg=0.0604 inp=0.0000 out=0.0604
+Completed epoch timing: {"epoch": 67, "seconds": 6.037}
+Epoch 68/650
+epoch=68 lr=1.66e-03 losses: avg=0.0595 inp=0.0000 out=0.0595
+Completed epoch timing: {"epoch": 68, "seconds": 6.006}
+Epoch 69/650
+epoch=69 lr=1.66e-03 losses: avg=0.0596 inp=0.0000 out=0.0596
+Completed epoch timing: {"epoch": 69, "seconds": 5.989}
+Epoch 70/650
+epoch=70 lr=1.66e-03 losses: avg=0.0594 inp=0.0000 out=0.0594
+Completed epoch timing: {"epoch": 70, "seconds": 6.002}
+Epoch 71/650
+epoch=71 lr=1.66e-03 losses: avg=0.0580 inp=0.0000 out=0.0580
+Completed epoch timing: {"epoch": 71, "seconds": 5.998}
+Epoch 72/650
+epoch=72 lr=1.66e-03 losses: avg=0.0570 inp=0.0000 out=0.0570
+Completed epoch timing: {"epoch": 72, "seconds": 5.999}
+Epoch 73/650
+epoch=73 lr=1.66e-03 losses: avg=0.0562 inp=0.0000 out=0.0562
+Completed epoch timing: {"epoch": 73, "seconds": 6.08}
+Epoch 74/650
+epoch=74 lr=1.66e-03 losses: avg=0.0553 inp=0.0000 out=0.0553
+Completed epoch timing: {"epoch": 74, "seconds": 6.003}
+Epoch 75/650
+epoch=75 lr=1.66e-03 losses: avg=0.0561 inp=0.0000 out=0.0561
+Completed epoch timing: {"epoch": 75, "seconds": 5.989}
+Epoch 76/650
+epoch=76 lr=1.66e-03 losses: avg=0.0551 inp=0.0000 out=0.0551
+Completed epoch timing: {"epoch": 76, "seconds": 5.988}
+Epoch 77/650
+epoch=77 lr=1.66e-03 losses: avg=0.0546 inp=0.0000 out=0.0546
+Completed epoch timing: {"epoch": 77, "seconds": 6.0}
+Epoch 78/650
+epoch=78 lr=1.66e-03 losses: avg=0.0541 inp=0.0000 out=0.0541
+Completed epoch timing: {"epoch": 78, "seconds": 5.999}
+Epoch 79/650
+epoch=79 lr=1.66e-03 losses: avg=0.0532 inp=0.0000 out=0.0532
+Completed epoch timing: {"epoch": 79, "seconds": 5.988}
+Epoch 80/650
+epoch=80 lr=1.66e-03 losses: avg=0.0533 inp=0.0000 out=0.0533
+Completed epoch timing: {"epoch": 80, "seconds": 5.981}
+Epoch 81/650
+epoch=81 lr=1.66e-03 losses: avg=0.0525 inp=0.0000 out=0.0525
+Completed epoch timing: {"epoch": 81, "seconds": 5.989}
+Epoch 82/650
+epoch=82 lr=1.66e-03 losses: avg=0.0531 inp=0.0000 out=0.0531
+Completed epoch timing: {"epoch": 82, "seconds": 6.006}
+Epoch 83/650
+epoch=83 lr=1.66e-03 losses: avg=0.0515 inp=0.0000 out=0.0515
+Completed epoch timing: {"epoch": 83, "seconds": 6.061}
+Epoch 84/650
+epoch=84 lr=1.66e-03 losses: avg=0.0513 inp=0.0000 out=0.0513
+Completed epoch timing: {"epoch": 84, "seconds": 6.01}
+Epoch 85/650
+epoch=85 lr=1.66e-03 losses: avg=0.0506 inp=0.0000 out=0.0506
+Completed epoch timing: {"epoch": 85, "seconds": 5.996}
+Epoch 86/650
+epoch=86 lr=1.66e-03 losses: avg=0.0503 inp=0.0000 out=0.0503
+Completed epoch timing: {"epoch": 86, "seconds": 6.005}
+Epoch 87/650
+epoch=87 lr=1.66e-03 losses: avg=0.0506 inp=0.0000 out=0.0506
+Completed epoch timing: {"epoch": 87, "seconds": 6.003}
+Epoch 88/650
+epoch=88 lr=1.66e-03 losses: avg=0.0500 inp=0.0000 out=0.0500
+Completed epoch timing: {"epoch": 88, "seconds": 6.006}
+Epoch 89/650
+epoch=89 lr=1.66e-03 losses: avg=0.0490 inp=0.0000 out=0.0490
+Completed epoch timing: {"epoch": 89, "seconds": 5.996}
+Epoch 90/650
+epoch=90 lr=1.66e-03 losses: avg=0.0484 inp=0.0000 out=0.0484
+Completed epoch timing: {"epoch": 90, "seconds": 5.989}
+Epoch 91/650
+epoch=91 lr=1.66e-03 losses: avg=0.0486 inp=0.0000 out=0.0486
+Completed epoch timing: {"epoch": 91, "seconds": 5.984}
+Epoch 92/650
+epoch=92 lr=1.66e-03 losses: avg=0.0475 inp=0.0000 out=0.0475
+Completed epoch timing: {"epoch": 92, "seconds": 5.994}
+Epoch 93/650
+epoch=93 lr=1.66e-03 losses: avg=0.0479 inp=0.0000 out=0.0479
+Completed epoch timing: {"epoch": 93, "seconds": 5.998}
+Epoch 94/650
+epoch=94 lr=1.66e-03 losses: avg=0.0474 inp=0.0000 out=0.0474
+Completed epoch timing: {"epoch": 94, "seconds": 5.985}
+Epoch 95/650
+epoch=95 lr=1.66e-03 losses: avg=0.0464 inp=0.0000 out=0.0464
+Completed epoch timing: {"epoch": 95, "seconds": 5.996}
+Epoch 96/650
+epoch=96 lr=1.66e-03 losses: avg=0.0464 inp=0.0000 out=0.0464
+Completed epoch timing: {"epoch": 96, "seconds": 5.995}
+Epoch 97/650
+epoch=97 lr=1.66e-03 losses: avg=0.0463 inp=0.0000 out=0.0463
+Completed epoch timing: {"epoch": 97, "seconds": 5.98}
+Epoch 98/650
+epoch=98 lr=1.66e-03 losses: avg=0.0461 inp=0.0000 out=0.0461
+Completed epoch timing: {"epoch": 98, "seconds": 6.014}
+Epoch 99/650
+epoch=99 lr=1.66e-03 losses: avg=0.0457 inp=0.0000 out=0.0457
+Completed epoch timing: {"epoch": 99, "seconds": 5.979}
+Epoch 100/650
+epoch=100 lr=1.66e-03 losses: avg=0.0452 inp=0.0000 out=0.0452
+Completed epoch timing: {"epoch": 100, "seconds": 5.992}
+Saved checkpoint to runs/tiny.epoch100.pt
+Epoch 101/650
+epoch=101 lr=1.66e-03 losses: avg=0.0445 inp=0.0000 out=0.0445
+Completed epoch timing: {"epoch": 101, "seconds": 6.799}
+Epoch 102/650
+epoch=102 lr=1.66e-03 losses: avg=0.0450 inp=0.0000 out=0.0450
+Completed epoch timing: {"epoch": 102, "seconds": 6.009}
+Epoch 103/650
+epoch=103 lr=1.66e-03 losses: avg=0.0441 inp=0.0000 out=0.0441
+Completed epoch timing: {"epoch": 103, "seconds": 6.002}
+Epoch 104/650
+epoch=104 lr=1.66e-03 losses: avg=0.0446 inp=0.0000 out=0.0446
+Completed epoch timing: {"epoch": 104, "seconds": 5.989}
+Epoch 105/650
+epoch=105 lr=1.66e-03 losses: avg=0.0439 inp=0.0000 out=0.0439
+Completed epoch timing: {"epoch": 105, "seconds": 5.998}
+Epoch 106/650
+epoch=106 lr=1.66e-03 losses: avg=0.0439 inp=0.0000 out=0.0439
+Completed epoch timing: {"epoch": 106, "seconds": 6.001}
+Epoch 107/650
+epoch=107 lr=1.66e-03 losses: avg=0.0433 inp=0.0000 out=0.0433
+Completed epoch timing: {"epoch": 107, "seconds": 5.989}
+Epoch 108/650
+epoch=108 lr=1.66e-03 losses: avg=0.0428 inp=0.0000 out=0.0428
+Completed epoch timing: {"epoch": 108, "seconds": 5.99}
+Epoch 109/650
+epoch=109 lr=1.66e-03 losses: avg=0.0426 inp=0.0000 out=0.0426
+Completed epoch timing: {"epoch": 109, "seconds": 5.994}
+Epoch 110/650
+epoch=110 lr=1.66e-03 losses: avg=0.0419 inp=0.0000 out=0.0419
+Completed epoch timing: {"epoch": 110, "seconds": 5.993}
+Epoch 111/650
+epoch=111 lr=1.66e-03 losses: avg=0.0415 inp=0.0000 out=0.0415
+Completed epoch timing: {"epoch": 111, "seconds": 5.998}
+Epoch 112/650
+epoch=112 lr=1.66e-03 losses: avg=0.0422 inp=0.0000 out=0.0422
+Completed epoch timing: {"epoch": 112, "seconds": 5.987}
+Epoch 113/650
+epoch=113 lr=1.66e-03 losses: avg=0.0412 inp=0.0000 out=0.0412
+Completed epoch timing: {"epoch": 113, "seconds": 5.98}
+Epoch 114/650
+epoch=114 lr=1.66e-03 losses: avg=0.0408 inp=0.0000 out=0.0408
+Completed epoch timing: {"epoch": 114, "seconds": 5.985}
+Epoch 115/650
+epoch=115 lr=1.66e-03 losses: avg=0.0410 inp=0.0000 out=0.0410
+Completed epoch timing: {"epoch": 115, "seconds": 5.985}
+Epoch 116/650
+epoch=116 lr=1.66e-03 losses: avg=0.0416 inp=0.0000 out=0.0416
+Completed epoch timing: {"epoch": 116, "seconds": 5.992}
+Epoch 117/650
+epoch=117 lr=1.66e-03 losses: avg=0.0412 inp=0.0000 out=0.0412
+Completed epoch timing: {"epoch": 117, "seconds": 5.986}
+Epoch 118/650
+epoch=118 lr=1.66e-03 losses: avg=0.0412 inp=0.0000 out=0.0412
+Completed epoch timing: {"epoch": 118, "seconds": 6.001}
+Epoch 119/650
+epoch=119 lr=1.66e-03 losses: avg=0.0404 inp=0.0000 out=0.0404
+Completed epoch timing: {"epoch": 119, "seconds": 6.005}
+Epoch 120/650
+epoch=120 lr=1.66e-03 losses: avg=0.0401 inp=0.0000 out=0.0401
+Completed epoch timing: {"epoch": 120, "seconds": 6.013}
+Epoch 121/650
+epoch=121 lr=1.66e-03 losses: avg=0.0400 inp=0.0000 out=0.0400
+Completed epoch timing: {"epoch": 121, "seconds": 6.055}
+Epoch 122/650
+epoch=122 lr=1.66e-03 losses: avg=0.0394 inp=0.0000 out=0.0394
+Completed epoch timing: {"epoch": 122, "seconds": 6.006}
+Epoch 123/650
+epoch=123 lr=1.66e-03 losses: avg=0.0398 inp=0.0000 out=0.0398
+Completed epoch timing: {"epoch": 123, "seconds": 6.061}
+Epoch 124/650
+epoch=124 lr=1.66e-03 losses: avg=0.0390 inp=0.0000 out=0.0390
+Completed epoch timing: {"epoch": 124, "seconds": 6.014}
+Epoch 125/650
+epoch=125 lr=1.66e-03 losses: avg=0.0389 inp=0.0000 out=0.0389
+Completed epoch timing: {"epoch": 125, "seconds": 6.071}
+Epoch 126/650
+epoch=126 lr=1.66e-03 losses: avg=0.0396 inp=0.0000 out=0.0396
+Completed epoch timing: {"epoch": 126, "seconds": 6.026}
+Epoch 127/650
+epoch=127 lr=1.66e-03 losses: avg=0.0383 inp=0.0000 out=0.0383
+Completed epoch timing: {"epoch": 127, "seconds": 6.025}
+Epoch 128/650
+epoch=128 lr=1.66e-03 losses: avg=0.0377 inp=0.0000 out=0.0377
+Completed epoch timing: {"epoch": 128, "seconds": 6.02}
+Epoch 129/650
+epoch=129 lr=1.66e-03 losses: avg=0.0387 inp=0.0000 out=0.0387
+Completed epoch timing: {"epoch": 129, "seconds": 6.026}
+Epoch 130/650
+epoch=130 lr=1.66e-03 losses: avg=0.0378 inp=0.0000 out=0.0378
+Completed epoch timing: {"epoch": 130, "seconds": 6.019}
+Epoch 131/650
+epoch=131 lr=1.66e-03 losses: avg=0.0378 inp=0.0000 out=0.0378
+Completed epoch timing: {"epoch": 131, "seconds": 6.036}
+Epoch 132/650
+epoch=132 lr=1.66e-03 losses: avg=0.0369 inp=0.0000 out=0.0369
+Completed epoch timing: {"epoch": 132, "seconds": 6.016}
+Epoch 133/650
+epoch=133 lr=1.66e-03 losses: avg=0.0372 inp=0.0000 out=0.0372
+Completed epoch timing: {"epoch": 133, "seconds": 6.02}
+Epoch 134/650
+epoch=134 lr=1.66e-03 losses: avg=0.0365 inp=0.0000 out=0.0365
+Completed epoch timing: {"epoch": 134, "seconds": 6.03}
+Epoch 135/650
+epoch=135 lr=1.66e-03 losses: avg=0.0376 inp=0.0000 out=0.0376
+Completed epoch timing: {"epoch": 135, "seconds": 6.002}
+Epoch 136/650
+epoch=136 lr=1.66e-03 losses: avg=0.0366 inp=0.0000 out=0.0366
+Completed epoch timing: {"epoch": 136, "seconds": 5.993}
+Epoch 137/650
+epoch=137 lr=1.66e-03 losses: avg=0.0363 inp=0.0000 out=0.0363
+Completed epoch timing: {"epoch": 137, "seconds": 6.017}
+Epoch 138/650
+epoch=138 lr=1.66e-03 losses: avg=0.0366 inp=0.0000 out=0.0366
+Completed epoch timing: {"epoch": 138, "seconds": 6.011}
+Epoch 139/650
+epoch=139 lr=1.66e-03 losses: avg=0.0358 inp=0.0000 out=0.0358
+Completed epoch timing: {"epoch": 139, "seconds": 6.007}
+Epoch 140/650
+epoch=140 lr=1.66e-03 losses: avg=0.0356 inp=0.0000 out=0.0356
+Completed epoch timing: {"epoch": 140, "seconds": 6.002}
+Epoch 141/650
+epoch=141 lr=1.66e-03 losses: avg=0.0367 inp=0.0000 out=0.0367
+Completed epoch timing: {"epoch": 141, "seconds": 6.001}
+Epoch 142/650
+epoch=142 lr=1.66e-03 losses: avg=0.0356 inp=0.0000 out=0.0356
+Completed epoch timing: {"epoch": 142, "seconds": 6.007}
+Epoch 143/650
+epoch=143 lr=1.66e-03 losses: avg=0.0354 inp=0.0000 out=0.0354
+Completed epoch timing: {"epoch": 143, "seconds": 5.99}
+Epoch 144/650
+epoch=144 lr=1.66e-03 losses: avg=0.0358 inp=0.0000 out=0.0358
+Completed epoch timing: {"epoch": 144, "seconds": 5.999}
+Epoch 145/650
+epoch=145 lr=1.66e-03 losses: avg=0.0349 inp=0.0000 out=0.0349
+Completed epoch timing: {"epoch": 145, "seconds": 6.0}
+Epoch 146/650
+epoch=146 lr=1.66e-03 losses: avg=0.0355 inp=0.0000 out=0.0355
+Completed epoch timing: {"epoch": 146, "seconds": 6.011}
+Epoch 147/650
+epoch=147 lr=1.66e-03 losses: avg=0.0353 inp=0.0000 out=0.0353
+Completed epoch timing: {"epoch": 147, "seconds": 5.999}
+Epoch 148/650
+epoch=148 lr=1.66e-03 losses: avg=0.0352 inp=0.0000 out=0.0352
+Completed epoch timing: {"epoch": 148, "seconds": 5.995}
+Epoch 149/650
+epoch=149 lr=1.66e-03 losses: avg=0.0353 inp=0.0000 out=0.0353
+Completed epoch timing: {"epoch": 149, "seconds": 6.006}
+Epoch 150/650
+epoch=150 lr=1.66e-03 losses: avg=0.0345 inp=0.0000 out=0.0345
+Completed epoch timing: {"epoch": 150, "seconds": 5.99}
+Epoch 151/650
+epoch=151 lr=1.66e-03 losses: avg=0.0347 inp=0.0000 out=0.0347
+Completed epoch timing: {"epoch": 151, "seconds": 5.994}
+Epoch 152/650
+epoch=152 lr=1.66e-03 losses: avg=0.0340 inp=0.0000 out=0.0340
+Completed epoch timing: {"epoch": 152, "seconds": 6.002}
+Epoch 153/650
+epoch=153 lr=1.66e-03 losses: avg=0.0344 inp=0.0000 out=0.0344
+Completed epoch timing: {"epoch": 153, "seconds": 6.005}
+Epoch 154/650
+epoch=154 lr=1.66e-03 losses: avg=0.0342 inp=0.0000 out=0.0342
+Completed epoch timing: {"epoch": 154, "seconds": 6.045}
+Epoch 155/650
+epoch=155 lr=1.66e-03 losses: avg=0.0340 inp=0.0000 out=0.0340
+Completed epoch timing: {"epoch": 155, "seconds": 6.066}
+Epoch 156/650
+epoch=156 lr=1.66e-03 losses: avg=0.0334 inp=0.0000 out=0.0334
+Completed epoch timing: {"epoch": 156, "seconds": 6.095}
+Epoch 157/650
+epoch=157 lr=1.66e-03 losses: avg=0.0341 inp=0.0000 out=0.0341
+Completed epoch timing: {"epoch": 157, "seconds": 6.075}
+Epoch 158/650
+epoch=158 lr=1.66e-03 losses: avg=0.0340 inp=0.0000 out=0.0340
+Completed epoch timing: {"epoch": 158, "seconds": 6.033}
+Epoch 159/650
+epoch=159 lr=1.66e-03 losses: avg=0.0330 inp=0.0000 out=0.0330
+Completed epoch timing: {"epoch": 159, "seconds": 6.015}
+Epoch 160/650
+epoch=160 lr=1.66e-03 losses: avg=0.0333 inp=0.0000 out=0.0333
+Completed epoch timing: {"epoch": 160, "seconds": 6.028}
+Epoch 161/650
+epoch=161 lr=1.66e-03 losses: avg=0.0327 inp=0.0000 out=0.0327
+Completed epoch timing: {"epoch": 161, "seconds": 6.002}
+Epoch 162/650
+epoch=162 lr=1.66e-03 losses: avg=0.0330 inp=0.0000 out=0.0330
+Completed epoch timing: {"epoch": 162, "seconds": 6.014}
+Epoch 163/650
+epoch=163 lr=1.66e-03 losses: avg=0.0331 inp=0.0000 out=0.0331
+Completed epoch timing: {"epoch": 163, "seconds": 6.0}
+Epoch 164/650
+epoch=164 lr=1.66e-03 losses: avg=0.0328 inp=0.0000 out=0.0328
+Completed epoch timing: {"epoch": 164, "seconds": 6.012}
+Epoch 165/650
+epoch=165 lr=1.66e-03 losses: avg=0.0321 inp=0.0000 out=0.0321
+Completed epoch timing: {"epoch": 165, "seconds": 6.009}
+Epoch 166/650
+epoch=166 lr=1.66e-03 losses: avg=0.0323 inp=0.0000 out=0.0323
+Completed epoch timing: {"epoch": 166, "seconds": 6.004}
+Epoch 167/650
+epoch=167 lr=1.66e-03 losses: avg=0.0322 inp=0.0000 out=0.0322
+Completed epoch timing: {"epoch": 167, "seconds": 6.025}
+Epoch 168/650
+epoch=168 lr=1.66e-03 losses: avg=0.0326 inp=0.0000 out=0.0326
+Completed epoch timing: {"epoch": 168, "seconds": 6.059}
+Epoch 169/650
+epoch=169 lr=1.66e-03 losses: avg=0.0321 inp=0.0000 out=0.0321
+Completed epoch timing: {"epoch": 169, "seconds": 6.11}
+Epoch 170/650
+epoch=170 lr=1.66e-03 losses: avg=0.0325 inp=0.0000 out=0.0325
+Completed epoch timing: {"epoch": 170, "seconds": 6.069}
+Epoch 171/650
+epoch=171 lr=1.66e-03 losses: avg=0.0317 inp=0.0000 out=0.0317
+Completed epoch timing: {"epoch": 171, "seconds": 6.014}
+Epoch 172/650
+epoch=172 lr=1.66e-03 losses: avg=0.0316 inp=0.0000 out=0.0316
+Completed epoch timing: {"epoch": 172, "seconds": 6.01}
+Epoch 173/650
+epoch=173 lr=1.66e-03 losses: avg=0.0315 inp=0.0000 out=0.0315
+Completed epoch timing: {"epoch": 173, "seconds": 6.079}
+Epoch 174/650
+epoch=174 lr=1.66e-03 losses: avg=0.0314 inp=0.0000 out=0.0314
+Completed epoch timing: {"epoch": 174, "seconds": 6.023}
+Epoch 175/650
+epoch=175 lr=1.66e-03 losses: avg=0.0306 inp=0.0000 out=0.0306
+Completed epoch timing: {"epoch": 175, "seconds": 6.03}
+Epoch 176/650
+epoch=176 lr=1.66e-03 losses: avg=0.0313 inp=0.0000 out=0.0313
+Completed epoch timing: {"epoch": 176, "seconds": 6.035}
+Epoch 177/650
+epoch=177 lr=1.66e-03 losses: avg=0.0312 inp=0.0000 out=0.0312
+Completed epoch timing: {"epoch": 177, "seconds": 6.015}
+Epoch 178/650
+epoch=178 lr=1.66e-03 losses: avg=0.0305 inp=0.0000 out=0.0305
+Completed epoch timing: {"epoch": 178, "seconds": 6.035}
+Epoch 179/650
+epoch=179 lr=1.66e-03 losses: avg=0.0312 inp=0.0000 out=0.0312
+Completed epoch timing: {"epoch": 179, "seconds": 6.009}
+Epoch 180/650
+epoch=180 lr=1.66e-03 losses: avg=0.0307 inp=0.0000 out=0.0307
+Completed epoch timing: {"epoch": 180, "seconds": 6.022}
+Epoch 181/650
+epoch=181 lr=1.66e-03 losses: avg=0.0307 inp=0.0000 out=0.0307
+Completed epoch timing: {"epoch": 181, "seconds": 5.998}
+Epoch 182/650
+epoch=182 lr=1.66e-03 losses: avg=0.0305 inp=0.0000 out=0.0305
+Completed epoch timing: {"epoch": 182, "seconds": 5.996}
+Epoch 183/650
+epoch=183 lr=1.66e-03 losses: avg=0.0305 inp=0.0000 out=0.0305
+Completed epoch timing: {"epoch": 183, "seconds": 6.013}
+Epoch 184/650
+epoch=184 lr=1.66e-03 losses: avg=0.0304 inp=0.0000 out=0.0304
+Completed epoch timing: {"epoch": 184, "seconds": 5.995}
+Epoch 185/650
+epoch=185 lr=1.66e-03 losses: avg=0.0297 inp=0.0000 out=0.0297
+Completed epoch timing: {"epoch": 185, "seconds": 6.005}
+Epoch 186/650
+epoch=186 lr=1.66e-03 losses: avg=0.0300 inp=0.0000 out=0.0300
+Completed epoch timing: {"epoch": 186, "seconds": 5.996}
+Epoch 187/650
+epoch=187 lr=1.66e-03 losses: avg=0.0308 inp=0.0000 out=0.0308
+Completed epoch timing: {"epoch": 187, "seconds": 6.008}
+Epoch 188/650
+epoch=188 lr=1.66e-03 losses: avg=0.0295 inp=0.0000 out=0.0295
+Completed epoch timing: {"epoch": 188, "seconds": 6.002}
+Epoch 189/650
+epoch=189 lr=1.66e-03 losses: avg=0.0299 inp=0.0000 out=0.0299
+Completed epoch timing: {"epoch": 189, "seconds": 6.002}
+Epoch 190/650
+epoch=190 lr=1.66e-03 losses: avg=0.0300 inp=0.0000 out=0.0300
+Completed epoch timing: {"epoch": 190, "seconds": 5.999}
+Epoch 191/650
+epoch=191 lr=1.66e-03 losses: avg=0.0297 inp=0.0000 out=0.0297
+Completed epoch timing: {"epoch": 191, "seconds": 6.015}
+Epoch 192/650
+epoch=192 lr=1.66e-03 losses: avg=0.0296 inp=0.0000 out=0.0296
+Completed epoch timing: {"epoch": 192, "seconds": 6.005}
+Epoch 193/650
+epoch=193 lr=1.66e-03 losses: avg=0.0299 inp=0.0000 out=0.0299
+Completed epoch timing: {"epoch": 193, "seconds": 6.0}
+Epoch 194/650
+epoch=194 lr=1.66e-03 losses: avg=0.0295 inp=0.0000 out=0.0295
+Completed epoch timing: {"epoch": 194, "seconds": 5.996}
+Epoch 195/650
+epoch=195 lr=1.66e-03 losses: avg=0.0296 inp=0.0000 out=0.0296
+Completed epoch timing: {"epoch": 195, "seconds": 6.015}
+Epoch 196/650
+epoch=196 lr=1.66e-03 losses: avg=0.0295 inp=0.0000 out=0.0295
+Completed epoch timing: {"epoch": 196, "seconds": 6.007}
+Epoch 197/650
+epoch=197 lr=1.66e-03 losses: avg=0.0294 inp=0.0000 out=0.0294
+Completed epoch timing: {"epoch": 197, "seconds": 6.004}
+Epoch 198/650
+epoch=198 lr=1.66e-03 losses: avg=0.0289 inp=0.0000 out=0.0289
+Completed epoch timing: {"epoch": 198, "seconds": 6.037}
+Epoch 199/650
+epoch=199 lr=1.66e-03 losses: avg=0.0290 inp=0.0000 out=0.0290
+Completed epoch timing: {"epoch": 199, "seconds": 6.024}
+Epoch 200/650
+epoch=200 lr=1.66e-03 losses: avg=0.0285 inp=0.0000 out=0.0285
+Completed epoch timing: {"epoch": 200, "seconds": 6.03}
+Saved checkpoint to runs/tiny.epoch200.pt
+Epoch 201/650
+epoch=201 lr=1.66e-03 losses: avg=0.0289 inp=0.0000 out=0.0289
+Completed epoch timing: {"epoch": 201, "seconds": 6.907}
+Epoch 202/650
+epoch=202 lr=1.66e-03 losses: avg=0.0285 inp=0.0000 out=0.0285
+Completed epoch timing: {"epoch": 202, "seconds": 6.033}
+Epoch 203/650
+epoch=203 lr=1.66e-03 losses: avg=0.0284 inp=0.0000 out=0.0284
+Completed epoch timing: {"epoch": 203, "seconds": 6.011}
+Epoch 204/650
+epoch=204 lr=1.66e-03 losses: avg=0.0283 inp=0.0000 out=0.0283
+Completed epoch timing: {"epoch": 204, "seconds": 6.017}
+Epoch 205/650
+epoch=205 lr=1.66e-03 losses: avg=0.0281 inp=0.0000 out=0.0281
+Completed epoch timing: {"epoch": 205, "seconds": 6.034}
+Epoch 206/650
+epoch=206 lr=1.66e-03 losses: avg=0.0281 inp=0.0000 out=0.0281
+Completed epoch timing: {"epoch": 206, "seconds": 6.007}
+Epoch 207/650
+epoch=207 lr=1.66e-03 losses: avg=0.0275 inp=0.0000 out=0.0275
+Completed epoch timing: {"epoch": 207, "seconds": 6.008}
+Epoch 208/650
+epoch=208 lr=1.66e-03 losses: avg=0.0278 inp=0.0000 out=0.0278
+Completed epoch timing: {"epoch": 208, "seconds": 6.018}
+Epoch 209/650
+epoch=209 lr=1.66e-03 losses: avg=0.0286 inp=0.0000 out=0.0286
+Completed epoch timing: {"epoch": 209, "seconds": 6.006}
+Epoch 210/650
+epoch=210 lr=1.66e-03 losses: avg=0.0279 inp=0.0000 out=0.0279
+Completed epoch timing: {"epoch": 210, "seconds": 6.014}
+Epoch 211/650
+epoch=211 lr=1.66e-03 losses: avg=0.0280 inp=0.0000 out=0.0280
+Completed epoch timing: {"epoch": 211, "seconds": 6.014}
+Epoch 212/650
+epoch=212 lr=1.66e-03 losses: avg=0.0276 inp=0.0000 out=0.0276
+Completed epoch timing: {"epoch": 212, "seconds": 6.005}
+Epoch 213/650
+epoch=213 lr=1.66e-03 losses: avg=0.0274 inp=0.0000 out=0.0274
+Completed epoch timing: {"epoch": 213, "seconds": 6.02}
+Epoch 214/650
+epoch=214 lr=1.66e-03 losses: avg=0.0273 inp=0.0000 out=0.0273
+Completed epoch timing: {"epoch": 214, "seconds": 6.024}
+Epoch 215/650
+epoch=215 lr=1.66e-03 losses: avg=0.0277 inp=0.0000 out=0.0277
+Completed epoch timing: {"epoch": 215, "seconds": 5.997}
+Epoch 216/650
+epoch=216 lr=1.66e-03 losses: avg=0.0266 inp=0.0000 out=0.0266
+Completed epoch timing: {"epoch": 216, "seconds": 6.001}
+Epoch 217/650
+epoch=217 lr=1.66e-03 losses: avg=0.0273 inp=0.0000 out=0.0273
+Completed epoch timing: {"epoch": 217, "seconds": 6.018}
+Epoch 218/650
+epoch=218 lr=1.66e-03 losses: avg=0.0273 inp=0.0000 out=0.0273
+Completed epoch timing: {"epoch": 218, "seconds": 5.989}
+Epoch 219/650
+epoch=219 lr=1.66e-03 losses: avg=0.0268 inp=0.0000 out=0.0268
+Completed epoch timing: {"epoch": 219, "seconds": 6.004}
+Epoch 220/650
+epoch=220 lr=1.66e-03 losses: avg=0.0274 inp=0.0000 out=0.0274
+Completed epoch timing: {"epoch": 220, "seconds": 5.994}
+Epoch 221/650
+epoch=221 lr=1.66e-03 losses: avg=0.0267 inp=0.0000 out=0.0267
+Completed epoch timing: {"epoch": 221, "seconds": 5.993}
+Epoch 222/650
+epoch=222 lr=1.66e-03 losses: avg=0.0268 inp=0.0000 out=0.0268
+Completed epoch timing: {"epoch": 222, "seconds": 6.062}
+Epoch 223/650
+epoch=223 lr=1.66e-03 losses: avg=0.0266 inp=0.0000 out=0.0266
+Completed epoch timing: {"epoch": 223, "seconds": 6.017}
+Epoch 224/650
+epoch=224 lr=1.66e-03 losses: avg=0.0265 inp=0.0000 out=0.0265
+Completed epoch timing: {"epoch": 224, "seconds": 5.992}
+Epoch 225/650
+epoch=225 lr=1.66e-03 losses: avg=0.0264 inp=0.0000 out=0.0264
+Completed epoch timing: {"epoch": 225, "seconds": 6.003}
+Epoch 226/650
+epoch=226 lr=1.66e-03 losses: avg=0.0269 inp=0.0000 out=0.0269
+Completed epoch timing: {"epoch": 226, "seconds": 6.002}
+Epoch 227/650
+epoch=227 lr=1.66e-03 losses: avg=0.0263 inp=0.0000 out=0.0263
+Completed epoch timing: {"epoch": 227, "seconds": 6.018}
+Epoch 228/650
+epoch=228 lr=1.66e-03 losses: avg=0.0266 inp=0.0000 out=0.0266
+Completed epoch timing: {"epoch": 228, "seconds": 6.01}
+Epoch 229/650
+epoch=229 lr=1.66e-03 losses: avg=0.0259 inp=0.0000 out=0.0259
+Completed epoch timing: {"epoch": 229, "seconds": 6.022}
+Epoch 230/650
+epoch=230 lr=1.66e-03 losses: avg=0.0264 inp=0.0000 out=0.0264
+Completed epoch timing: {"epoch": 230, "seconds": 6.002}
+Epoch 231/650
+epoch=231 lr=1.66e-03 losses: avg=0.0265 inp=0.0000 out=0.0265
+Completed epoch timing: {"epoch": 231, "seconds": 6.011}
+Epoch 232/650
+epoch=232 lr=1.66e-03 losses: avg=0.0261 inp=0.0000 out=0.0261
+Completed epoch timing: {"epoch": 232, "seconds": 6.007}
+Epoch 233/650
+epoch=233 lr=1.66e-03 losses: avg=0.0264 inp=0.0000 out=0.0264
+Completed epoch timing: {"epoch": 233, "seconds": 6.005}
+Epoch 234/650
+epoch=234 lr=1.66e-03 losses: avg=0.0263 inp=0.0000 out=0.0263
+Completed epoch timing: {"epoch": 234, "seconds": 5.997}
+Epoch 235/650
+epoch=235 lr=1.66e-03 losses: avg=0.0263 inp=0.0000 out=0.0263
+Completed epoch timing: {"epoch": 235, "seconds": 6.015}
+Epoch 236/650
+epoch=236 lr=1.66e-03 losses: avg=0.0254 inp=0.0000 out=0.0254
+Completed epoch timing: {"epoch": 236, "seconds": 5.993}
+Epoch 237/650
+epoch=237 lr=1.66e-03 losses: avg=0.0258 inp=0.0000 out=0.0258
+Completed epoch timing: {"epoch": 237, "seconds": 6.031}
+Epoch 238/650
+epoch=238 lr=1.66e-03 losses: avg=0.0254 inp=0.0000 out=0.0254
+Completed epoch timing: {"epoch": 238, "seconds": 6.006}
+Epoch 239/650
+epoch=239 lr=1.66e-03 losses: avg=0.0260 inp=0.0000 out=0.0260
+Completed epoch timing: {"epoch": 239, "seconds": 6.006}
+Epoch 240/650
+epoch=240 lr=1.66e-03 losses: avg=0.0251 inp=0.0000 out=0.0251
+Completed epoch timing: {"epoch": 240, "seconds": 5.982}
+Epoch 241/650
+epoch=241 lr=1.66e-03 losses: avg=0.0255 inp=0.0000 out=0.0255
+Completed epoch timing: {"epoch": 241, "seconds": 6.008}
+Epoch 242/650
+epoch=242 lr=1.66e-03 losses: avg=0.0250 inp=0.0000 out=0.0250
+Completed epoch timing: {"epoch": 242, "seconds": 6.013}
+Epoch 243/650
+epoch=243 lr=1.66e-03 losses: avg=0.0253 inp=0.0000 out=0.0253
+Completed epoch timing: {"epoch": 243, "seconds": 6.009}
+Epoch 244/650
+epoch=244 lr=1.66e-03 losses: avg=0.0252 inp=0.0000 out=0.0252
+Completed epoch timing: {"epoch": 244, "seconds": 6.008}
+Epoch 245/650
+epoch=245 lr=1.66e-03 losses: avg=0.0249 inp=0.0000 out=0.0249
+Completed epoch timing: {"epoch": 245, "seconds": 5.999}
+Epoch 246/650
+epoch=246 lr=1.66e-03 losses: avg=0.0251 inp=0.0000 out=0.0251
+Completed epoch timing: {"epoch": 246, "seconds": 6.009}
+Epoch 247/650
+epoch=247 lr=1.66e-03 losses: avg=0.0254 inp=0.0000 out=0.0254
+Completed epoch timing: {"epoch": 247, "seconds": 6.0}
+Epoch 248/650
+epoch=248 lr=1.66e-03 losses: avg=0.0246 inp=0.0000 out=0.0246
+Completed epoch timing: {"epoch": 248, "seconds": 6.012}
+Epoch 249/650
+epoch=249 lr=1.66e-03 losses: avg=0.0249 inp=0.0000 out=0.0249
+Completed epoch timing: {"epoch": 249, "seconds": 6.004}
+Epoch 250/650
+epoch=250 lr=1.66e-03 losses: avg=0.0248 inp=0.0000 out=0.0248
+Completed epoch timing: {"epoch": 250, "seconds": 6.009}
+Epoch 251/650
+epoch=251 lr=1.66e-03 losses: avg=0.0247 inp=0.0000 out=0.0247
+Completed epoch timing: {"epoch": 251, "seconds": 5.999}
+Epoch 252/650
+epoch=252 lr=1.66e-03 losses: avg=0.0245 inp=0.0000 out=0.0245
+Completed epoch timing: {"epoch": 252, "seconds": 5.994}
+Epoch 253/650
+epoch=253 lr=1.66e-03 losses: avg=0.0245 inp=0.0000 out=0.0245
+Completed epoch timing: {"epoch": 253, "seconds": 6.004}
+Epoch 254/650
+epoch=254 lr=1.66e-03 losses: avg=0.0244 inp=0.0000 out=0.0244
+Completed epoch timing: {"epoch": 254, "seconds": 6.004}
+Epoch 255/650
+epoch=255 lr=1.66e-03 losses: avg=0.0244 inp=0.0000 out=0.0244
+Completed epoch timing: {"epoch": 255, "seconds": 6.007}
+Epoch 256/650
+epoch=256 lr=1.66e-03 losses: avg=0.0246 inp=0.0000 out=0.0246
+Completed epoch timing: {"epoch": 256, "seconds": 6.009}
+Epoch 257/650
+epoch=257 lr=1.66e-03 losses: avg=0.0246 inp=0.0000 out=0.0246
+Completed epoch timing: {"epoch": 257, "seconds": 6.033}
+Epoch 258/650
+epoch=258 lr=1.66e-03 losses: avg=0.0244 inp=0.0000 out=0.0244
+Completed epoch timing: {"epoch": 258, "seconds": 6.003}
+Epoch 259/650
+epoch=259 lr=1.66e-03 losses: avg=0.0238 inp=0.0000 out=0.0238
+Completed epoch timing: {"epoch": 259, "seconds": 5.998}
+Epoch 260/650
+epoch=260 lr=1.66e-03 losses: avg=0.0239 inp=0.0000 out=0.0239
+Completed epoch timing: {"epoch": 260, "seconds": 6.0}
+Epoch 261/650
+epoch=261 lr=1.66e-03 losses: avg=0.0240 inp=0.0000 out=0.0240
+Completed epoch timing: {"epoch": 261, "seconds": 6.004}
+Epoch 262/650
+epoch=262 lr=1.66e-03 losses: avg=0.0243 inp=0.0000 out=0.0243
+Completed epoch timing: {"epoch": 262, "seconds": 6.009}
+Epoch 263/650
+epoch=263 lr=1.66e-03 losses: avg=0.0240 inp=0.0000 out=0.0240
+Completed epoch timing: {"epoch": 263, "seconds": 5.996}
+Epoch 264/650
+epoch=264 lr=1.66e-03 losses: avg=0.0242 inp=0.0000 out=0.0242
+Completed epoch timing: {"epoch": 264, "seconds": 5.987}
+Epoch 265/650
+epoch=265 lr=1.66e-03 losses: avg=0.0237 inp=0.0000 out=0.0237
+Completed epoch timing: {"epoch": 265, "seconds": 6.02}
+Epoch 266/650
+epoch=266 lr=1.66e-03 losses: avg=0.0236 inp=0.0000 out=0.0236
+Completed epoch timing: {"epoch": 266, "seconds": 6.002}
+Epoch 267/650
+epoch=267 lr=1.66e-03 losses: avg=0.0238 inp=0.0000 out=0.0238
+Completed epoch timing: {"epoch": 267, "seconds": 6.003}
+Epoch 268/650
+epoch=268 lr=1.66e-03 losses: avg=0.0242 inp=0.0000 out=0.0242
+Completed epoch timing: {"epoch": 268, "seconds": 6.013}
+Epoch 269/650
+epoch=269 lr=1.66e-03 losses: avg=0.0234 inp=0.0000 out=0.0234
+Completed epoch timing: {"epoch": 269, "seconds": 6.001}
+Epoch 270/650
+epoch=270 lr=1.66e-03 losses: avg=0.0233 inp=0.0000 out=0.0233
+Completed epoch timing: {"epoch": 270, "seconds": 6.016}
+Epoch 271/650
+epoch=271 lr=1.66e-03 losses: avg=0.0235 inp=0.0000 out=0.0235
+Completed epoch timing: {"epoch": 271, "seconds": 6.009}
+Epoch 272/650
+epoch=272 lr=1.66e-03 losses: avg=0.0235 inp=0.0000 out=0.0235
+Completed epoch timing: {"epoch": 272, "seconds": 6.057}
+Epoch 273/650
+epoch=273 lr=1.66e-03 losses: avg=0.0232 inp=0.0000 out=0.0232
+Completed epoch timing: {"epoch": 273, "seconds": 5.997}
+Epoch 274/650
+epoch=274 lr=1.66e-03 losses: avg=0.0233 inp=0.0000 out=0.0233
+Completed epoch timing: {"epoch": 274, "seconds": 6.02}
+Epoch 275/650
+epoch=275 lr=1.66e-03 losses: avg=0.0239 inp=0.0000 out=0.0239
+Completed epoch timing: {"epoch": 275, "seconds": 6.033}
+Epoch 276/650
+epoch=276 lr=1.66e-03 losses: avg=0.0229 inp=0.0000 out=0.0229
+Completed epoch timing: {"epoch": 276, "seconds": 6.007}
+Epoch 277/650
+epoch=277 lr=1.66e-03 losses: avg=0.0228 inp=0.0000 out=0.0228
+Completed epoch timing: {"epoch": 277, "seconds": 6.02}
+Epoch 278/650
+epoch=278 lr=1.66e-03 losses: avg=0.0232 inp=0.0000 out=0.0232
+Completed epoch timing: {"epoch": 278, "seconds": 6.017}
+Epoch 279/650
+epoch=279 lr=1.66e-03 losses: avg=0.0226 inp=0.0000 out=0.0226
+Completed epoch timing: {"epoch": 279, "seconds": 5.988}
+Epoch 280/650
+epoch=280 lr=1.66e-03 losses: avg=0.0229 inp=0.0000 out=0.0229
+Completed epoch timing: {"epoch": 280, "seconds": 6.001}
+Epoch 281/650
+epoch=281 lr=1.66e-03 losses: avg=0.0228 inp=0.0000 out=0.0228
+Completed epoch timing: {"epoch": 281, "seconds": 5.993}
+Epoch 282/650
+epoch=282 lr=1.66e-03 losses: avg=0.0233 inp=0.0000 out=0.0233
+Completed epoch timing: {"epoch": 282, "seconds": 6.016}
+Epoch 283/650
+epoch=283 lr=1.66e-03 losses: avg=0.0226 inp=0.0000 out=0.0226
+Completed epoch timing: {"epoch": 283, "seconds": 6.001}
+Epoch 284/650
+epoch=284 lr=1.66e-03 losses: avg=0.0225 inp=0.0000 out=0.0225
+Completed epoch timing: {"epoch": 284, "seconds": 5.987}
+Epoch 285/650
+epoch=285 lr=1.66e-03 losses: avg=0.0230 inp=0.0000 out=0.0230
+Completed epoch timing: {"epoch": 285, "seconds": 5.995}
+Epoch 286/650
+epoch=286 lr=1.66e-03 losses: avg=0.0229 inp=0.0000 out=0.0229
+Completed epoch timing: {"epoch": 286, "seconds": 5.993}
+Epoch 287/650
+epoch=287 lr=1.66e-03 losses: avg=0.0225 inp=0.0000 out=0.0225
+Completed epoch timing: {"epoch": 287, "seconds": 6.015}
+Epoch 288/650
+epoch=288 lr=1.66e-03 losses: avg=0.0224 inp=0.0000 out=0.0224
+Completed epoch timing: {"epoch": 288, "seconds": 5.992}
+Epoch 289/650
+epoch=289 lr=1.66e-03 losses: avg=0.0224 inp=0.0000 out=0.0224
+Completed epoch timing: {"epoch": 289, "seconds": 6.0}
+Epoch 290/650
+epoch=290 lr=1.66e-03 losses: avg=0.0230 inp=0.0000 out=0.0230
+Completed epoch timing: {"epoch": 290, "seconds": 6.006}
+Epoch 291/650
+epoch=291 lr=1.66e-03 losses: avg=0.0220 inp=0.0000 out=0.0220
+Completed epoch timing: {"epoch": 291, "seconds": 5.996}
+Epoch 292/650
+epoch=292 lr=1.66e-03 losses: avg=0.0224 inp=0.0000 out=0.0224
+Completed epoch timing: {"epoch": 292, "seconds": 6.012}
+Epoch 293/650
+epoch=293 lr=1.66e-03 losses: avg=0.0220 inp=0.0000 out=0.0220
+Completed epoch timing: {"epoch": 293, "seconds": 6.007}
+Epoch 294/650
+epoch=294 lr=1.66e-03 losses: avg=0.0217 inp=0.0000 out=0.0217
+Completed epoch timing: {"epoch": 294, "seconds": 5.994}
+Epoch 295/650
+epoch=295 lr=1.66e-03 losses: avg=0.0222 inp=0.0000 out=0.0222
+Completed epoch timing: {"epoch": 295, "seconds": 5.982}
+Epoch 296/650
+epoch=296 lr=1.66e-03 losses: avg=0.0221 inp=0.0000 out=0.0221
+Completed epoch timing: {"epoch": 296, "seconds": 6.009}
+Epoch 297/650
+epoch=297 lr=1.66e-03 losses: avg=0.0221 inp=0.0000 out=0.0221
+Completed epoch timing: {"epoch": 297, "seconds": 6.109}
+Epoch 298/650
+epoch=298 lr=1.66e-03 losses: avg=0.0219 inp=0.0000 out=0.0219
+Completed epoch timing: {"epoch": 298, "seconds": 5.999}
+Epoch 299/650
+epoch=299 lr=1.66e-03 losses: avg=0.0223 inp=0.0000 out=0.0223
+Completed epoch timing: {"epoch": 299, "seconds": 5.998}
+Epoch 300/650
+epoch=300 lr=1.66e-03 losses: avg=0.0220 inp=0.0000 out=0.0220
+Completed epoch timing: {"epoch": 300, "seconds": 6.005}
+Saved checkpoint to runs/tiny.epoch300.pt
+Epoch 301/650
+epoch=301 lr=1.66e-03 losses: avg=0.0215 inp=0.0000 out=0.0215
+Completed epoch timing: {"epoch": 301, "seconds": 6.759}
+Epoch 302/650
+epoch=302 lr=1.66e-03 losses: avg=0.0214 inp=0.0000 out=0.0214
+Completed epoch timing: {"epoch": 302, "seconds": 6.018}
+Epoch 303/650
+epoch=303 lr=1.66e-03 losses: avg=0.0212 inp=0.0000 out=0.0212
+Completed epoch timing: {"epoch": 303, "seconds": 5.998}
+Epoch 304/650
+epoch=304 lr=1.66e-03 losses: avg=0.0214 inp=0.0000 out=0.0214
+Completed epoch timing: {"epoch": 304, "seconds": 5.996}
+Epoch 305/650
+epoch=305 lr=1.66e-03 losses: avg=0.0216 inp=0.0000 out=0.0216
+Completed epoch timing: {"epoch": 305, "seconds": 6.015}
+Epoch 306/650
+epoch=306 lr=1.66e-03 losses: avg=0.0217 inp=0.0000 out=0.0217
+Completed epoch timing: {"epoch": 306, "seconds": 5.966}
+Epoch 307/650
+epoch=307 lr=1.66e-03 losses: avg=0.0212 inp=0.0000 out=0.0212
+Completed epoch timing: {"epoch": 307, "seconds": 5.998}
+Epoch 308/650
+epoch=308 lr=1.66e-03 losses: avg=0.0219 inp=0.0000 out=0.0219
+Completed epoch timing: {"epoch": 308, "seconds": 5.999}
+Epoch 309/650
+epoch=309 lr=1.66e-03 losses: avg=0.0214 inp=0.0000 out=0.0214
+Completed epoch timing: {"epoch": 309, "seconds": 6.003}
+Epoch 310/650
+epoch=310 lr=1.66e-03 losses: avg=0.0216 inp=0.0000 out=0.0216
+Completed epoch timing: {"epoch": 310, "seconds": 5.988}
+Epoch 311/650
+epoch=311 lr=1.66e-03 losses: avg=0.0217 inp=0.0000 out=0.0217
+Completed epoch timing: {"epoch": 311, "seconds": 5.99}
+Epoch 312/650
+epoch=312 lr=1.66e-03 losses: avg=0.0221 inp=0.0000 out=0.0221
+Completed epoch timing: {"epoch": 312, "seconds": 5.991}
+Epoch 313/650
+epoch=313 lr=1.66e-03 losses: avg=0.0210 inp=0.0000 out=0.0210
+Completed epoch timing: {"epoch": 313, "seconds": 6.012}
+Epoch 314/650
+epoch=314 lr=1.66e-03 losses: avg=0.0215 inp=0.0000 out=0.0215
+Completed epoch timing: {"epoch": 314, "seconds": 5.995}
+Epoch 315/650
+epoch=315 lr=1.66e-03 losses: avg=0.0213 inp=0.0000 out=0.0213
+Completed epoch timing: {"epoch": 315, "seconds": 5.995}
+Epoch 316/650
+epoch=316 lr=1.66e-03 losses: avg=0.0214 inp=0.0000 out=0.0214
+Completed epoch timing: {"epoch": 316, "seconds": 5.991}
+Epoch 317/650
+epoch=317 lr=1.66e-03 losses: avg=0.0215 inp=0.0000 out=0.0215
+Completed epoch timing: {"epoch": 317, "seconds": 6.023}
+Epoch 318/650
+epoch=318 lr=1.66e-03 losses: avg=0.0209 inp=0.0000 out=0.0209
+Completed epoch timing: {"epoch": 318, "seconds": 5.988}
+Epoch 319/650
+epoch=319 lr=1.66e-03 losses: avg=0.0207 inp=0.0000 out=0.0207
+Completed epoch timing: {"epoch": 319, "seconds": 5.981}
+Epoch 320/650
+epoch=320 lr=1.66e-03 losses: avg=0.0208 inp=0.0000 out=0.0208
+Completed epoch timing: {"epoch": 320, "seconds": 6.027}
+Epoch 321/650
+epoch=321 lr=1.66e-03 losses: avg=0.0206 inp=0.0000 out=0.0206
+Completed epoch timing: {"epoch": 321, "seconds": 5.993}
+Epoch 322/650
+epoch=322 lr=1.66e-03 losses: avg=0.0205 inp=0.0000 out=0.0205
+Completed epoch timing: {"epoch": 322, "seconds": 6.05}
+Epoch 323/650
+epoch=323 lr=1.66e-03 losses: avg=0.0210 inp=0.0000 out=0.0210
+Completed epoch timing: {"epoch": 323, "seconds": 6.013}
+Epoch 324/650
+epoch=324 lr=1.66e-03 losses: avg=0.0209 inp=0.0000 out=0.0209
+Completed epoch timing: {"epoch": 324, "seconds": 6.008}
+Epoch 325/650
+epoch=325 lr=1.66e-03 losses: avg=0.0211 inp=0.0000 out=0.0211
+Completed epoch timing: {"epoch": 325, "seconds": 6.011}
+Epoch 326/650
+epoch=326 lr=1.66e-03 losses: avg=0.0209 inp=0.0000 out=0.0209
+Completed epoch timing: {"epoch": 326, "seconds": 6.004}
+Epoch 327/650
+epoch=327 lr=1.66e-03 losses: avg=0.0203 inp=0.0000 out=0.0203
+Completed epoch timing: {"epoch": 327, "seconds": 6.009}
+Epoch 328/650
+epoch=328 lr=1.66e-03 losses: avg=0.0204 inp=0.0000 out=0.0204
+Completed epoch timing: {"epoch": 328, "seconds": 6.001}
+Epoch 329/650
+epoch=329 lr=1.66e-03 losses: avg=0.0202 inp=0.0000 out=0.0202
+Completed epoch timing: {"epoch": 329, "seconds": 5.998}
+Epoch 330/650
+epoch=330 lr=1.66e-03 losses: avg=0.0206 inp=0.0000 out=0.0206
+Completed epoch timing: {"epoch": 330, "seconds": 5.983}
+Epoch 331/650
+epoch=331 lr=1.66e-03 losses: avg=0.0199 inp=0.0000 out=0.0199
+Completed epoch timing: {"epoch": 331, "seconds": 6.016}
+Epoch 332/650
+epoch=332 lr=1.66e-03 losses: avg=0.0208 inp=0.0000 out=0.0208
+Completed epoch timing: {"epoch": 332, "seconds": 5.993}
+Epoch 333/650
+epoch=333 lr=1.66e-03 losses: avg=0.0203 inp=0.0000 out=0.0203
+Completed epoch timing: {"epoch": 333, "seconds": 5.995}
+Epoch 334/650
+epoch=334 lr=1.66e-03 losses: avg=0.0204 inp=0.0000 out=0.0204
+Completed epoch timing: {"epoch": 334, "seconds": 6.008}
+Epoch 335/650
+epoch=335 lr=1.66e-03 losses: avg=0.0208 inp=0.0000 out=0.0208
+Completed epoch timing: {"epoch": 335, "seconds": 5.994}
+Epoch 336/650
+epoch=336 lr=1.66e-03 losses: avg=0.0200 inp=0.0000 out=0.0200
+Completed epoch timing: {"epoch": 336, "seconds": 5.995}
+Epoch 337/650
+epoch=337 lr=1.66e-03 losses: avg=0.0199 inp=0.0000 out=0.0199
+Completed epoch timing: {"epoch": 337, "seconds": 6.016}
+Epoch 338/650
+epoch=338 lr=1.66e-03 losses: avg=0.0202 inp=0.0000 out=0.0202
+Completed epoch timing: {"epoch": 338, "seconds": 6.02}
+Epoch 339/650
+epoch=339 lr=1.66e-03 losses: avg=0.0196 inp=0.0000 out=0.0196
+Completed epoch timing: {"epoch": 339, "seconds": 6.003}
+Epoch 340/650
+epoch=340 lr=1.66e-03 losses: avg=0.0201 inp=0.0000 out=0.0201
+Completed epoch timing: {"epoch": 340, "seconds": 5.99}
+Epoch 341/650
+epoch=341 lr=1.66e-03 losses: avg=0.0201 inp=0.0000 out=0.0201
+Completed epoch timing: {"epoch": 341, "seconds": 6.003}
+Epoch 342/650
+epoch=342 lr=1.66e-03 losses: avg=0.0203 inp=0.0000 out=0.0203
+Completed epoch timing: {"epoch": 342, "seconds": 6.001}
+Epoch 343/650
+epoch=343 lr=1.66e-03 losses: avg=0.0201 inp=0.0000 out=0.0201
+Completed epoch timing: {"epoch": 343, "seconds": 5.998}
+Epoch 344/650
+epoch=344 lr=1.66e-03 losses: avg=0.0201 inp=0.0000 out=0.0201
+Completed epoch timing: {"epoch": 344, "seconds": 6.0}
+Epoch 345/650
+epoch=345 lr=1.66e-03 losses: avg=0.0197 inp=0.0000 out=0.0197
+Completed epoch timing: {"epoch": 345, "seconds": 5.996}
+Epoch 346/650
+epoch=346 lr=1.66e-03 losses: avg=0.0207 inp=0.0000 out=0.0207
+Completed epoch timing: {"epoch": 346, "seconds": 5.997}
+Epoch 347/650
+epoch=347 lr=1.66e-03 losses: avg=0.0199 inp=0.0000 out=0.0199
+Completed epoch timing: {"epoch": 347, "seconds": 5.994}
+Epoch 348/650
+epoch=348 lr=1.66e-03 losses: avg=0.0193 inp=0.0000 out=0.0193
+Completed epoch timing: {"epoch": 348, "seconds": 5.996}
+Epoch 349/650
+epoch=349 lr=1.66e-03 losses: avg=0.0197 inp=0.0000 out=0.0197
+Completed epoch timing: {"epoch": 349, "seconds": 5.994}
+Epoch 350/650
+epoch=350 lr=1.66e-03 losses: avg=0.0198 inp=0.0000 out=0.0198
+Completed epoch timing: {"epoch": 350, "seconds": 5.983}
+Epoch 351/650
+epoch=351 lr=1.66e-03 losses: avg=0.0197 inp=0.0000 out=0.0197
+Completed epoch timing: {"epoch": 351, "seconds": 5.995}
+Epoch 352/650
+epoch=352 lr=1.66e-03 losses: avg=0.0202 inp=0.0000 out=0.0202
+Completed epoch timing: {"epoch": 352, "seconds": 5.992}
+Epoch 353/650
+epoch=353 lr=1.66e-03 losses: avg=0.0197 inp=0.0000 out=0.0197
+Completed epoch timing: {"epoch": 353, "seconds": 6.004}
+Epoch 354/650
+epoch=354 lr=1.66e-03 losses: avg=0.0200 inp=0.0000 out=0.0200
+Completed epoch timing: {"epoch": 354, "seconds": 5.999}
+Epoch 355/650
+epoch=355 lr=1.66e-03 losses: avg=0.0192 inp=0.0000 out=0.0192
+Completed epoch timing: {"epoch": 355, "seconds": 5.994}
+Epoch 356/650
+epoch=356 lr=1.66e-03 losses: avg=0.0198 inp=0.0000 out=0.0198
+Completed epoch timing: {"epoch": 356, "seconds": 5.994}
+Epoch 357/650
+epoch=357 lr=1.66e-03 losses: avg=0.0198 inp=0.0000 out=0.0198
+Completed epoch timing: {"epoch": 357, "seconds": 6.021}
+Epoch 358/650
+epoch=358 lr=1.66e-03 losses: avg=0.0199 inp=0.0000 out=0.0199
+Completed epoch timing: {"epoch": 358, "seconds": 5.984}
+Epoch 359/650
+epoch=359 lr=1.66e-03 losses: avg=0.0197 inp=0.0000 out=0.0197
+Completed epoch timing: {"epoch": 359, "seconds": 5.998}
+Epoch 360/650
+epoch=360 lr=1.66e-03 losses: avg=0.0197 inp=0.0000 out=0.0197
+Completed epoch timing: {"epoch": 360, "seconds": 5.985}
+Epoch 361/650
+epoch=361 lr=1.66e-03 losses: avg=0.0194 inp=0.0000 out=0.0194
+Completed epoch timing: {"epoch": 361, "seconds": 5.984}
+Epoch 362/650
+epoch=362 lr=1.66e-03 losses: avg=0.0193 inp=0.0000 out=0.0193
+Completed epoch timing: {"epoch": 362, "seconds": 5.991}
+Epoch 363/650
+epoch=363 lr=1.66e-03 losses: avg=0.0193 inp=0.0000 out=0.0193
+Completed epoch timing: {"epoch": 363, "seconds": 5.991}
+Epoch 364/650
+epoch=364 lr=1.66e-03 losses: avg=0.0193 inp=0.0000 out=0.0193
+Completed epoch timing: {"epoch": 364, "seconds": 6.008}
+Epoch 365/650
+epoch=365 lr=1.66e-03 losses: avg=0.0192 inp=0.0000 out=0.0192
+Completed epoch timing: {"epoch": 365, "seconds": 6.027}
+Epoch 366/650
+epoch=366 lr=1.66e-03 losses: avg=0.0189 inp=0.0000 out=0.0189
+Completed epoch timing: {"epoch": 366, "seconds": 6.023}
+Epoch 367/650
+epoch=367 lr=1.66e-03 losses: avg=0.0188 inp=0.0000 out=0.0188
+Completed epoch timing: {"epoch": 367, "seconds": 5.982}
+Epoch 368/650
+epoch=368 lr=1.66e-03 losses: avg=0.0193 inp=0.0000 out=0.0193
+Completed epoch timing: {"epoch": 368, "seconds": 5.992}
+Epoch 369/650
+epoch=369 lr=1.66e-03 losses: avg=0.0187 inp=0.0000 out=0.0187
+Completed epoch timing: {"epoch": 369, "seconds": 5.996}
+Epoch 370/650
+epoch=370 lr=1.66e-03 losses: avg=0.0193 inp=0.0000 out=0.0193
+Completed epoch timing: {"epoch": 370, "seconds": 5.991}
+Epoch 371/650
+epoch=371 lr=1.66e-03 losses: avg=0.0194 inp=0.0000 out=0.0194
+Completed epoch timing: {"epoch": 371, "seconds": 5.997}
+Epoch 372/650
+epoch=372 lr=1.66e-03 losses: avg=0.0187 inp=0.0000 out=0.0187
+Completed epoch timing: {"epoch": 372, "seconds": 6.053}
+Epoch 373/650
+epoch=373 lr=1.66e-03 losses: avg=0.0190 inp=0.0000 out=0.0190
+Completed epoch timing: {"epoch": 373, "seconds": 5.999}
+Epoch 374/650
+epoch=374 lr=1.66e-03 losses: avg=0.0191 inp=0.0000 out=0.0191
+Completed epoch timing: {"epoch": 374, "seconds": 6.016}
+Epoch 375/650
+epoch=375 lr=1.66e-03 losses: avg=0.0190 inp=0.0000 out=0.0190
+Completed epoch timing: {"epoch": 375, "seconds": 5.998}
+Epoch 376/650
+epoch=376 lr=1.66e-03 losses: avg=0.0189 inp=0.0000 out=0.0189
+Completed epoch timing: {"epoch": 376, "seconds": 5.998}
+Epoch 377/650
+epoch=377 lr=1.66e-03 losses: avg=0.0188 inp=0.0000 out=0.0188
+Completed epoch timing: {"epoch": 377, "seconds": 6.005}
+Epoch 378/650
+epoch=378 lr=1.66e-03 losses: avg=0.0192 inp=0.0000 out=0.0192
+Completed epoch timing: {"epoch": 378, "seconds": 6.009}
+Epoch 379/650
+epoch=379 lr=1.66e-03 losses: avg=0.0185 inp=0.0000 out=0.0185
+Completed epoch timing: {"epoch": 379, "seconds": 6.005}
+Epoch 380/650
+epoch=380 lr=1.66e-03 losses: avg=0.0189 inp=0.0000 out=0.0189
+Completed epoch timing: {"epoch": 380, "seconds": 5.989}
+Epoch 381/650
+epoch=381 lr=1.66e-03 losses: avg=0.0191 inp=0.0000 out=0.0191
+Completed epoch timing: {"epoch": 381, "seconds": 5.994}
+Epoch 382/650
+epoch=382 lr=1.66e-03 losses: avg=0.0184 inp=0.0000 out=0.0184
+Completed epoch timing: {"epoch": 382, "seconds": 5.986}
+Epoch 383/650
+epoch=383 lr=1.66e-03 losses: avg=0.0185 inp=0.0000 out=0.0185
+Completed epoch timing: {"epoch": 383, "seconds": 5.989}
+Epoch 384/650
+epoch=384 lr=1.66e-03 losses: avg=0.0183 inp=0.0000 out=0.0183
+Completed epoch timing: {"epoch": 384, "seconds": 6.003}
+Epoch 385/650
+epoch=385 lr=1.66e-03 losses: avg=0.0184 inp=0.0000 out=0.0184
+Completed epoch timing: {"epoch": 385, "seconds": 5.978}
+Epoch 386/650
+epoch=386 lr=1.66e-03 losses: avg=0.0183 inp=0.0000 out=0.0183
+Completed epoch timing: {"epoch": 386, "seconds": 6.0}
+Epoch 387/650
+epoch=387 lr=1.66e-03 losses: avg=0.0189 inp=0.0000 out=0.0189
+Completed epoch timing: {"epoch": 387, "seconds": 5.988}
+Epoch 388/650
+epoch=388 lr=1.66e-03 losses: avg=0.0184 inp=0.0000 out=0.0184
+Completed epoch timing: {"epoch": 388, "seconds": 5.99}
+Epoch 389/650
+epoch=389 lr=1.66e-03 losses: avg=0.0182 inp=0.0000 out=0.0182
+Completed epoch timing: {"epoch": 389, "seconds": 5.984}
+Epoch 390/650
+epoch=390 lr=1.66e-03 losses: avg=0.0185 inp=0.0000 out=0.0185
+Completed epoch timing: {"epoch": 390, "seconds": 6.0}
+Epoch 391/650
+epoch=391 lr=1.66e-03 losses: avg=0.0188 inp=0.0000 out=0.0188
+Completed epoch timing: {"epoch": 391, "seconds": 5.997}
+Epoch 392/650
+epoch=392 lr=1.66e-03 losses: avg=0.0186 inp=0.0000 out=0.0186
+Completed epoch timing: {"epoch": 392, "seconds": 6.008}
+Epoch 393/650
+epoch=393 lr=1.66e-03 losses: avg=0.0184 inp=0.0000 out=0.0184
+Completed epoch timing: {"epoch": 393, "seconds": 6.017}
+Epoch 394/650
+epoch=394 lr=1.66e-03 losses: avg=0.0185 inp=0.0000 out=0.0185
+Completed epoch timing: {"epoch": 394, "seconds": 6.024}
+Epoch 395/650
+epoch=395 lr=1.66e-03 losses: avg=0.0184 inp=0.0000 out=0.0184
+Completed epoch timing: {"epoch": 395, "seconds": 5.994}
+Epoch 396/650
+epoch=396 lr=1.66e-03 losses: avg=0.0181 inp=0.0000 out=0.0181
+Completed epoch timing: {"epoch": 396, "seconds": 6.002}
+Epoch 397/650
+epoch=397 lr=1.66e-03 losses: avg=0.0185 inp=0.0000 out=0.0185
+Completed epoch timing: {"epoch": 397, "seconds": 6.022}
+Epoch 398/650
+epoch=398 lr=1.66e-03 losses: avg=0.0182 inp=0.0000 out=0.0182
+Completed epoch timing: {"epoch": 398, "seconds": 5.98}
+Epoch 399/650
+epoch=399 lr=1.66e-03 losses: avg=0.0180 inp=0.0000 out=0.0180
+Completed epoch timing: {"epoch": 399, "seconds": 5.984}
+Epoch 400/650
+epoch=400 lr=1.66e-03 losses: avg=0.0183 inp=0.0000 out=0.0183
+Completed epoch timing: {"epoch": 400, "seconds": 5.984}
+Saved checkpoint to runs/tiny.epoch400.pt
+Epoch 401/650
+epoch=401 lr=1.66e-03 losses: avg=0.0186 inp=0.0000 out=0.0186
+Completed epoch timing: {"epoch": 401, "seconds": 6.893}
+Epoch 402/650
+epoch=402 lr=1.66e-03 losses: avg=0.0179 inp=0.0000 out=0.0179
+Completed epoch timing: {"epoch": 402, "seconds": 5.989}
+Epoch 403/650
+epoch=403 lr=1.66e-03 losses: avg=0.0180 inp=0.0000 out=0.0180
+Completed epoch timing: {"epoch": 403, "seconds": 5.984}
+Epoch 404/650
+epoch=404 lr=1.66e-03 losses: avg=0.0183 inp=0.0000 out=0.0183
+Completed epoch timing: {"epoch": 404, "seconds": 5.983}
+Epoch 405/650
+epoch=405 lr=1.66e-03 losses: avg=0.0180 inp=0.0000 out=0.0180
+Completed epoch timing: {"epoch": 405, "seconds": 5.987}
+Epoch 406/650
+epoch=406 lr=1.66e-03 losses: avg=0.0182 inp=0.0000 out=0.0182
+Completed epoch timing: {"epoch": 406, "seconds": 5.99}
+Epoch 407/650
+epoch=407 lr=1.66e-03 losses: avg=0.0186 inp=0.0000 out=0.0186
+Completed epoch timing: {"epoch": 407, "seconds": 5.992}
+Epoch 408/650
+epoch=408 lr=1.66e-03 losses: avg=0.0180 inp=0.0000 out=0.0180
+Completed epoch timing: {"epoch": 408, "seconds": 6.0}
+Epoch 409/650
+epoch=409 lr=1.66e-03 losses: avg=0.0179 inp=0.0000 out=0.0179
+Completed epoch timing: {"epoch": 409, "seconds": 5.981}
+Epoch 410/650
+epoch=410 lr=1.66e-03 losses: avg=0.0177 inp=0.0000 out=0.0177
+Completed epoch timing: {"epoch": 410, "seconds": 5.979}
+Epoch 411/650
+epoch=411 lr=1.66e-03 losses: avg=0.0174 inp=0.0000 out=0.0174
+Completed epoch timing: {"epoch": 411, "seconds": 5.991}
+Epoch 412/650
+epoch=412 lr=1.66e-03 losses: avg=0.0177 inp=0.0000 out=0.0177
+Completed epoch timing: {"epoch": 412, "seconds": 5.973}
+Epoch 413/650
+epoch=413 lr=1.66e-03 losses: avg=0.0177 inp=0.0000 out=0.0177
+Completed epoch timing: {"epoch": 413, "seconds": 5.98}
+Epoch 414/650
+epoch=414 lr=1.66e-03 losses: avg=0.0178 inp=0.0000 out=0.0178
+Completed epoch timing: {"epoch": 414, "seconds": 5.979}
+Epoch 415/650
+epoch=415 lr=1.66e-03 losses: avg=0.0180 inp=0.0000 out=0.0180
+Completed epoch timing: {"epoch": 415, "seconds": 5.992}
+Epoch 416/650
+epoch=416 lr=1.66e-03 losses: avg=0.0178 inp=0.0000 out=0.0178
+Completed epoch timing: {"epoch": 416, "seconds": 5.986}
+Epoch 417/650
+epoch=417 lr=1.66e-03 losses: avg=0.0181 inp=0.0000 out=0.0181
+Completed epoch timing: {"epoch": 417, "seconds": 5.998}
+Epoch 418/650
+epoch=418 lr=1.66e-03 losses: avg=0.0174 inp=0.0000 out=0.0174
+Completed epoch timing: {"epoch": 418, "seconds": 5.991}
+Epoch 419/650
+epoch=419 lr=1.66e-03 losses: avg=0.0180 inp=0.0000 out=0.0180
+Completed epoch timing: {"epoch": 419, "seconds": 5.97}
+Epoch 420/650
+epoch=420 lr=1.66e-03 losses: avg=0.0175 inp=0.0000 out=0.0175
+Completed epoch timing: {"epoch": 420, "seconds": 5.984}
+Epoch 421/650
+epoch=421 lr=1.66e-03 losses: avg=0.0175 inp=0.0000 out=0.0175
+Completed epoch timing: {"epoch": 421, "seconds": 6.009}
+Epoch 422/650
+epoch=422 lr=1.66e-03 losses: avg=0.0175 inp=0.0000 out=0.0175
+Completed epoch timing: {"epoch": 422, "seconds": 6.028}
+Epoch 423/650
+epoch=423 lr=1.66e-03 losses: avg=0.0176 inp=0.0000 out=0.0176
+Completed epoch timing: {"epoch": 423, "seconds": 6.003}
+Epoch 424/650
+epoch=424 lr=1.66e-03 losses: avg=0.0173 inp=0.0000 out=0.0173
+Completed epoch timing: {"epoch": 424, "seconds": 5.992}
+Epoch 425/650
+epoch=425 lr=1.66e-03 losses: avg=0.0178 inp=0.0000 out=0.0178
+Completed epoch timing: {"epoch": 425, "seconds": 5.977}
+Epoch 426/650
+epoch=426 lr=1.66e-03 losses: avg=0.0173 inp=0.0000 out=0.0173
+Completed epoch timing: {"epoch": 426, "seconds": 5.989}
+Epoch 427/650
+epoch=427 lr=1.66e-03 losses: avg=0.0175 inp=0.0000 out=0.0175
+Completed epoch timing: {"epoch": 427, "seconds": 5.975}
+Epoch 428/650
+epoch=428 lr=1.66e-03 losses: avg=0.0174 inp=0.0000 out=0.0174
+Completed epoch timing: {"epoch": 428, "seconds": 5.987}
+Epoch 429/650
+epoch=429 lr=1.66e-03 losses: avg=0.0178 inp=0.0000 out=0.0178
+Completed epoch timing: {"epoch": 429, "seconds": 5.987}
+Epoch 430/650
+epoch=430 lr=1.66e-03 losses: avg=0.0177 inp=0.0000 out=0.0177
+Completed epoch timing: {"epoch": 430, "seconds": 5.992}
+Epoch 431/650
+epoch=431 lr=1.66e-03 losses: avg=0.0172 inp=0.0000 out=0.0172
+Completed epoch timing: {"epoch": 431, "seconds": 5.978}
+Epoch 432/650
+epoch=432 lr=1.66e-03 losses: avg=0.0170 inp=0.0000 out=0.0170
+Completed epoch timing: {"epoch": 432, "seconds": 5.99}
+Epoch 433/650
+epoch=433 lr=1.66e-03 losses: avg=0.0172 inp=0.0000 out=0.0172
+Completed epoch timing: {"epoch": 433, "seconds": 5.984}
+Epoch 434/650
+epoch=434 lr=1.66e-03 losses: avg=0.0174 inp=0.0000 out=0.0174
+Completed epoch timing: {"epoch": 434, "seconds": 6.007}
+Epoch 435/650
+epoch=435 lr=1.66e-03 losses: avg=0.0173 inp=0.0000 out=0.0173
+Completed epoch timing: {"epoch": 435, "seconds": 6.0}
+Epoch 436/650
+epoch=436 lr=1.66e-03 losses: avg=0.0170 inp=0.0000 out=0.0170
+Completed epoch timing: {"epoch": 436, "seconds": 6.0}
+Epoch 437/650
+epoch=437 lr=1.66e-03 losses: avg=0.0169 inp=0.0000 out=0.0169
+Completed epoch timing: {"epoch": 437, "seconds": 6.014}
+Epoch 438/650
+epoch=438 lr=1.66e-03 losses: avg=0.0171 inp=0.0000 out=0.0171
+Completed epoch timing: {"epoch": 438, "seconds": 5.993}
+Epoch 439/650
+epoch=439 lr=1.66e-03 losses: avg=0.0168 inp=0.0000 out=0.0168
+Completed epoch timing: {"epoch": 439, "seconds": 5.996}
+Epoch 440/650
+epoch=440 lr=1.66e-03 losses: avg=0.0168 inp=0.0000 out=0.0168
+Completed epoch timing: {"epoch": 440, "seconds": 5.986}
+Epoch 441/650
+epoch=441 lr=1.66e-03 losses: avg=0.0173 inp=0.0000 out=0.0173
+Completed epoch timing: {"epoch": 441, "seconds": 5.981}
+Epoch 442/650
+epoch=442 lr=1.66e-03 losses: avg=0.0173 inp=0.0000 out=0.0173
+Completed epoch timing: {"epoch": 442, "seconds": 5.976}
+Epoch 443/650
+epoch=443 lr=1.66e-03 losses: avg=0.0171 inp=0.0000 out=0.0171
+Completed epoch timing: {"epoch": 443, "seconds": 5.974}
+Epoch 444/650
+epoch=444 lr=1.66e-03 losses: avg=0.0172 inp=0.0000 out=0.0172
+Completed epoch timing: {"epoch": 444, "seconds": 5.983}
+Epoch 445/650
+epoch=445 lr=1.66e-03 losses: avg=0.0172 inp=0.0000 out=0.0172
+Completed epoch timing: {"epoch": 445, "seconds": 5.988}
+Epoch 446/650
+epoch=446 lr=1.66e-03 losses: avg=0.0170 inp=0.0000 out=0.0170
+Completed epoch timing: {"epoch": 446, "seconds": 5.994}
+Epoch 447/650
+epoch=447 lr=1.66e-03 losses: avg=0.0172 inp=0.0000 out=0.0172
+Completed epoch timing: {"epoch": 447, "seconds": 6.001}
+Epoch 448/650
+epoch=448 lr=1.66e-03 losses: avg=0.0165 inp=0.0000 out=0.0165
+Completed epoch timing: {"epoch": 448, "seconds": 6.002}
+Epoch 449/650
+epoch=449 lr=1.66e-03 losses: avg=0.0168 inp=0.0000 out=0.0168
+Completed epoch timing: {"epoch": 449, "seconds": 5.986}
+Epoch 450/650
+epoch=450 lr=1.66e-03 losses: avg=0.0170 inp=0.0000 out=0.0170
+Completed epoch timing: {"epoch": 450, "seconds": 5.979}
+Epoch 451/650
+epoch=451 lr=1.66e-03 losses: avg=0.0166 inp=0.0000 out=0.0166
+Completed epoch timing: {"epoch": 451, "seconds": 5.983}
+Epoch 452/650
+epoch=452 lr=1.66e-03 losses: avg=0.0173 inp=0.0000 out=0.0173
+Completed epoch timing: {"epoch": 452, "seconds": 5.984}
+Epoch 453/650
+epoch=453 lr=1.66e-03 losses: avg=0.0165 inp=0.0000 out=0.0165
+Completed epoch timing: {"epoch": 453, "seconds": 5.986}
+Epoch 454/650
+epoch=454 lr=1.66e-03 losses: avg=0.0168 inp=0.0000 out=0.0168
+Completed epoch timing: {"epoch": 454, "seconds": 5.993}
+Epoch 455/650
+epoch=455 lr=1.66e-03 losses: avg=0.0171 inp=0.0000 out=0.0171
+Completed epoch timing: {"epoch": 455, "seconds": 5.989}
+Epoch 456/650
+epoch=456 lr=1.66e-03 losses: avg=0.0165 inp=0.0000 out=0.0165
+Completed epoch timing: {"epoch": 456, "seconds": 5.991}
+Epoch 457/650
+epoch=457 lr=1.66e-03 losses: avg=0.0168 inp=0.0000 out=0.0168
+Completed epoch timing: {"epoch": 457, "seconds": 6.007}
+Epoch 458/650
+epoch=458 lr=1.66e-03 losses: avg=0.0167 inp=0.0000 out=0.0167
+Completed epoch timing: {"epoch": 458, "seconds": 5.997}
+Epoch 459/650
+epoch=459 lr=1.66e-03 losses: avg=0.0166 inp=0.0000 out=0.0166
+Completed epoch timing: {"epoch": 459, "seconds": 5.974}
+Epoch 460/650
+epoch=460 lr=1.66e-03 losses: avg=0.0173 inp=0.0000 out=0.0173
+Completed epoch timing: {"epoch": 460, "seconds": 5.982}
+Epoch 461/650
+epoch=461 lr=1.66e-03 losses: avg=0.0167 inp=0.0000 out=0.0167
+Completed epoch timing: {"epoch": 461, "seconds": 5.985}
+Epoch 462/650
+epoch=462 lr=1.66e-03 losses: avg=0.0165 inp=0.0000 out=0.0165
+Completed epoch timing: {"epoch": 462, "seconds": 5.983}
+Epoch 463/650
+epoch=463 lr=1.66e-03 losses: avg=0.0165 inp=0.0000 out=0.0165
+Completed epoch timing: {"epoch": 463, "seconds": 5.976}
+Epoch 464/650
+epoch=464 lr=1.66e-03 losses: avg=0.0163 inp=0.0000 out=0.0163
+Completed epoch timing: {"epoch": 464, "seconds": 5.997}
+Epoch 465/650
+epoch=465 lr=1.66e-03 losses: avg=0.0168 inp=0.0000 out=0.0168
+Completed epoch timing: {"epoch": 465, "seconds": 6.004}
+Epoch 466/650
+epoch=466 lr=1.66e-03 losses: avg=0.0161 inp=0.0000 out=0.0161
+Completed epoch timing: {"epoch": 466, "seconds": 5.998}
+Epoch 467/650
+epoch=467 lr=1.66e-03 losses: avg=0.0161 inp=0.0000 out=0.0161
+Completed epoch timing: {"epoch": 467, "seconds": 5.983}
+Epoch 468/650
+epoch=468 lr=1.66e-03 losses: avg=0.0168 inp=0.0000 out=0.0168
+Completed epoch timing: {"epoch": 468, "seconds": 5.99}
+Epoch 469/650
+epoch=469 lr=1.66e-03 losses: avg=0.0162 inp=0.0000 out=0.0162
+Completed epoch timing: {"epoch": 469, "seconds": 5.99}
+Epoch 470/650
+epoch=470 lr=1.66e-03 losses: avg=0.0169 inp=0.0000 out=0.0169
+Completed epoch timing: {"epoch": 470, "seconds": 5.983}
+Epoch 471/650
+epoch=471 lr=1.66e-03 losses: avg=0.0162 inp=0.0000 out=0.0162
+Completed epoch timing: {"epoch": 471, "seconds": 5.995}
+Epoch 472/650
+epoch=472 lr=1.66e-03 losses: avg=0.0163 inp=0.0000 out=0.0163
+Completed epoch timing: {"epoch": 472, "seconds": 6.053}
+Epoch 473/650
+epoch=473 lr=1.66e-03 losses: avg=0.0168 inp=0.0000 out=0.0168
+Completed epoch timing: {"epoch": 473, "seconds": 5.995}
+Epoch 474/650
+epoch=474 lr=1.66e-03 losses: avg=0.0167 inp=0.0000 out=0.0167
+Completed epoch timing: {"epoch": 474, "seconds": 5.987}
+Epoch 475/650
+epoch=475 lr=1.66e-03 losses: avg=0.0162 inp=0.0000 out=0.0162
+Completed epoch timing: {"epoch": 475, "seconds": 5.99}
+Epoch 476/650
+epoch=476 lr=1.66e-03 losses: avg=0.0159 inp=0.0000 out=0.0159
+Completed epoch timing: {"epoch": 476, "seconds": 5.99}
+Epoch 477/650
+epoch=477 lr=1.66e-03 losses: avg=0.0163 inp=0.0000 out=0.0163
+Completed epoch timing: {"epoch": 477, "seconds": 6.004}
+Epoch 478/650
+epoch=478 lr=1.66e-03 losses: avg=0.0162 inp=0.0000 out=0.0162
+Completed epoch timing: {"epoch": 478, "seconds": 5.988}
+Epoch 479/650
+epoch=479 lr=1.66e-03 losses: avg=0.0159 inp=0.0000 out=0.0159
+Completed epoch timing: {"epoch": 479, "seconds": 5.983}
+Epoch 480/650
+epoch=480 lr=1.66e-03 losses: avg=0.0157 inp=0.0000 out=0.0157
+Completed epoch timing: {"epoch": 480, "seconds": 5.985}
+Epoch 481/650
+epoch=481 lr=1.66e-03 losses: avg=0.0159 inp=0.0000 out=0.0159
+Completed epoch timing: {"epoch": 481, "seconds": 5.992}
+Epoch 482/650
+epoch=482 lr=1.66e-03 losses: avg=0.0165 inp=0.0000 out=0.0165
+Completed epoch timing: {"epoch": 482, "seconds": 5.988}
+Epoch 483/650
+epoch=483 lr=1.66e-03 losses: avg=0.0165 inp=0.0000 out=0.0165
+Completed epoch timing: {"epoch": 483, "seconds": 5.986}
+Epoch 484/650
+epoch=484 lr=1.66e-03 losses: avg=0.0160 inp=0.0000 out=0.0160
+Completed epoch timing: {"epoch": 484, "seconds": 5.997}
+Epoch 485/650
+epoch=485 lr=1.66e-03 losses: avg=0.0163 inp=0.0000 out=0.0163
+Completed epoch timing: {"epoch": 485, "seconds": 5.982}
+Epoch 486/650
+epoch=486 lr=1.66e-03 losses: avg=0.0160 inp=0.0000 out=0.0160
+Completed epoch timing: {"epoch": 486, "seconds": 5.98}
+Epoch 487/650
+epoch=487 lr=1.66e-03 losses: avg=0.0161 inp=0.0000 out=0.0161
+Completed epoch timing: {"epoch": 487, "seconds": 5.974}
+Epoch 488/650
+epoch=488 lr=1.66e-03 losses: avg=0.0160 inp=0.0000 out=0.0160
+Completed epoch timing: {"epoch": 488, "seconds": 5.982}
+Epoch 489/650
+epoch=489 lr=1.66e-03 losses: avg=0.0157 inp=0.0000 out=0.0157
+Completed epoch timing: {"epoch": 489, "seconds": 5.983}
+Epoch 490/650
+epoch=490 lr=1.66e-03 losses: avg=0.0161 inp=0.0000 out=0.0161
+Completed epoch timing: {"epoch": 490, "seconds": 5.979}
+Epoch 491/650
+epoch=491 lr=1.66e-03 losses: avg=0.0157 inp=0.0000 out=0.0157
+Completed epoch timing: {"epoch": 491, "seconds": 5.989}
+Epoch 492/650
+epoch=492 lr=1.66e-03 losses: avg=0.0157 inp=0.0000 out=0.0157
+Completed epoch timing: {"epoch": 492, "seconds": 5.995}
+Epoch 493/650
+epoch=493 lr=1.66e-03 losses: avg=0.0160 inp=0.0000 out=0.0160
+Completed epoch timing: {"epoch": 493, "seconds": 5.991}
+Epoch 494/650
+epoch=494 lr=1.66e-03 losses: avg=0.0159 inp=0.0000 out=0.0159
+Completed epoch timing: {"epoch": 494, "seconds": 6.012}
+Epoch 495/650
+epoch=495 lr=1.66e-03 losses: avg=0.0156 inp=0.0000 out=0.0156
+Completed epoch timing: {"epoch": 495, "seconds": 5.988}
+Epoch 496/650
+epoch=496 lr=1.66e-03 losses: avg=0.0155 inp=0.0000 out=0.0155
+Completed epoch timing: {"epoch": 496, "seconds": 5.988}
+Epoch 497/650
+epoch=497 lr=1.66e-03 losses: avg=0.0158 inp=0.0000 out=0.0158
+Completed epoch timing: {"epoch": 497, "seconds": 5.995}
+Epoch 498/650
+epoch=498 lr=1.66e-03 losses: avg=0.0163 inp=0.0000 out=0.0163
+Completed epoch timing: {"epoch": 498, "seconds": 5.987}
+Epoch 499/650
+epoch=499 lr=1.66e-03 losses: avg=0.0154 inp=0.0000 out=0.0154
+Completed epoch timing: {"epoch": 499, "seconds": 5.992}
+Epoch 500/650
+epoch=500 lr=1.66e-03 losses: avg=0.0157 inp=0.0000 out=0.0157
+Completed epoch timing: {"epoch": 500, "seconds": 5.988}
+Saved checkpoint to runs/tiny.epoch500.pt
+Epoch 501/650
+epoch=501 lr=1.66e-03 losses: avg=0.0158 inp=0.0000 out=0.0158
+Completed epoch timing: {"epoch": 501, "seconds": 5.995}
+Epoch 502/650
+epoch=502 lr=1.66e-03 losses: avg=0.0158 inp=0.0000 out=0.0158
+Completed epoch timing: {"epoch": 502, "seconds": 6.89}
+Epoch 503/650
+epoch=503 lr=1.66e-03 losses: avg=0.0159 inp=0.0000 out=0.0159
+Completed epoch timing: {"epoch": 503, "seconds": 5.977}
+Epoch 504/650
+epoch=504 lr=1.66e-03 losses: avg=0.0157 inp=0.0000 out=0.0157
+Completed epoch timing: {"epoch": 504, "seconds": 5.991}
+Epoch 505/650
+epoch=505 lr=1.66e-03 losses: avg=0.0156 inp=0.0000 out=0.0156
+Completed epoch timing: {"epoch": 505, "seconds": 6.005}
+Epoch 506/650
+epoch=506 lr=1.66e-03 losses: avg=0.0154 inp=0.0000 out=0.0154
+Completed epoch timing: {"epoch": 506, "seconds": 6.011}
+Epoch 507/650
+epoch=507 lr=1.66e-03 losses: avg=0.0156 inp=0.0000 out=0.0156
+Completed epoch timing: {"epoch": 507, "seconds": 6.005}
+Epoch 508/650
+epoch=508 lr=1.66e-03 losses: avg=0.0153 inp=0.0000 out=0.0153
+Completed epoch timing: {"epoch": 508, "seconds": 6.009}
+Epoch 509/650
+epoch=509 lr=1.66e-03 losses: avg=0.0154 inp=0.0000 out=0.0154
+Completed epoch timing: {"epoch": 509, "seconds": 6.023}
+Epoch 510/650
+epoch=510 lr=1.66e-03 losses: avg=0.0157 inp=0.0000 out=0.0157
+Completed epoch timing: {"epoch": 510, "seconds": 6.004}
+Epoch 511/650
+epoch=511 lr=1.66e-03 losses: avg=0.0154 inp=0.0000 out=0.0154
+Completed epoch timing: {"epoch": 511, "seconds": 6.005}
+Epoch 512/650
+epoch=512 lr=1.66e-03 losses: avg=0.0155 inp=0.0000 out=0.0155
+Completed epoch timing: {"epoch": 512, "seconds": 6.035}
+Epoch 513/650
+epoch=513 lr=1.66e-03 losses: avg=0.0152 inp=0.0000 out=0.0152
+Completed epoch timing: {"epoch": 513, "seconds": 6.03}
+Epoch 514/650
+epoch=514 lr=1.66e-03 losses: avg=0.0158 inp=0.0000 out=0.0158
+Completed epoch timing: {"epoch": 514, "seconds": 6.016}
+Epoch 515/650
+epoch=515 lr=1.66e-03 losses: avg=0.0153 inp=0.0000 out=0.0153
+Completed epoch timing: {"epoch": 515, "seconds": 6.003}
+Epoch 516/650
+epoch=516 lr=1.66e-03 losses: avg=0.0159 inp=0.0000 out=0.0159
+Completed epoch timing: {"epoch": 516, "seconds": 6.027}
+Epoch 517/650
+epoch=517 lr=1.66e-03 losses: avg=0.0156 inp=0.0000 out=0.0156
+Completed epoch timing: {"epoch": 517, "seconds": 5.976}
+Epoch 518/650
+epoch=518 lr=1.66e-03 losses: avg=0.0152 inp=0.0000 out=0.0152
+Completed epoch timing: {"epoch": 518, "seconds": 5.991}
+Epoch 519/650
+epoch=519 lr=1.66e-03 losses: avg=0.0156 inp=0.0000 out=0.0156
+Completed epoch timing: {"epoch": 519, "seconds": 5.995}
+Epoch 520/650
+epoch=520 lr=1.66e-03 losses: avg=0.0151 inp=0.0000 out=0.0151
+Completed epoch timing: {"epoch": 520, "seconds": 5.97}
+Epoch 521/650
+epoch=521 lr=1.65e-03 losses: avg=0.0148 inp=0.0000 out=0.0148
+Completed epoch timing: {"epoch": 521, "seconds": 6.064}
+Epoch 522/650
+epoch=522 lr=1.63e-03 losses: avg=0.0149 inp=0.0000 out=0.0149
+Completed epoch timing: {"epoch": 522, "seconds": 6.0}
+Epoch 523/650
+epoch=523 lr=1.62e-03 losses: avg=0.0151 inp=0.0000 out=0.0151
+Completed epoch timing: {"epoch": 523, "seconds": 5.997}
+Epoch 524/650
+epoch=524 lr=1.61e-03 losses: avg=0.0149 inp=0.0000 out=0.0149
+Completed epoch timing: {"epoch": 524, "seconds": 5.998}
+Epoch 525/650
+epoch=525 lr=1.60e-03 losses: avg=0.0149 inp=0.0000 out=0.0149
+Completed epoch timing: {"epoch": 525, "seconds": 5.991}
+Epoch 526/650
+epoch=526 lr=1.58e-03 losses: avg=0.0150 inp=0.0000 out=0.0150
+Completed epoch timing: {"epoch": 526, "seconds": 5.989}
+Epoch 527/650
+epoch=527 lr=1.57e-03 losses: avg=0.0143 inp=0.0000 out=0.0143
+Completed epoch timing: {"epoch": 527, "seconds": 5.994}
+Epoch 528/650
+epoch=528 lr=1.56e-03 losses: avg=0.0143 inp=0.0000 out=0.0143
+Completed epoch timing: {"epoch": 528, "seconds": 5.99}
+Epoch 529/650
+epoch=529 lr=1.55e-03 losses: avg=0.0141 inp=0.0000 out=0.0141
+Completed epoch timing: {"epoch": 529, "seconds": 5.987}
+Epoch 530/650
+epoch=530 lr=1.53e-03 losses: avg=0.0141 inp=0.0000 out=0.0141
+Completed epoch timing: {"epoch": 530, "seconds": 5.986}
+Epoch 531/650
+epoch=531 lr=1.52e-03 losses: avg=0.0137 inp=0.0000 out=0.0137
+Completed epoch timing: {"epoch": 531, "seconds": 5.985}
+Epoch 532/650
+epoch=532 lr=1.51e-03 losses: avg=0.0141 inp=0.0000 out=0.0141
+Completed epoch timing: {"epoch": 532, "seconds": 5.97}
+Epoch 533/650
+epoch=533 lr=1.49e-03 losses: avg=0.0134 inp=0.0000 out=0.0134
+Completed epoch timing: {"epoch": 533, "seconds": 5.981}
+Epoch 534/650
+epoch=534 lr=1.48e-03 losses: avg=0.0137 inp=0.0000 out=0.0137
+Completed epoch timing: {"epoch": 534, "seconds": 5.984}
+Epoch 535/650
+epoch=535 lr=1.47e-03 losses: avg=0.0137 inp=0.0000 out=0.0137
+Completed epoch timing: {"epoch": 535, "seconds": 5.98}
+Epoch 536/650
+epoch=536 lr=1.46e-03 losses: avg=0.0131 inp=0.0000 out=0.0131
+Completed epoch timing: {"epoch": 536, "seconds": 6.017}
+Epoch 537/650
+epoch=537 lr=1.44e-03 losses: avg=0.0131 inp=0.0000 out=0.0131
+Completed epoch timing: {"epoch": 537, "seconds": 5.981}
+Epoch 538/650
+epoch=538 lr=1.43e-03 losses: avg=0.0129 inp=0.0000 out=0.0129
+Completed epoch timing: {"epoch": 538, "seconds": 5.97}
+Epoch 539/650
+epoch=539 lr=1.42e-03 losses: avg=0.0128 inp=0.0000 out=0.0128
+Completed epoch timing: {"epoch": 539, "seconds": 5.986}
+Epoch 540/650
+epoch=540 lr=1.40e-03 losses: avg=0.0124 inp=0.0000 out=0.0124
+Completed epoch timing: {"epoch": 540, "seconds": 5.97}
+Epoch 541/650
+epoch=541 lr=1.39e-03 losses: avg=0.0126 inp=0.0000 out=0.0126
+Completed epoch timing: {"epoch": 541, "seconds": 5.993}
+Epoch 542/650
+epoch=542 lr=1.38e-03 losses: avg=0.0123 inp=0.0000 out=0.0123
+Completed epoch timing: {"epoch": 542, "seconds": 5.996}
+Epoch 543/650
+epoch=543 lr=1.37e-03 losses: avg=0.0123 inp=0.0000 out=0.0123
+Completed epoch timing: {"epoch": 543, "seconds": 5.993}
+Epoch 544/650
+epoch=544 lr=1.35e-03 losses: avg=0.0117 inp=0.0000 out=0.0117
+Completed epoch timing: {"epoch": 544, "seconds": 5.997}
+Epoch 545/650
+epoch=545 lr=1.34e-03 losses: avg=0.0118 inp=0.0000 out=0.0118
+Completed epoch timing: {"epoch": 545, "seconds": 5.993}
+Epoch 546/650
+epoch=546 lr=1.33e-03 losses: avg=0.0120 inp=0.0000 out=0.0120
+Completed epoch timing: {"epoch": 546, "seconds": 5.997}
+Epoch 547/650
+epoch=547 lr=1.32e-03 losses: avg=0.0120 inp=0.0000 out=0.0120
+Completed epoch timing: {"epoch": 547, "seconds": 5.982}
+Epoch 548/650
+epoch=548 lr=1.30e-03 losses: avg=0.0114 inp=0.0000 out=0.0114
+Completed epoch timing: {"epoch": 548, "seconds": 5.982}
+Epoch 549/650
+epoch=549 lr=1.29e-03 losses: avg=0.0116 inp=0.0000 out=0.0116
+Completed epoch timing: {"epoch": 549, "seconds": 6.0}
+Epoch 550/650
+epoch=550 lr=1.28e-03 losses: avg=0.0110 inp=0.0000 out=0.0110
+Completed epoch timing: {"epoch": 550, "seconds": 5.986}
+Epoch 551/650
+epoch=551 lr=1.26e-03 losses: avg=0.0111 inp=0.0000 out=0.0111
+Completed epoch timing: {"epoch": 551, "seconds": 5.998}
+Epoch 552/650
+epoch=552 lr=1.25e-03 losses: avg=0.0109 inp=0.0000 out=0.0109
+Completed epoch timing: {"epoch": 552, "seconds": 5.987}
+Epoch 553/650
+epoch=553 lr=1.24e-03 losses: avg=0.0107 inp=0.0000 out=0.0107
+Completed epoch timing: {"epoch": 553, "seconds": 5.972}
+Epoch 554/650
+epoch=554 lr=1.23e-03 losses: avg=0.0108 inp=0.0000 out=0.0108
+Completed epoch timing: {"epoch": 554, "seconds": 5.97}
+Epoch 555/650
+epoch=555 lr=1.21e-03 losses: avg=0.0103 inp=0.0000 out=0.0103
+Completed epoch timing: {"epoch": 555, "seconds": 5.982}
+Epoch 556/650
+epoch=556 lr=1.20e-03 losses: avg=0.0102 inp=0.0000 out=0.0102
+Completed epoch timing: {"epoch": 556, "seconds": 6.005}
+Epoch 557/650
+epoch=557 lr=1.19e-03 losses: avg=0.0104 inp=0.0000 out=0.0104
+Completed epoch timing: {"epoch": 557, "seconds": 5.982}
+Epoch 558/650
+epoch=558 lr=1.17e-03 losses: avg=0.0103 inp=0.0000 out=0.0103
+Completed epoch timing: {"epoch": 558, "seconds": 6.003}
+Epoch 559/650
+epoch=559 lr=1.16e-03 losses: avg=0.0097 inp=0.0000 out=0.0097
+Completed epoch timing: {"epoch": 559, "seconds": 5.999}
+Epoch 560/650
+epoch=560 lr=1.15e-03 losses: avg=0.0096 inp=0.0000 out=0.0096
+Completed epoch timing: {"epoch": 560, "seconds": 6.003}
+Epoch 561/650
+epoch=561 lr=1.14e-03 losses: avg=0.0095 inp=0.0000 out=0.0095
+Completed epoch timing: {"epoch": 561, "seconds": 5.983}
+Epoch 562/650
+epoch=562 lr=1.12e-03 losses: avg=0.0094 inp=0.0000 out=0.0094
+Completed epoch timing: {"epoch": 562, "seconds": 5.992}
+Epoch 563/650
+epoch=563 lr=1.11e-03 losses: avg=0.0093 inp=0.0000 out=0.0093
+Completed epoch timing: {"epoch": 563, "seconds": 5.975}
+Epoch 564/650
+epoch=564 lr=1.10e-03 losses: avg=0.0092 inp=0.0000 out=0.0092
+Completed epoch timing: {"epoch": 564, "seconds": 5.984}
+Epoch 565/650
+epoch=565 lr=1.09e-03 losses: avg=0.0090 inp=0.0000 out=0.0090
+Completed epoch timing: {"epoch": 565, "seconds": 5.989}
+Epoch 566/650
+epoch=566 lr=1.07e-03 losses: avg=0.0091 inp=0.0000 out=0.0091
+Completed epoch timing: {"epoch": 566, "seconds": 6.005}
+Epoch 567/650
+epoch=567 lr=1.06e-03 losses: avg=0.0089 inp=0.0000 out=0.0089
+Completed epoch timing: {"epoch": 567, "seconds": 6.001}
+Epoch 568/650
+epoch=568 lr=1.05e-03 losses: avg=0.0084 inp=0.0000 out=0.0084
+Completed epoch timing: {"epoch": 568, "seconds": 5.976}
+Epoch 569/650
+epoch=569 lr=1.03e-03 losses: avg=0.0083 inp=0.0000 out=0.0083
+Completed epoch timing: {"epoch": 569, "seconds": 5.982}
+Epoch 570/650
+epoch=570 lr=1.02e-03 losses: avg=0.0084 inp=0.0000 out=0.0084
+Completed epoch timing: {"epoch": 570, "seconds": 5.996}
+Epoch 571/650
+epoch=571 lr=1.01e-03 losses: avg=0.0082 inp=0.0000 out=0.0082
+Completed epoch timing: {"epoch": 571, "seconds": 6.098}
+Epoch 572/650
+epoch=572 lr=9.96e-04 losses: avg=0.0083 inp=0.0000 out=0.0083
+Completed epoch timing: {"epoch": 572, "seconds": 5.979}
+Epoch 573/650
+epoch=573 lr=9.83e-04 losses: avg=0.0084 inp=0.0000 out=0.0084
+Completed epoch timing: {"epoch": 573, "seconds": 5.989}
+Epoch 574/650
+epoch=574 lr=9.70e-04 losses: avg=0.0081 inp=0.0000 out=0.0081
+Completed epoch timing: {"epoch": 574, "seconds": 5.982}
+Epoch 575/650
+epoch=575 lr=9.58e-04 losses: avg=0.0076 inp=0.0000 out=0.0076
+Completed epoch timing: {"epoch": 575, "seconds": 5.991}
+Epoch 576/650
+epoch=576 lr=9.45e-04 losses: avg=0.0077 inp=0.0000 out=0.0077
+Completed epoch timing: {"epoch": 576, "seconds": 5.994}
+Epoch 577/650
+epoch=577 lr=9.32e-04 losses: avg=0.0077 inp=0.0000 out=0.0077
+Completed epoch timing: {"epoch": 577, "seconds": 5.973}
+Epoch 578/650
+epoch=578 lr=9.19e-04 losses: avg=0.0075 inp=0.0000 out=0.0075
+Completed epoch timing: {"epoch": 578, "seconds": 5.979}
+Epoch 579/650
+epoch=579 lr=9.07e-04 losses: avg=0.0073 inp=0.0000 out=0.0073
+Completed epoch timing: {"epoch": 579, "seconds": 5.997}
+Epoch 580/650
+epoch=580 lr=8.94e-04 losses: avg=0.0072 inp=0.0000 out=0.0072
+Completed epoch timing: {"epoch": 580, "seconds": 5.981}
+Epoch 581/650
+epoch=581 lr=8.81e-04 losses: avg=0.0069 inp=0.0000 out=0.0069
+Completed epoch timing: {"epoch": 581, "seconds": 6.015}
+Epoch 582/650
+epoch=582 lr=8.68e-04 losses: avg=0.0069 inp=0.0000 out=0.0069
+Completed epoch timing: {"epoch": 582, "seconds": 5.987}
+Epoch 583/650
+epoch=583 lr=8.56e-04 losses: avg=0.0071 inp=0.0000 out=0.0071
+Completed epoch timing: {"epoch": 583, "seconds": 5.989}
+Epoch 584/650
+epoch=584 lr=8.43e-04 losses: avg=0.0067 inp=0.0000 out=0.0067
+Completed epoch timing: {"epoch": 584, "seconds": 5.975}
+Epoch 585/650
+epoch=585 lr=8.30e-04 losses: avg=0.0066 inp=0.0000 out=0.0066
+Completed epoch timing: {"epoch": 585, "seconds": 5.982}
+Epoch 586/650
+epoch=586 lr=8.17e-04 losses: avg=0.0061 inp=0.0000 out=0.0061
+Completed epoch timing: {"epoch": 586, "seconds": 6.005}
+Epoch 587/650
+epoch=587 lr=8.04e-04 losses: avg=0.0065 inp=0.0000 out=0.0065
+Completed epoch timing: {"epoch": 587, "seconds": 5.979}
+Epoch 588/650
+epoch=588 lr=7.92e-04 losses: avg=0.0062 inp=0.0000 out=0.0062
+Completed epoch timing: {"epoch": 588, "seconds": 6.0}
+Epoch 589/650
+epoch=589 lr=7.79e-04 losses: avg=0.0061 inp=0.0000 out=0.0061
+Completed epoch timing: {"epoch": 589, "seconds": 5.987}
+Epoch 590/650
+epoch=590 lr=7.66e-04 losses: avg=0.0062 inp=0.0000 out=0.0062
+Completed epoch timing: {"epoch": 590, "seconds": 5.98}
+Epoch 591/650
+epoch=591 lr=7.53e-04 losses: avg=0.0060 inp=0.0000 out=0.0060
+Completed epoch timing: {"epoch": 591, "seconds": 5.973}
+Epoch 592/650
+epoch=592 lr=7.41e-04 losses: avg=0.0056 inp=0.0000 out=0.0056
+Completed epoch timing: {"epoch": 592, "seconds": 5.996}
+Epoch 593/650
+epoch=593 lr=7.28e-04 losses: avg=0.0058 inp=0.0000 out=0.0058
+Completed epoch timing: {"epoch": 593, "seconds": 5.976}
+Epoch 594/650
+epoch=594 lr=7.15e-04 losses: avg=0.0055 inp=0.0000 out=0.0055
+Completed epoch timing: {"epoch": 594, "seconds": 5.983}
+Epoch 595/650
+epoch=595 lr=7.02e-04 losses: avg=0.0054 inp=0.0000 out=0.0054
+Completed epoch timing: {"epoch": 595, "seconds": 5.981}
+Epoch 596/650
+epoch=596 lr=6.90e-04 losses: avg=0.0052 inp=0.0000 out=0.0052
+Completed epoch timing: {"epoch": 596, "seconds": 6.02}
+Epoch 597/650
+epoch=597 lr=6.77e-04 losses: avg=0.0051 inp=0.0000 out=0.0051
+Completed epoch timing: {"epoch": 597, "seconds": 6.005}
+Epoch 598/650
+epoch=598 lr=6.64e-04 losses: avg=0.0053 inp=0.0000 out=0.0053
+Completed epoch timing: {"epoch": 598, "seconds": 5.995}
+Epoch 599/650
+epoch=599 lr=6.51e-04 losses: avg=0.0051 inp=0.0000 out=0.0051
+Completed epoch timing: {"epoch": 599, "seconds": 5.979}
+Epoch 600/650
+epoch=600 lr=6.38e-04 losses: avg=0.0048 inp=0.0000 out=0.0048
+Completed epoch timing: {"epoch": 600, "seconds": 6.002}
+Saved checkpoint to runs/tiny.epoch600.pt
+Epoch 601/650
+epoch=601 lr=6.26e-04 losses: avg=0.0047 inp=0.0000 out=0.0047
+Completed epoch timing: {"epoch": 601, "seconds": 6.854}
+Epoch 602/650
+epoch=602 lr=6.13e-04 losses: avg=0.0044 inp=0.0000 out=0.0044
+Completed epoch timing: {"epoch": 602, "seconds": 6.003}
+Epoch 603/650
+epoch=603 lr=6.00e-04 losses: avg=0.0043 inp=0.0000 out=0.0043
+Completed epoch timing: {"epoch": 603, "seconds": 5.992}
+Epoch 604/650
+epoch=604 lr=5.87e-04 losses: avg=0.0044 inp=0.0000 out=0.0044
+Completed epoch timing: {"epoch": 604, "seconds": 5.991}
+Epoch 605/650
+epoch=605 lr=5.75e-04 losses: avg=0.0044 inp=0.0000 out=0.0044
+Completed epoch timing: {"epoch": 605, "seconds": 5.983}
+Epoch 606/650
+epoch=606 lr=5.62e-04 losses: avg=0.0042 inp=0.0000 out=0.0042
+Completed epoch timing: {"epoch": 606, "seconds": 5.999}
+Epoch 607/650
+epoch=607 lr=5.49e-04 losses: avg=0.0042 inp=0.0000 out=0.0042
+Completed epoch timing: {"epoch": 607, "seconds": 5.993}
+Epoch 608/650
+epoch=608 lr=5.36e-04 losses: avg=0.0041 inp=0.0000 out=0.0041
+Completed epoch timing: {"epoch": 608, "seconds": 5.983}
+Epoch 609/650
+epoch=609 lr=5.24e-04 losses: avg=0.0039 inp=0.0000 out=0.0039
+Completed epoch timing: {"epoch": 609, "seconds": 6.002}
+Epoch 610/650
+epoch=610 lr=5.11e-04 losses: avg=0.0039 inp=0.0000 out=0.0039
+Completed epoch timing: {"epoch": 610, "seconds": 5.982}
+Epoch 611/650
+epoch=611 lr=4.98e-04 losses: avg=0.0036 inp=0.0000 out=0.0036
+Completed epoch timing: {"epoch": 611, "seconds": 5.985}
+Epoch 612/650
+epoch=612 lr=4.85e-04 losses: avg=0.0038 inp=0.0000 out=0.0038
+Completed epoch timing: {"epoch": 612, "seconds": 5.993}
+Epoch 613/650
+epoch=613 lr=4.72e-04 losses: avg=0.0035 inp=0.0000 out=0.0035
+Completed epoch timing: {"epoch": 613, "seconds": 6.004}
+Epoch 614/650
+epoch=614 lr=4.60e-04 losses: avg=0.0036 inp=0.0000 out=0.0036
+Completed epoch timing: {"epoch": 614, "seconds": 5.983}
+Epoch 615/650
+epoch=615 lr=4.47e-04 losses: avg=0.0034 inp=0.0000 out=0.0034
+Completed epoch timing: {"epoch": 615, "seconds": 5.979}
+Epoch 616/650
+epoch=616 lr=4.34e-04 losses: avg=0.0033 inp=0.0000 out=0.0033
+Completed epoch timing: {"epoch": 616, "seconds": 6.017}
+Epoch 617/650
+epoch=617 lr=4.21e-04 losses: avg=0.0032 inp=0.0000 out=0.0032
+Completed epoch timing: {"epoch": 617, "seconds": 5.989}
+Epoch 618/650
+epoch=618 lr=4.09e-04 losses: avg=0.0031 inp=0.0000 out=0.0031
+Completed epoch timing: {"epoch": 618, "seconds": 5.996}
+Epoch 619/650
+epoch=619 lr=3.96e-04 losses: avg=0.0032 inp=0.0000 out=0.0032
+Completed epoch timing: {"epoch": 619, "seconds": 5.975}
+Epoch 620/650
+epoch=620 lr=3.83e-04 losses: avg=0.0030 inp=0.0000 out=0.0030
+Completed epoch timing: {"epoch": 620, "seconds": 5.992}
+Epoch 621/650
+epoch=621 lr=3.70e-04 losses: avg=0.0029 inp=0.0000 out=0.0029
+Completed epoch timing: {"epoch": 621, "seconds": 6.062}
+Epoch 622/650
+epoch=622 lr=3.58e-04 losses: avg=0.0027 inp=0.0000 out=0.0027
+Completed epoch timing: {"epoch": 622, "seconds": 5.998}
+Epoch 623/650
+epoch=623 lr=3.45e-04 losses: avg=0.0026 inp=0.0000 out=0.0026
+Completed epoch timing: {"epoch": 623, "seconds": 5.981}
+Epoch 624/650
+epoch=624 lr=3.32e-04 losses: avg=0.0027 inp=0.0000 out=0.0027
+Completed epoch timing: {"epoch": 624, "seconds": 5.986}
+Epoch 625/650
+epoch=625 lr=3.19e-04 losses: avg=0.0026 inp=0.0000 out=0.0026
+Completed epoch timing: {"epoch": 625, "seconds": 5.983}
+Epoch 626/650
+epoch=626 lr=3.06e-04 losses: avg=0.0025 inp=0.0000 out=0.0025
+Completed epoch timing: {"epoch": 626, "seconds": 5.982}
+Epoch 627/650
+epoch=627 lr=2.94e-04 losses: avg=0.0026 inp=0.0000 out=0.0026
+Completed epoch timing: {"epoch": 627, "seconds": 5.992}
+Epoch 628/650
+epoch=628 lr=2.81e-04 losses: avg=0.0026 inp=0.0000 out=0.0026
+Completed epoch timing: {"epoch": 628, "seconds": 5.992}
+Epoch 629/650
+epoch=629 lr=2.68e-04 losses: avg=0.0025 inp=0.0000 out=0.0025
+Completed epoch timing: {"epoch": 629, "seconds": 5.978}
+Epoch 630/650
+epoch=630 lr=2.55e-04 losses: avg=0.0022 inp=0.0000 out=0.0022
+Completed epoch timing: {"epoch": 630, "seconds": 5.982}
+Epoch 631/650
+epoch=631 lr=2.43e-04 losses: avg=0.0022 inp=0.0000 out=0.0022
+Completed epoch timing: {"epoch": 631, "seconds": 5.983}
+Epoch 632/650
+epoch=632 lr=2.30e-04 losses: avg=0.0020 inp=0.0000 out=0.0020
+Completed epoch timing: {"epoch": 632, "seconds": 5.973}
+Epoch 633/650
+epoch=633 lr=2.17e-04 losses: avg=0.0021 inp=0.0000 out=0.0021
+Completed epoch timing: {"epoch": 633, "seconds": 5.982}
+Epoch 634/650
+epoch=634 lr=2.04e-04 losses: avg=0.0020 inp=0.0000 out=0.0020
+Completed epoch timing: {"epoch": 634, "seconds": 6.063}
+Epoch 635/650
+epoch=635 lr=1.92e-04 losses: avg=0.0020 inp=0.0000 out=0.0020
+Completed epoch timing: {"epoch": 635, "seconds": 6.02}
+Epoch 636/650
+epoch=636 lr=1.79e-04 losses: avg=0.0019 inp=0.0000 out=0.0019
+Completed epoch timing: {"epoch": 636, "seconds": 6.033}
+Epoch 637/650
+epoch=637 lr=1.66e-04 losses: avg=0.0018 inp=0.0000 out=0.0018
+Completed epoch timing: {"epoch": 637, "seconds": 5.988}
+Epoch 638/650
+epoch=638 lr=1.53e-04 losses: avg=0.0018 inp=0.0000 out=0.0018
+Completed epoch timing: {"epoch": 638, "seconds": 5.981}
+Epoch 639/650
+epoch=639 lr=1.40e-04 losses: avg=0.0018 inp=0.0000 out=0.0018
+Completed epoch timing: {"epoch": 639, "seconds": 5.973}
+Epoch 640/650
+epoch=640 lr=1.28e-04 losses: avg=0.0017 inp=0.0000 out=0.0017
+Completed epoch timing: {"epoch": 640, "seconds": 5.98}
+Epoch 641/650
+epoch=641 lr=1.15e-04 losses: avg=0.0017 inp=0.0000 out=0.0017
+Completed epoch timing: {"epoch": 641, "seconds": 5.982}
+Epoch 642/650
+epoch=642 lr=1.02e-04 losses: avg=0.0017 inp=0.0000 out=0.0017
+Completed epoch timing: {"epoch": 642, "seconds": 5.982}
+Epoch 643/650
+epoch=643 lr=8.94e-05 losses: avg=0.0016 inp=0.0000 out=0.0016
+Completed epoch timing: {"epoch": 643, "seconds": 5.979}
+Epoch 644/650
+epoch=644 lr=7.66e-05 losses: avg=0.0016 inp=0.0000 out=0.0016
+Completed epoch timing: {"epoch": 644, "seconds": 5.97}
+Epoch 645/650
+epoch=645 lr=6.38e-05 losses: avg=0.0016 inp=0.0000 out=0.0016
+Completed epoch timing: {"epoch": 645, "seconds": 5.973}
+Saved checkpoint to runs/tiny.epoch645.pt
+Epoch 646/650
+epoch=646 lr=5.11e-05 losses: avg=0.0015 inp=0.0000 out=0.0015
+Completed epoch timing: {"epoch": 646, "seconds": 6.778}
+Epoch 647/650
+epoch=647 lr=3.83e-05 losses: avg=0.0015 inp=0.0000 out=0.0015
+Completed epoch timing: {"epoch": 647, "seconds": 5.988}
+Epoch 648/650
+epoch=648 lr=2.55e-05 losses: avg=0.0015 inp=0.0000 out=0.0015
+Completed epoch timing: {"epoch": 648, "seconds": 5.993}
+Saved checkpoint to runs/tiny.epoch648.pt
+Epoch 649/650
+epoch=649 lr=1.28e-05 losses: avg=0.0014 inp=0.0000 out=0.0014
+Completed epoch timing: {"epoch": 649, "seconds": 6.774}
+Epoch 650/650
+epoch=650 lr=0.00e+00 losses: avg=0.0015 inp=0.0000 out=0.0015
+Completed epoch timing: {"epoch": 650, "seconds": 5.975}
+Saved checkpoint to runs/tiny.epoch650.pt
+Saved checkpoint to runs/tiny.pt
+Training finished in 4025.66s
+Starting Evaluation...
+GPU cleaned. Allocated: 0.06 GB
+
+============================================================
+STARTING EVALUATION: submission_eval (Augmented augs: 300)
+============================================================
+
+Building model and dataloader...
+Precomputing 3D positions...
+Augmentation stats: 5864 sequences, avg augments=245.8, min=1, max=300
+Compiling model for decoding step...
+[test] Finished batch 1 / 1008
+[test] Finished batch 2 / 1008
+[test] Finished batch 3 / 1008
+[test] Finished batch 4 / 1008
+[test] Finished batch 5 / 1008
+[test] Finished batch 6 / 1008
+[test] Finished batch 7 / 1008
+[test] Finished batch 8 / 1008
+[test] Finished batch 9 / 1008
+[test] Finished batch 10 / 1008
+[test] Finished batch 11 / 1008
+[test] Finished batch 12 / 1008
+[test] Finished batch 13 / 1008
+[test] Finished batch 14 / 1008
+[test] Finished batch 15 / 1008
+[test] Finished batch 16 / 1008
+[test] Finished batch 17 / 1008
+[test] Finished batch 18 / 1008
+[test] Finished batch 19 / 1008
+[test] Finished batch 20 / 1008
+[test] Finished batch 21 / 1008
+[test] Finished batch 22 / 1008
+[test] Finished batch 23 / 1008
+[test] Finished batch 24 / 1008
+[test] Finished batch 25 / 1008
+[test] Finished batch 26 / 1008
+[test] Finished batch 27 / 1008
+[test] Finished batch 28 / 1008
+[test] Finished batch 29 / 1008
+[test] Finished batch 30 / 1008
+[test] Finished batch 31 / 1008
+[test] Finished batch 32 / 1008
+[test] Finished batch 33 / 1008
+[test] Finished batch 34 / 1008
+[test] Finished batch 35 / 1008
+[test] Finished batch 36 / 1008
+[test] Finished batch 37 / 1008
+[test] Finished batch 38 / 1008
+[test] Finished batch 39 / 1008
+[test] Finished batch 40 / 1008
+[test] Finished batch 41 / 1008
+[test] Finished batch 42 / 1008
+[test] Finished batch 43 / 1008
+[test] Finished batch 44 / 1008
+[test] Finished batch 45 / 1008
+[test] Finished batch 46 / 1008
+[test] Finished batch 47 / 1008
+[test] Finished batch 48 / 1008
+[test] Finished batch 49 / 1008
+[test] Finished batch 50 / 1008
+[test] Finished batch 51 / 1008
+[test] Finished batch 52 / 1008
+[test] Finished batch 53 / 1008
+[test] Finished batch 54 / 1008
+[test] Finished batch 55 / 1008
+[test] Finished batch 56 / 1008
+[test] Finished batch 57 / 1008
+[test] Finished batch 58 / 1008
+[test] Finished batch 59 / 1008
+[test] Finished batch 60 / 1008
+[test] Finished batch 61 / 1008
+[test] Finished batch 62 / 1008
+[test] Finished batch 63 / 1008
+[test] Finished batch 64 / 1008
+[test] Finished batch 65 / 1008
+[test] Finished batch 66 / 1008
+[test] Finished batch 67 / 1008
+[test] Finished batch 68 / 1008
+[test] Finished batch 69 / 1008
+[test] Finished batch 70 / 1008
+[test] Finished batch 71 / 1008
+[test] Finished batch 72 / 1008
+[test] Finished batch 73 / 1008
+[test] Finished batch 74 / 1008
+[test] Finished batch 75 / 1008
+[test] Finished batch 76 / 1008
+[test] Finished batch 77 / 1008
+[test] Finished batch 78 / 1008
+[test] Finished batch 79 / 1008
+[test] Finished batch 80 / 1008
+[test] Finished batch 81 / 1008
+[test] Finished batch 82 / 1008
+[test] Finished batch 83 / 1008
+[test] Finished batch 84 / 1008
+[test] Finished batch 85 / 1008
+[test] Finished batch 86 / 1008
+[test] Finished batch 87 / 1008
+[test] Finished batch 88 / 1008
+[test] Finished batch 89 / 1008
+[test] Finished batch 90 / 1008
+[test] Finished batch 91 / 1008
+[test] Finished batch 92 / 1008
+[test] Finished batch 93 / 1008
+[test] Finished batch 94 / 1008
+[test] Finished batch 95 / 1008
+[test] Finished batch 96 / 1008
+[test] Finished batch 97 / 1008
+[test] Finished batch 98 / 1008
+[test] Finished batch 99 / 1008
+[test] Finished batch 100 / 1008
+[test] Finished batch 101 / 1008
+[test] Finished batch 102 / 1008
+[test] Finished batch 103 / 1008
+[test] Finished batch 104 / 1008
+[test] Finished batch 105 / 1008
+[test] Finished batch 106 / 1008
+[test] Finished batch 107 / 1008
+[test] Finished batch 108 / 1008
+[test] Finished batch 109 / 1008
+[test] Finished batch 110 / 1008
+[test] Finished batch 111 / 1008
+[test] Finished batch 112 / 1008
+[test] Finished batch 113 / 1008
+[test] Finished batch 114 / 1008
+[test] Finished batch 115 / 1008
+[test] Finished batch 116 / 1008
+[test] Finished batch 117 / 1008
+[test] Finished batch 118 / 1008
+[test] Finished batch 119 / 1008
+[test] Finished batch 120 / 1008
+[test] Finished batch 121 / 1008
+[test] Finished batch 122 / 1008
+[test] Finished batch 123 / 1008
+[test] Finished batch 124 / 1008
+[test] Finished batch 125 / 1008
+[test] Finished batch 126 / 1008
+[test] Finished batch 127 / 1008
+[test] Finished batch 128 / 1008
+[test] Finished batch 129 / 1008
+[test] Finished batch 130 / 1008
+[test] Finished batch 131 / 1008
+[test] Finished batch 132 / 1008
+[test] Finished batch 133 / 1008
+[test] Finished batch 134 / 1008
+[test] Finished batch 135 / 1008
+[test] Finished batch 136 / 1008
+[test] Finished batch 137 / 1008
+[test] Finished batch 138 / 1008
+[test] Finished batch 139 / 1008
+[test] Finished batch 140 / 1008
+[test] Finished batch 141 / 1008
+[test] Finished batch 142 / 1008
+[test] Finished batch 143 / 1008
+[test] Finished batch 144 / 1008
+[test] Finished batch 145 / 1008
+[test] Finished batch 146 / 1008
+[test] Finished batch 147 / 1008
+[test] Finished batch 148 / 1008
+[test] Finished batch 149 / 1008
+[test] Finished batch 150 / 1008
+[test] Finished batch 151 / 1008
+[test] Finished batch 152 / 1008
+[test] Finished batch 153 / 1008
+[test] Finished batch 154 / 1008
+[test] Finished batch 155 / 1008
+[test] Finished batch 156 / 1008
+[test] Finished batch 157 / 1008
+[test] Finished batch 158 / 1008
+[test] Finished batch 159 / 1008
+[test] Finished batch 160 / 1008
+[test] Finished batch 161 / 1008
+[test] Finished batch 162 / 1008
+[test] Finished batch 163 / 1008
+[test] Finished batch 164 / 1008
+[test] Finished batch 165 / 1008
+[test] Finished batch 166 / 1008
+[test] Finished batch 167 / 1008
+[test] Finished batch 168 / 1008
+[test] Finished batch 169 / 1008
+[test] Finished batch 170 / 1008
+[test] Finished batch 171 / 1008
+[test] Finished batch 172 / 1008
+[test] Finished batch 173 / 1008
+[test] Finished batch 174 / 1008
+[test] Finished batch 175 / 1008
+[test] Finished batch 176 / 1008
+[test] Finished batch 177 / 1008
+[test] Finished batch 178 / 1008
+[test] Finished batch 179 / 1008
+[test] Finished batch 180 / 1008
+[test] Finished batch 181 / 1008
+[test] Finished batch 182 / 1008
+[test] Finished batch 183 / 1008
+[test] Finished batch 184 / 1008
+[test] Finished batch 185 / 1008
+[test] Finished batch 186 / 1008
+[test] Finished batch 187 / 1008
+[test] Finished batch 188 / 1008
+[test] Finished batch 189 / 1008
+[test] Finished batch 190 / 1008
+[test] Finished batch 191 / 1008
+[test] Finished batch 192 / 1008
+[test] Finished batch 193 / 1008
+[test] Finished batch 194 / 1008
+[test] Finished batch 195 / 1008
+[test] Finished batch 196 / 1008
+[test] Finished batch 197 / 1008
+[test] Finished batch 198 / 1008
+[test] Finished batch 199 / 1008
+[test] Finished batch 200 / 1008
+[test] Finished batch 201 / 1008
+[test] Finished batch 202 / 1008
+[test] Finished batch 203 / 1008
+[test] Finished batch 204 / 1008
+[test] Finished batch 205 / 1008
+[test] Finished batch 206 / 1008
+[test] Finished batch 207 / 1008
+[test] Finished batch 208 / 1008
+[test] Finished batch 209 / 1008
+[test] Finished batch 210 / 1008
+[test] Finished batch 211 / 1008
+[test] Finished batch 212 / 1008
+[test] Finished batch 213 / 1008
+[test] Finished batch 214 / 1008
+[test] Finished batch 215 / 1008
+[test] Finished batch 216 / 1008
+[test] Finished batch 217 / 1008
+[test] Finished batch 218 / 1008
+[test] Finished batch 219 / 1008
+[test] Finished batch 220 / 1008
+[test] Finished batch 221 / 1008
+[test] Finished batch 222 / 1008
+[test] Finished batch 223 / 1008
+[test] Finished batch 224 / 1008
+[test] Finished batch 225 / 1008
+[test] Finished batch 226 / 1008
+[test] Finished batch 227 / 1008
+[test] Finished batch 228 / 1008
+[test] Finished batch 229 / 1008
+[test] Finished batch 230 / 1008
+[test] Finished batch 231 / 1008
+[test] Finished batch 232 / 1008
+[test] Finished batch 233 / 1008
+[test] Finished batch 234 / 1008
+[test] Finished batch 235 / 1008
+[test] Finished batch 236 / 1008
+[test] Finished batch 237 / 1008
+[test] Finished batch 238 / 1008
+[test] Finished batch 239 / 1008
+[test] Finished batch 240 / 1008
+[test] Finished batch 241 / 1008
+[test] Finished batch 242 / 1008
+[test] Finished batch 243 / 1008
+[test] Finished batch 244 / 1008
+[test] Finished batch 245 / 1008
+[test] Finished batch 246 / 1008
+[test] Finished batch 247 / 1008
+[test] Finished batch 248 / 1008
+[test] Finished batch 249 / 1008
+[test] Finished batch 250 / 1008
+[test] Finished batch 251 / 1008
+[test] Finished batch 252 / 1008
+[test] Finished batch 253 / 1008
+[test] Finished batch 254 / 1008
+[test] Finished batch 255 / 1008
+[test] Finished batch 256 / 1008
+[test] Finished batch 257 / 1008
+[test] Finished batch 258 / 1008
+[test] Finished batch 259 / 1008
+[test] Finished batch 260 / 1008
+[test] Finished batch 261 / 1008
+[test] Finished batch 262 / 1008
+[test] Finished batch 263 / 1008
+[test] Finished batch 264 / 1008
+[test] Finished batch 265 / 1008
+[test] Finished batch 266 / 1008
+[test] Finished batch 267 / 1008
+[test] Finished batch 268 / 1008
+[test] Finished batch 269 / 1008
+[test] Finished batch 270 / 1008
+[test] Finished batch 271 / 1008
+[test] Finished batch 272 / 1008
+[test] Finished batch 273 / 1008
+[test] Finished batch 274 / 1008
+[test] Finished batch 275 / 1008
+[test] Finished batch 276 / 1008
+[test] Finished batch 277 / 1008
+[test] Finished batch 278 / 1008
+[test] Finished batch 279 / 1008
+[test] Finished batch 280 / 1008
+[test] Finished batch 281 / 1008
+[test] Finished batch 282 / 1008
+[test] Finished batch 283 / 1008
+[test] Finished batch 284 / 1008
+[test] Finished batch 285 / 1008
+[test] Finished batch 286 / 1008
+[test] Finished batch 287 / 1008
+[test] Finished batch 288 / 1008
+[test] Finished batch 289 / 1008
+[test] Finished batch 290 / 1008
+[test] Finished batch 291 / 1008
+[test] Finished batch 292 / 1008
+[test] Finished batch 293 / 1008
+[test] Finished batch 294 / 1008
+[test] Finished batch 295 / 1008
+[test] Finished batch 296 / 1008
+[test] Finished batch 297 / 1008
+[test] Finished batch 298 / 1008
+[test] Finished batch 299 / 1008
+[test] Finished batch 300 / 1008
+[test] Finished batch 301 / 1008
+[test] Finished batch 302 / 1008
+[test] Finished batch 303 / 1008
+[test] Finished batch 304 / 1008
+[test] Finished batch 305 / 1008
+[test] Finished batch 306 / 1008
+[test] Finished batch 307 / 1008
+[test] Finished batch 308 / 1008
+[test] Finished batch 309 / 1008
+[test] Finished batch 310 / 1008
+[test] Finished batch 311 / 1008
+[test] Finished batch 312 / 1008
+[test] Finished batch 313 / 1008
+[test] Finished batch 314 / 1008
+[test] Finished batch 315 / 1008
+[test] Finished batch 316 / 1008
+[test] Finished batch 317 / 1008
+[test] Finished batch 318 / 1008
+[test] Finished batch 319 / 1008
+[test] Finished batch 320 / 1008
+[test] Finished batch 321 / 1008
+[test] Finished batch 322 / 1008
+[test] Finished batch 323 / 1008
+[test] Finished batch 324 / 1008
+[test] Finished batch 325 / 1008
+[test] Finished batch 326 / 1008
+[test] Finished batch 327 / 1008
+[test] Finished batch 328 / 1008
+[test] Finished batch 329 / 1008
+[test] Finished batch 330 / 1008
+[test] Finished batch 331 / 1008
+[test] Finished batch 332 / 1008
+[test] Finished batch 333 / 1008
+[test] Finished batch 334 / 1008
+[test] Finished batch 335 / 1008
+[test] Finished batch 336 / 1008
+[test] Finished batch 337 / 1008
+[test] Finished batch 338 / 1008
+[test] Finished batch 339 / 1008
+[test] Finished batch 340 / 1008
+[test] Finished batch 341 / 1008
+[test] Finished batch 342 / 1008
+[test] Finished batch 343 / 1008
+[test] Finished batch 344 / 1008
+[test] Finished batch 345 / 1008
+[test] Finished batch 346 / 1008
+[test] Finished batch 347 / 1008
+[test] Finished batch 348 / 1008
+[test] Finished batch 349 / 1008
+[test] Finished batch 350 / 1008
+[test] Finished batch 351 / 1008
+[test] Finished batch 352 / 1008
+[test] Finished batch 353 / 1008
+[test] Finished batch 354 / 1008
+[test] Finished batch 355 / 1008
+[test] Finished batch 356 / 1008
+[test] Finished batch 357 / 1008
+[test] Finished batch 358 / 1008
+[test] Finished batch 359 / 1008
+[test] Finished batch 360 / 1008
+[test] Finished batch 361 / 1008
+[test] Finished batch 362 / 1008
+[test] Finished batch 363 / 1008
+[test] Finished batch 364 / 1008
+[test] Finished batch 365 / 1008
+[test] Finished batch 366 / 1008
+[test] Finished batch 367 / 1008
+[test] Finished batch 368 / 1008
+[test] Finished batch 369 / 1008
+[test] Finished batch 370 / 1008
+[test] Finished batch 371 / 1008
+[test] Finished batch 372 / 1008
+[test] Finished batch 373 / 1008
+[test] Finished batch 374 / 1008
+[test] Finished batch 375 / 1008
+[test] Finished batch 376 / 1008
+[test] Finished batch 377 / 1008
+[test] Finished batch 378 / 1008
+[test] Finished batch 379 / 1008
+[test] Finished batch 380 / 1008
+[test] Finished batch 381 / 1008
+[test] Finished batch 382 / 1008
+[test] Finished batch 383 / 1008
+[test] Finished batch 384 / 1008
+[test] Finished batch 385 / 1008
+[test] Finished batch 386 / 1008
+[test] Finished batch 387 / 1008
+[test] Finished batch 388 / 1008
+[test] Finished batch 389 / 1008
+[test] Finished batch 390 / 1008
+[test] Finished batch 391 / 1008
+[test] Finished batch 392 / 1008
+[test] Finished batch 393 / 1008
+[test] Finished batch 394 / 1008
+[test] Finished batch 395 / 1008
+[test] Finished batch 396 / 1008
+[test] Finished batch 397 / 1008
+[test] Finished batch 398 / 1008
+[test] Finished batch 399 / 1008
+[test] Finished batch 400 / 1008
+[test] Finished batch 401 / 1008
+[test] Finished batch 402 / 1008
+[test] Finished batch 403 / 1008
+[test] Finished batch 404 / 1008
+[test] Finished batch 405 / 1008
+[test] Finished batch 406 / 1008
+[test] Finished batch 407 / 1008
+[test] Finished batch 408 / 1008
+[test] Finished batch 409 / 1008
+[test] Finished batch 410 / 1008
+[test] Finished batch 411 / 1008
+[test] Finished batch 412 / 1008
+[test] Finished batch 413 / 1008
+[test] Finished batch 414 / 1008
+[test] Finished batch 415 / 1008
+[test] Finished batch 416 / 1008
+[test] Finished batch 417 / 1008
+[test] Finished batch 418 / 1008
+[test] Finished batch 419 / 1008
+[test] Finished batch 420 / 1008
+[test] Finished batch 421 / 1008
+[test] Finished batch 422 / 1008
+[test] Finished batch 423 / 1008
+[test] Finished batch 424 / 1008
+[test] Finished batch 425 / 1008
+[test] Finished batch 426 / 1008
+[test] Finished batch 427 / 1008
+[test] Finished batch 428 / 1008
+[test] Finished batch 429 / 1008
+[test] Finished batch 430 / 1008
+[test] Finished batch 431 / 1008
+[test] Finished batch 432 / 1008
+[test] Finished batch 433 / 1008
+[test] Finished batch 434 / 1008
+[test] Finished batch 435 / 1008
+[test] Finished batch 436 / 1008
+[test] Finished batch 437 / 1008
+[test] Finished batch 438 / 1008
+[test] Finished batch 439 / 1008
+[test] Finished batch 440 / 1008
+[test] Finished batch 441 / 1008
+[test] Finished batch 442 / 1008
+[test] Finished batch 443 / 1008
+[test] Finished batch 444 / 1008
+[test] Finished batch 445 / 1008
+[test] Finished batch 446 / 1008
+[test] Finished batch 447 / 1008
+[test] Finished batch 448 / 1008
+[test] Finished batch 449 / 1008
+[test] Finished batch 450 / 1008
+[test] Finished batch 451 / 1008
+[test] Finished batch 452 / 1008
+[test] Finished batch 453 / 1008
+[test] Finished batch 454 / 1008
+[test] Finished batch 455 / 1008
+[test] Finished batch 456 / 1008
+[test] Finished batch 457 / 1008
+[test] Finished batch 458 / 1008
+[test] Finished batch 459 / 1008
+[test] Finished batch 460 / 1008
+[test] Finished batch 461 / 1008
+[test] Finished batch 462 / 1008
+[test] Finished batch 463 / 1008
+[test] Finished batch 464 / 1008
+[test] Finished batch 465 / 1008
+[test] Finished batch 466 / 1008
+[test] Finished batch 467 / 1008
+[test] Finished batch 468 / 1008
+[test] Finished batch 469 / 1008
+[test] Finished batch 470 / 1008
+[test] Finished batch 471 / 1008
+[test] Finished batch 472 / 1008
+[test] Finished batch 473 / 1008
+[test] Finished batch 474 / 1008
+[test] Finished batch 475 / 1008
+[test] Finished batch 476 / 1008
+[test] Finished batch 477 / 1008
+[test] Finished batch 478 / 1008
+[test] Finished batch 479 / 1008
+[test] Finished batch 480 / 1008
+[test] Finished batch 481 / 1008
+[test] Finished batch 482 / 1008
+[test] Finished batch 483 / 1008
+[test] Finished batch 484 / 1008
+[test] Finished batch 485 / 1008
+[test] Finished batch 486 / 1008
+[test] Finished batch 487 / 1008
+[test] Finished batch 488 / 1008
+[test] Finished batch 489 / 1008
+[test] Finished batch 490 / 1008
+[test] Finished batch 491 / 1008
+[test] Finished batch 492 / 1008
+[test] Finished batch 493 / 1008
+[test] Finished batch 494 / 1008
+[test] Finished batch 495 / 1008
+[test] Finished batch 496 / 1008
+[test] Finished batch 497 / 1008
+[test] Finished batch 498 / 1008
+[test] Finished batch 499 / 1008
+[test] Finished batch 500 / 1008
+[test] Finished batch 501 / 1008
+[test] Finished batch 502 / 1008
+[test] Finished batch 503 / 1008
+[test] Finished batch 504 / 1008
+[test] Finished batch 505 / 1008
+[test] Finished batch 506 / 1008
+[test] Finished batch 507 / 1008
+[test] Finished batch 508 / 1008
+[test] Finished batch 509 / 1008
+[test] Finished batch 510 / 1008
+[test] Finished batch 511 / 1008
+[test] Finished batch 512 / 1008
+[test] Finished batch 513 / 1008
+[test] Finished batch 514 / 1008
+[test] Finished batch 515 / 1008
+[test] Finished batch 516 / 1008
+[test] Finished batch 517 / 1008
+[test] Finished batch 518 / 1008
+[test] Finished batch 519 / 1008
+[test] Finished batch 520 / 1008
+[test] Finished batch 521 / 1008
+[test] Finished batch 522 / 1008
+[test] Finished batch 523 / 1008
+[test] Finished batch 524 / 1008
+[test] Finished batch 525 / 1008
+[test] Finished batch 526 / 1008
+[test] Finished batch 527 / 1008
+[test] Finished batch 528 / 1008
+[test] Finished batch 529 / 1008
+[test] Finished batch 530 / 1008
+[test] Finished batch 531 / 1008
+[test] Finished batch 532 / 1008
+[test] Finished batch 533 / 1008
+[test] Finished batch 534 / 1008
+[test] Finished batch 535 / 1008
+[test] Finished batch 536 / 1008
+[test] Finished batch 537 / 1008
+[test] Finished batch 538 / 1008
+[test] Finished batch 539 / 1008
+[test] Finished batch 540 / 1008
+[test] Finished batch 541 / 1008
+[test] Finished batch 542 / 1008
+[test] Finished batch 543 / 1008
+[test] Finished batch 544 / 1008
+[test] Finished batch 545 / 1008
+[test] Finished batch 546 / 1008

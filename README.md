@@ -60,8 +60,26 @@ limited to two minutes. CPU and RAM are capped at four cores and 16 GiB. At
 the current requested-resource rates, this reserves about $8.90 in compute;
 actual billing remains the source of truth. It runs with one container and
 no function retries. Data fingerprints must match the frozen low pilot before
-training begins. High evaluation recovery needs a separate execution plan;
-the existing 15-minute recovery function only accepts low checkpoints.
+training begins. The 15-minute recovery function accepts low checkpoints.
+The high recovery function has a separate 38-minute deadline, four-core/16 GiB
+hard limits, and checks the full high training dose before selecting 648.
+
+For the 2026-10-10 high evaluation recovery, deploy the code and submit a
+spawned call whose ID is saved before the caller exits:
+
+```bash
+ARC_RUN=eval-high-h100-20261010-001 modal deploy --name arc-transformer-recovery modal_app.py
+python submit_evaluation.py --deployment arc-transformer-recovery \
+  --run-id eval-high-h100-20261010-001 --source-run-id high-h100-20261009-001 \
+  --output docs/runs/eval-high-h100-20261010-001/job.json
+```
+
+Use the Python environment containing Modal for submission. Result retrieval
+uses `modal.FunctionCall.from_id(call_id).get(timeout=...)` from another
+process. Deployment has no warm containers; only the submitted evaluation
+uses compute. See [Modal invocation methods](https://modal.com/docs/guide/invoking-functions).
+This recovery reserves about $2.99 at its full timeout, fitting within the
+original high run's $9 allowance after its $5.85 billed interrupted attempt.
 
 Actual spending
 comes from Modal billing with `project` and `run` tags, including CPU and RAM.

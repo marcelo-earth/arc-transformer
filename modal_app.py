@@ -30,7 +30,7 @@ FLASH_ATTN_WHEEL = (
 # Inner deadlines allow evidence to be committed before Modal's hard timeout.
 # Check actual project spend with experiment-hub/costs.py before each launch.
 TIMEOUT_SECONDS = {"probe": 7 * 60, "low": 30 * 60, "high": 121 * 60,
-                   "evaluation": 15 * 60}
+                   "evaluation": 15 * 60, "high_evaluation": 38 * 60}
 RUN_ID = validate_run_id(os.environ.get("ARC_RUN", "untitled"))
 
 image = (
@@ -83,16 +83,18 @@ def _run(preset: str, run_id: str, probe: bool = False, evaluate_from: str = "")
     if evaluate_from:
         source_config = json.loads((Path("/runs") / validate_run_id(evaluate_from)
                                     / "artifacts" / "config.json").read_text())
-        if source_config["epochs"] != 90:
-            raise ValueError("The 15-minute recovery function is sized for low only; size high recovery separately.")
+        expected_epochs = 650 if preset == "high" else 90
+        if source_config["epochs"] != expected_epochs:
+            raise ValueError("Recovery preset must match the source training dose.")
         command.extend(["--evaluate-from", str(Path("/runs") / validate_run_id(evaluate_from))])
     if preset == "high":
         command.extend(["--expected-data-manifest",
                         "/runs/low-h100-20261009-003/artifacts/data_manifest.json"])
     mode = "evaluation" if evaluate_from else "probe" if probe else "baseline"
+    deadline_key = "high_evaluation" if evaluate_from and preset == "high" else mode if mode != "baseline" else preset
     summary = run_logged(
         command, cwd="/mdlARC", out_dir=out_dir,
-        timeout=TIMEOUT_SECONDS[mode if mode != "baseline" else preset],
+        timeout=TIMEOUT_SECONDS[deadline_key],
         metadata={"run_id": run_id, "preset": preset, "gpu": "H100",
                   "mdlarc_commit": MDLARC_COMMIT, "seed": 42,
                   "inference_epoch": 648 if preset == "high" else 90,
@@ -126,6 +128,14 @@ def evaluate_checkpoint(run_id: str, source_run_id: str) -> dict:
     return _run("low", run_id, evaluate_from=source_run_id)
 
 
+@app.function(gpu="H100", cpu=(4, 4), memory=(16384, 16384),
+              timeout=40 * 60, startup_timeout=120, retries=0,
+              max_containers=1, scaledown_window=2, volumes={"/runs": runs})
+def evaluate_high_checkpoint(run_id: str, source_run_id: str) -> dict:
+    """Finish the authorized high run within its remaining $3.15 reserve."""
+    return _run("high", run_id, evaluate_from=source_run_id)
+
+
 @app.local_entrypoint()
 def main(preset: str = "low", diagnostic: bool = False, evaluate_from: str = ""):
     if RUN_ID == "untitled":
@@ -137,9 +147,8 @@ def main(preset: str = "low", diagnostic: bool = False, evaluate_from: str = "")
     if diagnostic and evaluate_from:
         raise ValueError("Diagnostic and checkpoint evaluation are separate modes.")
     if evaluate_from:
-        if preset != "low":
-            raise ValueError("High recovery needs a separately sized evaluation budget; do not launch it implicitly.")
-        summary = evaluate_checkpoint.remote(RUN_ID, validate_run_id(evaluate_from))
+        fn = evaluate_high_checkpoint if preset == "high" else evaluate_checkpoint
+        summary = fn.remote(RUN_ID, validate_run_id(evaluate_from))
     else:
         fn = probe if diagnostic else run_high if preset == "high" else run_low
         summary = fn.remote(RUN_ID)
