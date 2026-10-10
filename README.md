@@ -49,6 +49,13 @@ hard timeout. Failures, timeouts and missing scores are reported explicitly.
 Only the low preset is enabled within the current budget. Actual spending
 comes from Modal billing with `project` and `run` tags, including CPU and RAM.
 
+The runner also records runtime package versions, per-epoch timings and a data
+manifest with SHA-256 hashes. It checks that evaluation test outputs are absent
+from `challenges.json`; demonstration outputs remain available, as required by
+the reference's transductive protocol. The upstream downloader uses moving
+dataset branches, so preserving the cached Modal image and data hashes matters
+in addition to pinning the code commit.
+
 ```mermaid
 flowchart LR
     P[Two-epoch diagnostic] -->|completes| L[90-epoch low pilot]

@@ -1,5 +1,6 @@
 """Run the pinned reference, adding observability without changing its model."""
 import argparse
+import hashlib
 import importlib.metadata
 import json
 from pathlib import Path
@@ -13,11 +14,37 @@ class ProbeComplete(Exception):
     pass
 
 
+def audit_data(root, destination):
+    root = Path(root)
+    challenges = json.loads((root / "challenges.json").read_text())
+    solutions = json.loads((root / "solutions.json").read_text())
+    if not solutions:
+        raise ValueError("Evaluation solutions must contain at least one task.")
+    missing = set(solutions) - set(challenges)
+    if missing:
+        raise ValueError(f"Evaluation tasks missing from challenges: {len(missing)}")
+    exposed = [key for key in solutions if any(
+        "output" in pair for pair in challenges[key].get("test", [])
+    )]
+    if exposed:
+        raise ValueError(f"Evaluation test outputs exposed in challenges: {len(exposed)}")
+    manifest = {
+        "files": {name: {"sha256": hashlib.sha256((root / name).read_bytes()).hexdigest(),
+                         "bytes": (root / name).stat().st_size}
+                  for name in ("challenges.json", "solutions.json")},
+        "challenge_tasks": len(challenges), "evaluation_tasks": len(solutions),
+        "eval_tasks_with_test_output_in_challenges": 0,
+    }
+    Path(destination).write_text(json.dumps(manifest, indent=2) + "\n")
+    return manifest
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("preset", choices=("low", "medium"))
     parser.add_argument("--probe", action="store_true")
     args = parser.parse_args()
+    audit_data("assets", "runs/data_manifest.json")
     sys.path.insert(0, str(Path.cwd() / "src"))
     import build
     import train
