@@ -73,6 +73,33 @@ flowchart LR
 
 Local failure-path checks: `python3.11 -m unittest discover -s tests -v`.
 
+## First completed pilot (2026-10-09)
+
+The low preset, seed 42, scored **33.875%** on the 400-task ARC-AGI-1 public
+evaluation set: task-averaged pass@2 score 135.5/400, with 134 tasks fully
+correct. The scorer gives partial credit within tasks with multiple test
+pairs. All 400 task IDs and all 419 test pairs are present in the submission;
+an independent JSON rescore matches the reference scorer exactly.
+
+Training completed 90 epochs in 640.67 seconds on H100. A logging-adapter
+error interrupted the evaluation handoff; the final checkpoint was retained
+and evaluated without retraining in 401.98 seconds. The combined subprocess
+time was 1,107.4 seconds, including setup and the failed handoff. The adapter
+is fixed and a regression test protects its evaluation arguments.
+
+| Evidence | Location |
+|---|---|
+| Two-epoch diagnostic | [docs/runs/probe-h100-20261009-004](docs/runs/probe-h100-20261009-004/) |
+| Full training, config and checkpoints log | [docs/runs/low-h100-20261009-003](docs/runs/low-h100-20261009-003/) |
+| Recovered evaluation, submission and independent verification | [docs/runs/eval-low-h100-20261009-003](docs/runs/eval-low-h100-20261009-003/) |
+
+This is one exploratory seed with the low preset. It does not confirm the
+high preset's 44% claim or estimate seed-to-seed uncertainty. No architecture
+or hyperparameter ablations were performed. Actual billing for these runs is
+pending in Modal's report; the confirmed prior app spending is $1.52424669.
+All session apps are stopped. The next milestone is a budgeted high-preset
+reproduction, after actual billing is available.
+
 ## Model at a glance
 
 ```mermaid
