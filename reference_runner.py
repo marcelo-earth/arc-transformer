@@ -47,7 +47,10 @@ def logged_builder(original_build, *, probe=False):
             cfg.epochs = 2
         cfg.train_log_mode = "epoch"
         cfg.log_location = "both"
-        cfg.checkpoint_epochs = list(range(10, cfg.epochs, 10))
+        required = {epoch for epoch in getattr(cfg, "checkpoint_epochs", [])
+                    if 0 < epoch <= cfg.epochs}
+        interval = 100 if cfg.epochs >= 650 else 10
+        cfg.checkpoint_epochs = sorted(required | set(range(interval, cfg.epochs, interval)))
         config = {key: str(value) if isinstance(value, Path) else value
                   for key, value in vars(cfg).items()}
         Path("runs/config.json").write_text(json.dumps(config, indent=2) + "\n")
@@ -55,13 +58,27 @@ def logged_builder(original_build, *, probe=False):
     return build_with_logging
 
 
+def checkpoint_for_evaluation(source, cfg):
+    # The pinned high preset evaluates 648, never the final 650 checkpoint.
+    epoch = 648 if cfg.epochs == 650 else cfg.epochs
+    if epoch == cfg.epochs:
+        return Path(source) / "tiny.pt"
+    width = len(str(cfg.epochs))
+    return Path(source) / f"tiny.epoch{epoch:0{width}d}.pt"
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("preset", choices=("low", "medium"))
+    parser.add_argument("preset", choices=("low", "medium", "high"))
     parser.add_argument("--probe", action="store_true")
     parser.add_argument("--evaluate-from", type=Path)
+    parser.add_argument("--expected-data-manifest", type=Path)
     args = parser.parse_args()
-    audit_data("assets", "runs/data_manifest.json")
+    manifest = audit_data("assets", "runs/data_manifest.json")
+    if args.expected_data_manifest:
+        expected = json.loads(args.expected_data_manifest.read_text())
+        if manifest["files"] != expected["files"]:
+            raise ValueError("Run data differs from the frozen pilot manifest.")
     sys.path.insert(0, str(Path.cwd() / "src"))
     import build
     import train
@@ -92,7 +109,7 @@ def main():
             if config.get(key) is not None:
                 config[key] = Path(config[key])
         cfg = argparse.Namespace(**config)
-        checkpoint = source / "tiny.pt"
+        checkpoint = checkpoint_for_evaluation(source, cfg)
         if not checkpoint.is_file():
             raise FileNotFoundError(f"Completed training checkpoint missing: {checkpoint}")
         print(f"Evaluating frozen checkpoint: {checkpoint}", flush=True)

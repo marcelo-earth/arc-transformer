@@ -3,6 +3,7 @@
 Usage:
     ARC_RUN=probe-h100-001 modal run modal_app.py --diagnostic # two training epochs, no evaluation
     ARC_RUN=low-h100-001 modal run modal_app.py --preset low   # reproduction run on an H100
+    ARC_RUN=high-h100-001 modal run --detach modal_app.py --preset high
 
 ARC_RUN tags the app for experiment-hub's costs.py. Use a new value per run.
 
@@ -28,7 +29,8 @@ FLASH_ATTN_WHEEL = (
 
 # Inner deadlines allow evidence to be committed before Modal's hard timeout.
 # Check actual project spend with experiment-hub/costs.py before each launch.
-TIMEOUT_SECONDS = {"probe": 7 * 60, "low": 30 * 60, "evaluation": 15 * 60}
+TIMEOUT_SECONDS = {"probe": 7 * 60, "low": 30 * 60, "high": 121 * 60,
+                   "evaluation": 15 * 60}
 RUN_ID = validate_run_id(os.environ.get("ARC_RUN", "untitled"))
 
 image = (
@@ -79,13 +81,21 @@ def _run(preset: str, run_id: str, probe: bool = False, evaluate_from: str = "")
     if probe:
         command.append("--probe")
     if evaluate_from:
+        source_config = json.loads((Path("/runs") / validate_run_id(evaluate_from)
+                                    / "artifacts" / "config.json").read_text())
+        if source_config["epochs"] != 90:
+            raise ValueError("The 15-minute recovery function is sized for low only; size high recovery separately.")
         command.extend(["--evaluate-from", str(Path("/runs") / validate_run_id(evaluate_from))])
+    if preset == "high":
+        command.extend(["--expected-data-manifest",
+                        "/runs/low-h100-20261009-003/artifacts/data_manifest.json"])
     mode = "evaluation" if evaluate_from else "probe" if probe else "baseline"
     summary = run_logged(
         command, cwd="/mdlARC", out_dir=out_dir,
         timeout=TIMEOUT_SECONDS[mode if mode != "baseline" else preset],
         metadata={"run_id": run_id, "preset": preset, "gpu": "H100",
                   "mdlarc_commit": MDLARC_COMMIT, "seed": 42,
+                  "inference_epoch": 648 if preset == "high" else 90,
                   "mode": mode, "source_run_id": evaluate_from or None,
                   "compute_cost_source": "modal billing report, project/run tags"},
         commit=runs.commit, require_score=not probe,
@@ -101,6 +111,14 @@ def run_low(run_id: str) -> dict:
     return _run("low", run_id)
 
 
+@app.function(gpu="H100", cpu=(4, 4), memory=(16384, 16384),
+              timeout=123 * 60, startup_timeout=120, retries=0,
+              max_containers=1, scaledown_window=2, volumes={"/runs": runs})
+def run_high(run_id: str) -> dict:
+    """One authorized high-preset run, bounded to about $8.90 in compute."""
+    return _run("high", run_id)
+
+
 @app.function(gpu="H100", cpu=4, memory=16384, timeout=17 * 60,
               startup_timeout=120, retries=0, max_containers=1,
               volumes={"/runs": runs})
@@ -112,14 +130,19 @@ def evaluate_checkpoint(run_id: str, source_run_id: str) -> dict:
 def main(preset: str = "low", diagnostic: bool = False, evaluate_from: str = ""):
     if RUN_ID == "untitled":
         raise ValueError("Set a unique ARC_RUN before launching compute.")
-    if preset != "low":
-        raise ValueError("Only low is enabled inside the current $5 project budget.")
+    if preset not in ("low", "high"):
+        raise ValueError("Enabled presets are low and the authorized high reproduction.")
+    if diagnostic and preset != "low":
+        raise ValueError("The two-epoch diagnostic uses the low preset.")
     if diagnostic and evaluate_from:
         raise ValueError("Diagnostic and checkpoint evaluation are separate modes.")
     if evaluate_from:
+        if preset != "low":
+            raise ValueError("High recovery needs a separately sized evaluation budget; do not launch it implicitly.")
         summary = evaluate_checkpoint.remote(RUN_ID, validate_run_id(evaluate_from))
     else:
-        summary = (probe if diagnostic else run_low).remote(RUN_ID)
+        fn = probe if diagnostic else run_high if preset == "high" else run_low
+        summary = fn.remote(RUN_ID)
     print(json.dumps(summary, indent=2))
     if summary["status"] != "completed":
         raise RuntimeError(f"Run {RUN_ID} ended with status {summary['status']}; evidence is saved.")

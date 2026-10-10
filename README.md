@@ -28,6 +28,8 @@ the $0.67 reference cost used a different GPU and provider.
 ```bash
 ARC_RUN=probe-h100-20261009-003 modal run modal_app.py --diagnostic
 ARC_RUN=low-h100-20261009-003 modal run modal_app.py --preset low
+# Authorized high reproduction, survives client disconnection:
+ARC_RUN=high-h100-20261009-001 modal run --detach modal_app.py --preset high
 # Recover evaluation from a completed training checkpoint without retraining:
 ARC_RUN=eval-low-h100-20261009-003 modal run modal_app.py --evaluate-from low-h100-20261009-003
 ```
@@ -42,7 +44,7 @@ Each run has a unique directory in the `arc-transformer-runs` volume:
 configuration, training log, checkpoints and, for a finished baseline, the
 submission and structured `score.json`. Logs are committed every 60 seconds
 and at exit. A hard termination can lose at most the uncommitted tail.
-Intermediate checkpoints are written every ten epochs. They are evidence for
+Low intermediate checkpoints are written every ten epochs. They are evidence for
 recovery; resuming is not yet exposed by this runner.
 
 The diagnostic stops internally after seven minutes and the low run after
@@ -50,7 +52,18 @@ The diagnostic stops internally after seven minutes and the low run after
 hard timeout. Failures, timeouts and missing scores are reported explicitly.
 Checkpoint-only evaluation has a 15-minute inner deadline. It verifies the
 source training dose and data hashes before loading the frozen checkpoint.
-Only the low preset is enabled within the current budget. Actual spending
+The high preset is authorized for one run up to $9. It trains 650 epochs
+with 300 augmentations and evaluates checkpoint 648, preserving the reference
+checkpoints 645/648/650 plus recovery checkpoints every 100 epochs. Its inner
+deadline is 121 minutes, Modal's hard timeout is 123 minutes, and startup is
+limited to two minutes. CPU and RAM are capped at four cores and 16 GiB. At
+the current requested-resource rates, this reserves about $8.90 in compute;
+actual billing remains the source of truth. It runs with one container and
+no function retries. Data fingerprints must match the frozen low pilot before
+training begins. High evaluation recovery needs a separate execution plan;
+the existing 15-minute recovery function only accepts low checkpoints.
+
+Actual spending
 comes from Modal billing with `project` and `run` tags, including CPU and RAM.
 
 The runner also records runtime package versions, per-epoch timings and a data
@@ -97,8 +110,8 @@ This is one exploratory seed with the low preset. It does not confirm the
 high preset's 44% claim or estimate seed-to-seed uncertainty. No architecture
 or hyperparameter ablations were performed. Actual billing for these runs is
 pending in Modal's report; the confirmed prior app spending is $1.52424669.
-All session apps are stopped. The next milestone is a budgeted high-preset
-reproduction, after actual billing is available.
+The low session apps are stopped. The next milestone is the authorized
+high-preset reproduction described above.
 
 ## Model at a glance
 
