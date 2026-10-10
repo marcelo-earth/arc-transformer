@@ -80,7 +80,14 @@ def main():
     if args.evaluate_from:
         import evaluate
         source = args.evaluate_from / "artifacts"
+        source_manifest = json.loads((source / "data_manifest.json").read_text())
+        current_manifest = json.loads(Path("runs/data_manifest.json").read_text())
+        if source_manifest["files"] != current_manifest["files"]:
+            raise ValueError("Recovery data differs from the frozen training run.")
+        training_summary = json.loads((source / "training_summary.json").read_text())
         config = json.loads((source / "config.json").read_text())
+        if training_summary["probe"] or training_summary["epochs"] != config["epochs"]:
+            raise ValueError("Recovery requires a completed baseline training dose.")
         for key in ("data_path", "train_log_file", "save_path", "checkpoint_path"):
             if config.get(key) is not None:
                 config[key] = Path(config[key])
