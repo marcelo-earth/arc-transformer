@@ -39,10 +39,27 @@ def audit_data(root, destination):
     return manifest
 
 
+def logged_builder(original_build, *, probe=False):
+    def build_with_logging(cfg, *build_args, **kwargs):
+        if kwargs.get("is_eval", False):
+            return original_build(cfg, *build_args, **kwargs)
+        if probe:
+            cfg.epochs = 2
+        cfg.train_log_mode = "epoch"
+        cfg.log_location = "both"
+        cfg.checkpoint_epochs = list(range(10, cfg.epochs, 10))
+        config = {key: str(value) if isinstance(value, Path) else value
+                  for key, value in vars(cfg).items()}
+        Path("runs/config.json").write_text(json.dumps(config, indent=2) + "\n")
+        return original_build(cfg, *build_args, **kwargs)
+    return build_with_logging
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("preset", choices=("low", "medium"))
     parser.add_argument("--probe", action="store_true")
+    parser.add_argument("--evaluate-from", type=Path)
     args = parser.parse_args()
     audit_data("assets", "runs/data_manifest.json")
     sys.path.insert(0, str(Path.cwd() / "src"))
@@ -60,6 +77,28 @@ def main():
     Path("runs/environment.json").write_text(json.dumps(environment, indent=2) + "\n")
     print(json.dumps(environment), flush=True)
 
+    if args.evaluate_from:
+        import evaluate
+        source = args.evaluate_from / "artifacts"
+        config = json.loads((source / "config.json").read_text())
+        for key in ("data_path", "train_log_file", "save_path", "checkpoint_path"):
+            if config.get(key) is not None:
+                config[key] = Path(config[key])
+        cfg = argparse.Namespace(**config)
+        checkpoint = source / "tiny.pt"
+        if not checkpoint.is_file():
+            raise FileNotFoundError(f"Completed training checkpoint missing: {checkpoint}")
+        print(f"Evaluating frozen checkpoint: {checkpoint}", flush=True)
+        result = evaluate.run_evaluation(
+            cfg, run_name="submission_eval", max_augments=cfg.max_augments,
+            data_path=cfg.data_path, checkpoint_path=checkpoint, batch_size=100,
+            splits=["test"], task_ids=None,
+        )
+        score = utils.score_arc_submission(Path("assets/solutions.json"),
+                                            Path("runs") / result[0] / "submission.json")
+        Path("runs/score.json").write_text(json.dumps(score, indent=2) + "\n")
+        return
+
     original_build = build.build_model_and_data
     original_train = train.train_model
     original_score = utils.score_arc_submission
@@ -74,17 +113,6 @@ def main():
             timings.write(json.dumps(record) + "\n")
         print(f"Completed epoch timing: {json.dumps(record)}", flush=True)
         return result
-
-    def build_with_logging(cfg):
-        if args.probe:
-            cfg.epochs = 2
-        cfg.train_log_mode = "epoch"
-        cfg.log_location = "both"
-        cfg.checkpoint_epochs = list(range(10, cfg.epochs, 10))
-        config = {key: str(value) if isinstance(value, Path) else value
-                  for key, value in vars(cfg).items()}
-        Path("runs/config.json").write_text(json.dumps(config, indent=2) + "\n")
-        return original_build(cfg)
 
     def train_with_timing(*train_args, **kwargs):
         started = time.monotonic()
@@ -104,7 +132,7 @@ def main():
         Path("runs/score.json").write_text(json.dumps(result, indent=2) + "\n")
         return result
 
-    build.build_model_and_data = build_with_logging
+    build.build_model_and_data = logged_builder(original_build, probe=args.probe)
     train.train_model = train_with_timing
     train.train_one_epoch = epoch_with_timing
     utils.score_arc_submission = score_with_artifact

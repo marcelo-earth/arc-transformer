@@ -28,7 +28,7 @@ FLASH_ATTN_WHEEL = (
 
 # Inner deadlines allow evidence to be committed before Modal's hard timeout.
 # Check actual project spend with experiment-hub/costs.py before each launch.
-TIMEOUT_SECONDS = {"probe": 7 * 60, "low": 30 * 60}
+TIMEOUT_SECONDS = {"probe": 7 * 60, "low": 30 * 60, "evaluation": 15 * 60}
 RUN_ID = validate_run_id(os.environ.get("ARC_RUN", "untitled"))
 
 image = (
@@ -63,7 +63,7 @@ def probe(run_id: str) -> dict:
     return _run("low", run_id, probe=True)
 
 
-def _run(preset: str, run_id: str, probe: bool = False) -> dict:
+def _run(preset: str, run_id: str, probe: bool = False, evaluate_from: str = "") -> dict:
     run_id = validate_run_id(run_id)
     out_dir = Path("/runs") / run_id
     if out_dir.exists():
@@ -78,12 +78,15 @@ def _run(preset: str, run_id: str, probe: bool = False) -> dict:
     command = ["python", "-u", "/reference_runner.py", preset]
     if probe:
         command.append("--probe")
+    if evaluate_from:
+        command.extend(["--evaluate-from", str(Path("/runs") / validate_run_id(evaluate_from))])
+    mode = "evaluation" if evaluate_from else "probe" if probe else "baseline"
     summary = run_logged(
         command, cwd="/mdlARC", out_dir=out_dir,
-        timeout=TIMEOUT_SECONDS["probe" if probe else preset],
+        timeout=TIMEOUT_SECONDS[mode if mode != "baseline" else preset],
         metadata={"run_id": run_id, "preset": preset, "gpu": "H100",
                   "mdlarc_commit": MDLARC_COMMIT, "seed": 42,
-                  "mode": "probe" if probe else "baseline",
+                  "mode": mode, "source_run_id": evaluate_from or None,
                   "compute_cost_source": "modal billing report, project/run tags"},
         commit=runs.commit, require_score=not probe,
     )
@@ -98,13 +101,25 @@ def run_low(run_id: str) -> dict:
     return _run("low", run_id)
 
 
+@app.function(gpu="H100", cpu=4, memory=16384, timeout=17 * 60,
+              startup_timeout=120, retries=0, max_containers=1,
+              volumes={"/runs": runs})
+def evaluate_checkpoint(run_id: str, source_run_id: str) -> dict:
+    return _run("low", run_id, evaluate_from=source_run_id)
+
+
 @app.local_entrypoint()
-def main(preset: str = "low", diagnostic: bool = False):
+def main(preset: str = "low", diagnostic: bool = False, evaluate_from: str = ""):
     if RUN_ID == "untitled":
         raise ValueError("Set a unique ARC_RUN before launching compute.")
     if preset != "low":
         raise ValueError("Only low is enabled inside the current $5 project budget.")
-    summary = (probe if diagnostic else run_low).remote(RUN_ID)
+    if diagnostic and evaluate_from:
+        raise ValueError("Diagnostic and checkpoint evaluation are separate modes.")
+    if evaluate_from:
+        summary = evaluate_checkpoint.remote(RUN_ID, validate_run_id(evaluate_from))
+    else:
+        summary = (probe if diagnostic else run_low).remote(RUN_ID)
     print(json.dumps(summary, indent=2))
     if summary["status"] != "completed":
         raise RuntimeError(f"Run {RUN_ID} ended with status {summary['status']}; evidence is saved.")
